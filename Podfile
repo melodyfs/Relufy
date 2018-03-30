@@ -7,5 +7,5 @@ target 'Mentor-iOS' do
 
   # Pods for Mentor-iOS
   pod 'PusherSwift’
-
+  pod 'Koloda', '~> 4.3.1'
 end

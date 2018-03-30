@@ -17,6 +17,13 @@
 		6C5618B5206B7A6300DCAA46 /* MatchesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C5618B4206B7A6300DCAA46 /* MatchesVC.swift */; };
 		6C5618B7206B7AE600DCAA46 /* MessagesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C5618B6206B7AE600DCAA46 /* MessagesVC.swift */; };
 		6C5618B9206B7B1600DCAA46 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C5618B8206B7B1600DCAA46 /* ProfileVC.swift */; };
+		6C5618BB206C15F000DCAA46 /* UIView+AutoLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C5618BA206C15F000DCAA46 /* UIView+AutoLayout.swift */; };
+		6C5618BE206C41C100DCAA46 /* ServerNetworking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C5618BD206C41C100DCAA46 /* ServerNetworking.swift */; };
+		6C5618C0206C444900DCAA46 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C5618BF206C444900DCAA46 /* User.swift */; };
+		6C5618C2206C4E9400DCAA46 /* MatchesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C5618C1206C4E9400DCAA46 /* MatchesViewModel.swift */; };
+		6C5618C4206C533100DCAA46 /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C5618C3206C533100DCAA46 /* UIImageView+Extension.swift */; };
+		6C5618C6206D7B6000DCAA46 /* MatchesListDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C5618C5206D7B6000DCAA46 /* MatchesListDataSource.swift */; };
+		6C5618CC206D7C9100DCAA46 /* MatchesListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C5618CB206D7C9100DCAA46 /* MatchesListCell.swift */; };
 		DE532E60246C0105584CB7FF /* Pods_Mentor_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B81E3CB86C48174EEA96C22B /* Pods_Mentor_iOS.framework */; };
 /* End PBXBuildFile section */
 
@@ -34,6 +41,13 @@
 		6C5618B4206B7A6300DCAA46 /* MatchesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchesVC.swift; sourceTree = "<group>"; };
 		6C5618B6206B7AE600DCAA46 /* MessagesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesVC.swift; sourceTree = "<group>"; };
 		6C5618B8206B7B1600DCAA46 /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
+		6C5618BA206C15F000DCAA46 /* UIView+AutoLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+AutoLayout.swift"; sourceTree = "<group>"; };
+		6C5618BD206C41C100DCAA46 /* ServerNetworking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerNetworking.swift; sourceTree = "<group>"; };
+		6C5618BF206C444900DCAA46 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		6C5618C1206C4E9400DCAA46 /* MatchesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchesViewModel.swift; sourceTree = "<group>"; };
+		6C5618C3206C533100DCAA46 /* UIImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
+		6C5618C5206D7B6000DCAA46 /* MatchesListDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchesListDataSource.swift; sourceTree = "<group>"; };
+		6C5618CB206D7C9100DCAA46 /* MatchesListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchesListCell.swift; sourceTree = "<group>"; };
 		B81E3CB86C48174EEA96C22B /* Pods_Mentor_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Mentor_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C84BB0C96CC25AC9880D289B /* Pods-Mentor-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mentor-iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-Mentor-iOS/Pods-Mentor-iOS.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -71,6 +85,7 @@
 		6C56189820670FEE00DCAA46 /* Mentor-iOS */ = {
 			isa = PBXGroup;
 			children = (
+				6C5618BC206C417700DCAA46 /* HTTPClients */,
 				6C5618B3206B7A1400DCAA46 /* Profile */,
 				6C5618B2206B7A0B00DCAA46 /* Messages */,
 				6C5618AF206B787B00DCAA46 /* Matches */,
@@ -82,6 +97,8 @@
 				6C5618AB206714C700DCAA46 /* Credentials.swift */,
 				6C5618AD206B647B00DCAA46 /* PusherHelpers.swift */,
 				6C5618B0206B78D000DCAA46 /* TabBarController.swift */,
+				6C5618BA206C15F000DCAA46 /* UIView+AutoLayout.swift */,
+				6C5618C3206C533100DCAA46 /* UIImageView+Extension.swift */,
 			);
 			path = "Mentor-iOS";
 			sourceTree = "<group>";
@@ -89,7 +106,10 @@
 		6C5618AF206B787B00DCAA46 /* Matches */ = {
 			isa = PBXGroup;
 			children = (
-				6C5618B4206B7A6300DCAA46 /* MatchesVC.swift */,
+				6C5618CA206D7C7700DCAA46 /* Cells */,
+				6C5618C7206D7B9300DCAA46 /* ViewModels */,
+				6C5618C8206D7BA100DCAA46 /* VIewControllers */,
+				6C5618C9206D7BAB00DCAA46 /* DataSource */,
 			);
 			path = Matches;
 			sourceTree = "<group>";
@@ -108,6 +128,47 @@
 				6C5618B8206B7B1600DCAA46 /* ProfileVC.swift */,
 			);
 			path = Profile;
+			sourceTree = "<group>";
+		};
+		6C5618BC206C417700DCAA46 /* HTTPClients */ = {
+			isa = PBXGroup;
+			children = (
+				6C5618BD206C41C100DCAA46 /* ServerNetworking.swift */,
+				6C5618BF206C444900DCAA46 /* User.swift */,
+			);
+			path = HTTPClients;
+			sourceTree = "<group>";
+		};
+		6C5618C7206D7B9300DCAA46 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				6C5618C1206C4E9400DCAA46 /* MatchesViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		6C5618C8206D7BA100DCAA46 /* VIewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				6C5618B4206B7A6300DCAA46 /* MatchesVC.swift */,
+			);
+			path = VIewControllers;
+			sourceTree = "<group>";
+		};
+		6C5618C9206D7BAB00DCAA46 /* DataSource */ = {
+			isa = PBXGroup;
+			children = (
+				6C5618C5206D7B6000DCAA46 /* MatchesListDataSource.swift */,
+			);
+			path = DataSource;
+			sourceTree = "<group>";
+		};
+		6C5618CA206D7C7700DCAA46 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				6C5618CB206D7C9100DCAA46 /* MatchesListCell.swift */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		95E63E73D7D76F7EA7F07146 /* Pods */ = {
@@ -251,12 +312,19 @@
 			files = (
 				6C5618B5206B7A6300DCAA46 /* MatchesVC.swift in Sources */,
 				6C5618AE206B647B00DCAA46 /* PusherHelpers.swift in Sources */,
+				6C5618C4206C533100DCAA46 /* UIImageView+Extension.swift in Sources */,
 				6C5618AC206714C700DCAA46 /* Credentials.swift in Sources */,
+				6C5618BB206C15F000DCAA46 /* UIView+AutoLayout.swift in Sources */,
 				6C5618B1206B78D000DCAA46 /* TabBarController.swift in Sources */,
 				6C5618B9206B7B1600DCAA46 /* ProfileVC.swift in Sources */,
+				6C5618C2206C4E9400DCAA46 /* MatchesViewModel.swift in Sources */,
+				6C5618BE206C41C100DCAA46 /* ServerNetworking.swift in Sources */,
 				6C56189C20670FEE00DCAA46 /* ViewController.swift in Sources */,
+				6C5618C6206D7B6000DCAA46 /* MatchesListDataSource.swift in Sources */,
 				6C56189A20670FEE00DCAA46 /* AppDelegate.swift in Sources */,
 				6C5618B7206B7AE600DCAA46 /* MessagesVC.swift in Sources */,
+				6C5618CC206D7C9100DCAA46 /* MatchesListCell.swift in Sources */,
+				6C5618C0206C444900DCAA46 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
