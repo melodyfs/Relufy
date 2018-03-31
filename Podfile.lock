@@ -3,16 +3,19 @@ PODS:
     - pop (~> 1.0)
   - pop (1.0.10)
   - PusherSwift (5.1.0)
+  - UPCarouselFlowLayout (1.1.1)
 
 DEPENDENCIES:
   - Koloda (~> 4.3.1)
   - PusherSwift
+  - UPCarouselFlowLayout
 
 SPEC CHECKSUMS:
   Koloda: 0d39b2aa188ccd1fac48d752acaf9802e683c625
   pop: 82ca6b068ce9278fd350fd9dd09482a0ce9492e6
   PusherSwift: ea736474a51f5e6764b252dfda14014cfa3e828f
+  UPCarouselFlowLayout: 02045c1505d63057fba3d9975be880a8d16bf17d
 
-PODFILE CHECKSUM: f151a271dea330ac807870bdf8e5565fbce58236
+PODFILE CHECKSUM: 854037e947ba597e4e46a90127f44a8cfb55f952
 
 COCOAPODS: 1.2.1

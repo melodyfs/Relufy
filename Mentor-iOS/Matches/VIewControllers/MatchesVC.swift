@@ -8,13 +8,9 @@
 
 import Foundation
 import UIKit
-import Koloda
+import UPCarouselFlowLayout
 
 class MatchesVC: UIViewController {
-    
-//    let matchesVC = MatchesVC(coder: UICollectionViewFlowLayout())
-
-//    var collectionView: UICollectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: UICollectionViewFlowLayout())
     
     var collectionView: UICollectionView!
     
@@ -29,27 +25,51 @@ class MatchesVC: UIViewController {
         
         
         view.backgroundColor = UIColor.gray
-        let flowLayout = UICollectionViewFlowLayout()
-        collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: flowLayout)
-        
-        collectionView.register(MatchesListCell.self, forCellWithReuseIdentifier: cellID)
-        
+//        setUpCarouselLayout()
         registerCollectionView()
+       
+        
 
     }
     
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//        DispatchQueue.main.async {
+//            self.collectionView.reloadData()
+////            print("item: \(self.userItems)")
+//        }
+//    }
+    
+    func setUpCarouselLayout() {
+        let layout = UPCarouselFlowLayout()
+        collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
+        layout.scrollDirection = .horizontal
+        layout.spacingMode = UPCarouselFlowLayoutSpacingMode.overlap(visibleOffset: 30)
+        layout.sideItemScale = 0.7
+        layout.sideItemAlpha = 0.4
+        layout.sideItemShift = 0.5
+        
+    }
+    
     func registerCollectionView() {
-        collectionView.dataSource = dataSource
-        collectionView.delegate = self
+        
+        
+        let flowLayout = UICollectionViewFlowLayout()
+        collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: flowLayout)
+        collectionView.register(MatchesListCell.self, forCellWithReuseIdentifier: cellID)
+        flowLayout.scrollDirection = .horizontal
         
         viewModel.fetchUsers(callback: { [unowned self] (users) in
             self.dataSource.items = users
+            self.userItems = users
             DispatchQueue.main.async {
                 self.collectionView.reloadData()
             }
         })
+        
         dataSource.configureCell = { cv, indexPath in
             let cell = cv.dequeueReusableCell(withReuseIdentifier: self.cellID, for: indexPath) as! MatchesListCell
+            cell.viewModel = self.userItems[indexPath.section]
             return cell
         }
         
@@ -57,6 +77,9 @@ class MatchesVC: UIViewController {
         collectionView.showsVerticalScrollIndicator = false
         self.view.addSubview(collectionView)
         collectionView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 100, paddingLeft: 8, paddingBottom: 50, paddingRight: 8, width: 0, height: 200)
+        
+        collectionView.dataSource = dataSource
+        collectionView.delegate = self
     }
     
     func setUpView() {
@@ -78,8 +101,10 @@ extension MatchesVC: UICollectionViewDelegateFlowLayout {
     
     // cell size and position
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: 200)
+        return CGSize(width: view.frame.width, height: 500)
     }
+    
+    
 
     
 }

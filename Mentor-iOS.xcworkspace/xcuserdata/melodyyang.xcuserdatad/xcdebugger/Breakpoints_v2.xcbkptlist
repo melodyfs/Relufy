@@ -22,16 +22,32 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Mentor-iOS/Matches/Cells/MatchesListCell.swift"
+            timestampString = "544232995.981512"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "99"
+            endingLineNumber = "99"
+            landmarkName = "init(coder:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Mentor-iOS/Matches/VIewControllers/MatchesVC.swift"
-            timestampString = "544073133.405376"
+            timestampString = "544232995.981591"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "37"
-            endingLineNumber = "37"
-            landmarkName = "viewDidLoad()"
+            startingLineNumber = "71"
+            endingLineNumber = "71"
+            landmarkName = "registerCollectionView()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -42,61 +58,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Mentor-iOS/Matches/Cells/MatchesListCell.swift"
-            timestampString = "544073133.405709"
+            timestampString = "544232995.9819289"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "39"
-            endingLineNumber = "39"
+            startingLineNumber = "85"
+            endingLineNumber = "85"
             landmarkName = "setUpViews()"
             landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Mentor-iOS/Matches/VIewControllers/MatchesVC.swift"
-            timestampString = "544073133.405757"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "50"
-            endingLineNumber = "50"
-            landmarkName = "registerCollectionView()"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Mentor_iOS.MatchesVC.registerCollectionView() -&gt; ()"
-                  moduleName = "Mentor-iOS"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/melodyyang/Desktop/Mentor-iOS/Mentor-iOS/Matches/VIewControllers/MatchesVC.swift"
-                  timestampString = "544073004.118735"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "48"
-                  endingLineNumber = "48"
-                  offsetFromSymbolStart = "211">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Array&lt;Mentor_iOS.UserItemViewModel&gt;) -&gt; () in Mentor_iOS.MatchesVC.registerCollectionView() -&gt; ()"
-                  moduleName = "Mentor-iOS"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/melodyyang/Desktop/Mentor-iOS/Mentor-iOS/Matches/VIewControllers/MatchesVC.swift"
-                  timestampString = "544073004.122192"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "48"
-                  endingLineNumber = "48"
-                  offsetFromSymbolStart = "329">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
