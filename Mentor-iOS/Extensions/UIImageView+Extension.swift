@@ -41,5 +41,19 @@ extension UIImageView {
             }.resume()
     }
     
+    func maskCircle(anyImage: UIImage) {
+        self.contentMode = UIViewContentMode.scaleAspectFill
+        self.layer.cornerRadius = self.frame.height / 2
+        self.layer.masksToBounds = false
+        self.clipsToBounds = true
+        self.image = anyImage
+    }
+    
+//    func setRounded() {
+//        let radius = self.frame / 2
+//        self.layer.cornerRadius = radius
+//        self.layer.masksToBounds = true
+//    }
+    
 }
 

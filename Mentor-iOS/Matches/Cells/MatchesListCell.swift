@@ -12,16 +12,16 @@ class MatchesListCell: UICollectionViewCell {
     
     var viewModel: UserItemViewModel! {
         didSet {
-            self.nameLabel.text = viewModel?.name
-            self.roleLabel.text = viewModel?.role
-            self.companyLabel.text = viewModel?.company
-            self.profileImageView.getImageFromURL(url: (viewModel?.image)!)
+            nameLabel.text = viewModel?.name
+            roleLabel.text = (viewModel?.role)! + " for \(viewModel.years) year(s)"
+            companyLabel.text = "Current Company: " + (viewModel?.company)!
+            profileImageView.getImageFromURL(url: (viewModel?.image)!)
         }
     }
     
     let nameLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14)
+        label.font = UIFont.systemFont(ofSize: 30)
         label.textColor = UIColor.black
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -29,7 +29,7 @@ class MatchesListCell: UICollectionViewCell {
     
     let roleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14)
+        label.font = UIFont.systemFont(ofSize: 20)
         label.textColor = UIColor.black
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -37,7 +37,7 @@ class MatchesListCell: UICollectionViewCell {
     
     let companyLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14)
+        label.font = UIFont.systemFont(ofSize: 20)
         label.textColor = UIColor.black
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -48,6 +48,9 @@ class MatchesListCell: UICollectionViewCell {
         imageView.backgroundColor = UIColor.white
         imageView.image = UIImage(named: "Profile")
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.layer.masksToBounds = false
+        imageView.layer.cornerRadius = 75
+        imageView.clipsToBounds = true
         return imageView
     }()
     
@@ -68,31 +71,32 @@ class MatchesListCell: UICollectionViewCell {
     
     func setUpViews() {
         backgroundColor = UIColor.orange
-//
-//        addSubview(nameLabel)
-//        addSubview(roleLabel)
-//        addSubview(companyLabel)
-//        addSubview(profileImageView)
+
+        addSubview(profileImageView)
+        addSubview(nameLabel)
+        addSubview(roleLabel)
+        addSubview(companyLabel)
         
-//        nameLabel.text = "Melody"
-//        roleLabel.text = "Software Dev"
-//        companyLabel.text = "Apple"
+//        profileImageView.leftAnchor.constraint(equalTo: leftAnchor, constant: 130).isActive = true
+        profileImageView.topAnchor.constraint(equalTo: topAnchor, constant: 20).isActive = true
+        profileImageView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        profileImageView.heightAnchor.constraint(equalToConstant: 150).isActive = true
+        profileImageView.widthAnchor.constraint(equalToConstant: 150).isActive = true
         
-        let stackView = UIStackView(arrangedSubviews: [profileImageView, nameLabel, roleLabel, companyLabel])
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.distribution = .fillEqually
-        addSubview(stackView)
+//        nameLabel.leftAnchor.constraint(equalTo: profileImageView.leftAnchor).isActive = true
+        nameLabel.centerYAnchor.constraint(equalTo: profileImageView.centerYAnchor, constant: 110).isActive = true
+        nameLabel.centerXAnchor.constraint(equalTo: profileImageView.centerXAnchor).isActive = true
+        nameLabel.topAnchor.constraint(equalTo: topAnchor, constant: 50).isActive = true
+//        nameLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: 5).isActive = true
         
+        roleLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 20).isActive = true
+        roleLabel.centerYAnchor.constraint(equalTo: nameLabel.centerYAnchor, constant: 35).isActive = true
+        roleLabel.rightAnchor.constraint(equalTo: nameLabel.rightAnchor).isActive = true
         
-        NSLayoutConstraint.activate([
-            stackView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
-            stackView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
-            stackView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
-            stackView.heightAnchor.constraint(equalToConstant: 50)
-        ])
-        
-        
-        
+        companyLabel.leftAnchor.constraint(equalTo: roleLabel.leftAnchor).isActive = true
+        companyLabel.centerYAnchor.constraint(equalTo: nameLabel.centerYAnchor, constant: 50).isActive = true
+        companyLabel.rightAnchor.constraint(equalTo: nameLabel.rightAnchor).isActive = true
+
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -101,3 +105,5 @@ class MatchesListCell: UICollectionViewCell {
 
     
 }
+
+

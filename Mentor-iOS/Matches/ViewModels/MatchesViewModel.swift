@@ -15,17 +15,13 @@ class MatchesViewModel {
     var userItems: [UserItemViewModel] = []
     
     init() {
-        ServerNetworking.shared.fetch(route: .getMentee, data: nil) { info in
+        networking.fetch(route: .getMentee, data: nil) { info in
             let userInfoList = try? JSONDecoder().decode([User].self, from: info)
             self.userInfo = userInfoList!
             self.userItems = self.getUsers(users: self.userInfo)
-            print(self.userItems)
+//            print(self.userItems)
         }
     }
-    
-//    func collectImages() {
-//        let images = imageView?.getImageFromURL(url: robot.image)
-//    }
     
     func fetchUsers(callback: @escaping ([UserItemViewModel]) -> Void) {
         ServerNetworking.shared.fetch(route: .getMentee, data: nil) { info in
@@ -34,7 +30,7 @@ class MatchesViewModel {
             
             self.userItems = self.getUsers(users: self.userInfo)
             callback(self.userItems)
-            print(self.userItems)
+//            print(self.userItems)
         }
     }
     
@@ -46,7 +42,7 @@ class MatchesViewModel {
         return UserItemViewModel(
             name: "\(user.name ?? "None")",
             email: "\(user.email ?? "None")",
-            role: "\(user.role ?? "None")",
+            role: "\(user.role?.capitalized ?? "None")",
             years: user.years_experience ?? 0,
             company: "\(user.company ?? "None")",
             gender: "\(user.gender ?? "None")",

@@ -24,6 +24,11 @@
 		6C5618C4206C533100DCAA46 /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C5618C3206C533100DCAA46 /* UIImageView+Extension.swift */; };
 		6C5618C6206D7B6000DCAA46 /* MatchesListDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C5618C5206D7B6000DCAA46 /* MatchesListDataSource.swift */; };
 		6C5618CC206D7C9100DCAA46 /* MatchesListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C5618CB206D7C9100DCAA46 /* MatchesListCell.swift */; };
+		6CBC6BFC2070D4410039A4F6 /* Match.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CBC6BFB2070D4410039A4F6 /* Match.swift */; };
+		6CC44BB22073000500AB92A4 /* URLParam+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CC44BB12073000500AB92A4 /* URLParam+Extension.swift */; };
+		6CE702F92070801A00D2A630 /* TableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CE702F82070801A00D2A630 /* TableDataSource.swift */; };
+		6CE702FE207080E100D2A630 /* MessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CE702FD207080E100D2A630 /* MessageViewModel.swift */; };
+		6CE70301207081B100D2A630 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CE70300207081B100D2A630 /* MessageCell.swift */; };
 		DE532E60246C0105584CB7FF /* Pods_Mentor_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B81E3CB86C48174EEA96C22B /* Pods_Mentor_iOS.framework */; };
 /* End PBXBuildFile section */
 
@@ -48,6 +53,11 @@
 		6C5618C3206C533100DCAA46 /* UIImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
 		6C5618C5206D7B6000DCAA46 /* MatchesListDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchesListDataSource.swift; sourceTree = "<group>"; };
 		6C5618CB206D7C9100DCAA46 /* MatchesListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchesListCell.swift; sourceTree = "<group>"; };
+		6CBC6BFB2070D4410039A4F6 /* Match.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Match.swift; sourceTree = "<group>"; };
+		6CC44BB12073000500AB92A4 /* URLParam+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLParam+Extension.swift"; sourceTree = "<group>"; };
+		6CE702F82070801A00D2A630 /* TableDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableDataSource.swift; sourceTree = "<group>"; };
+		6CE702FD207080E100D2A630 /* MessageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewModel.swift; sourceTree = "<group>"; };
+		6CE70300207081B100D2A630 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
 		B81E3CB86C48174EEA96C22B /* Pods_Mentor_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Mentor_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C84BB0C96CC25AC9880D289B /* Pods-Mentor-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mentor-iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-Mentor-iOS/Pods-Mentor-iOS.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -85,20 +95,17 @@
 		6C56189820670FEE00DCAA46 /* Mentor-iOS */ = {
 			isa = PBXGroup;
 			children = (
+				6CE702F720706CFD00D2A630 /* TabBar */,
+				6CE702F620706CCF00D2A630 /* Extensions */,
 				6C5618BC206C417700DCAA46 /* HTTPClients */,
 				6C5618B3206B7A1400DCAA46 /* Profile */,
 				6C5618B2206B7A0B00DCAA46 /* Messages */,
 				6C5618AF206B787B00DCAA46 /* Matches */,
 				6C56189920670FEE00DCAA46 /* AppDelegate.swift */,
-				6C56189B20670FEE00DCAA46 /* ViewController.swift */,
 				6C5618A020670FEE00DCAA46 /* Assets.xcassets */,
 				6C5618A220670FEE00DCAA46 /* LaunchScreen.storyboard */,
 				6C5618A520670FEE00DCAA46 /* Info.plist */,
 				6C5618AB206714C700DCAA46 /* Credentials.swift */,
-				6C5618AD206B647B00DCAA46 /* PusherHelpers.swift */,
-				6C5618B0206B78D000DCAA46 /* TabBarController.swift */,
-				6C5618BA206C15F000DCAA46 /* UIView+AutoLayout.swift */,
-				6C5618C3206C533100DCAA46 /* UIImageView+Extension.swift */,
 			);
 			path = "Mentor-iOS";
 			sourceTree = "<group>";
@@ -117,7 +124,12 @@
 		6C5618B2206B7A0B00DCAA46 /* Messages */ = {
 			isa = PBXGroup;
 			children = (
-				6C5618B6206B7AE600DCAA46 /* MessagesVC.swift */,
+				6CE702FF2070818E00D2A630 /* Cells */,
+				6CE702FC2070809A00D2A630 /* ViewModels */,
+				6CE702FB2070806500D2A630 /* ViewControllers */,
+				6CE702FA2070805D00D2A630 /* DataSource */,
+				6C5618AD206B647B00DCAA46 /* PusherHelpers.swift */,
+				6C56189B20670FEE00DCAA46 /* ViewController.swift */,
 			);
 			path = Messages;
 			sourceTree = "<group>";
@@ -135,6 +147,7 @@
 			children = (
 				6C5618BD206C41C100DCAA46 /* ServerNetworking.swift */,
 				6C5618BF206C444900DCAA46 /* User.swift */,
+				6CBC6BFB2070D4410039A4F6 /* Match.swift */,
 			);
 			path = HTTPClients;
 			sourceTree = "<group>";
@@ -167,6 +180,56 @@
 			isa = PBXGroup;
 			children = (
 				6C5618CB206D7C9100DCAA46 /* MatchesListCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		6CE702F620706CCF00D2A630 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				6C5618C3206C533100DCAA46 /* UIImageView+Extension.swift */,
+				6C5618BA206C15F000DCAA46 /* UIView+AutoLayout.swift */,
+				6CC44BB12073000500AB92A4 /* URLParam+Extension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		6CE702F720706CFD00D2A630 /* TabBar */ = {
+			isa = PBXGroup;
+			children = (
+				6C5618B0206B78D000DCAA46 /* TabBarController.swift */,
+			);
+			path = TabBar;
+			sourceTree = "<group>";
+		};
+		6CE702FA2070805D00D2A630 /* DataSource */ = {
+			isa = PBXGroup;
+			children = (
+				6CE702F82070801A00D2A630 /* TableDataSource.swift */,
+			);
+			path = DataSource;
+			sourceTree = "<group>";
+		};
+		6CE702FB2070806500D2A630 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				6C5618B6206B7AE600DCAA46 /* MessagesVC.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		6CE702FC2070809A00D2A630 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				6CE702FD207080E100D2A630 /* MessageViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		6CE702FF2070818E00D2A630 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				6CE70300207081B100D2A630 /* MessageCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -312,10 +375,15 @@
 			files = (
 				6C5618B5206B7A6300DCAA46 /* MatchesVC.swift in Sources */,
 				6C5618AE206B647B00DCAA46 /* PusherHelpers.swift in Sources */,
+				6CE70301207081B100D2A630 /* MessageCell.swift in Sources */,
 				6C5618C4206C533100DCAA46 /* UIImageView+Extension.swift in Sources */,
+				6CE702F92070801A00D2A630 /* TableDataSource.swift in Sources */,
 				6C5618AC206714C700DCAA46 /* Credentials.swift in Sources */,
 				6C5618BB206C15F000DCAA46 /* UIView+AutoLayout.swift in Sources */,
+				6CC44BB22073000500AB92A4 /* URLParam+Extension.swift in Sources */,
 				6C5618B1206B78D000DCAA46 /* TabBarController.swift in Sources */,
+				6CBC6BFC2070D4410039A4F6 /* Match.swift in Sources */,
+				6CE702FE207080E100D2A630 /* MessageViewModel.swift in Sources */,
 				6C5618B9206B7B1600DCAA46 /* ProfileVC.swift in Sources */,
 				6C5618C2206C4E9400DCAA46 /* MatchesViewModel.swift in Sources */,
 				6C5618BE206C41C100DCAA46 /* ServerNetworking.swift in Sources */,

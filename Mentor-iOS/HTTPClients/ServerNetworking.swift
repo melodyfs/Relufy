@@ -16,6 +16,8 @@ enum Route {
     case getMentee
     case updateMentee
     case connectPusher
+    case getMatchesAll
+    case getMatchesImages
     
    
     func path() -> String {
@@ -30,6 +32,10 @@ enum Route {
         // TODO: Remove this after testing
         case .getMentee:
             return "http://localhost:3000/mentees/all"
+        case .getMatchesImages:
+            return "http://localhost:3000/matches/get_info"
+        case .getMatchesAll:
+             return "http://localhost:3000/matches"
         }
     }
     
@@ -38,7 +44,7 @@ enum Route {
         case .createMentor, .createMentee:
             return [:]
         default:
-            let headers = ["Authorization": "Token token=6ytt7bb5b834d37135dbb61d71955fc0"]
+            let headers = ["Authorization": "Token token=e99edf19d5c8225109736af67c94b310"]
             return headers
         }
         
@@ -86,6 +92,32 @@ class ServerNetworking {
         request.allHTTPHeaderFields = route.headers()
         request.httpBody = route.body(data: data)
         request.httpMethod = route.method()
+        
+        session.dataTask(with: request) { (data, res, err) in
+            let httpResponse = res as? HTTPURLResponse
+            if let data = data {
+                self.statusCode = (httpResponse?.statusCode)!
+                print(self.statusCode)
+                completion(data)
+                print("Networking succeeded")
+            }
+            else {
+                print(err?.localizedDescription ?? "Error")
+            }
+            
+            }.resume()
+        
+    }
+    
+    func getInfo(route: Route, params: [String: String], completion: @escaping (Data) -> Void) {
+        let base = route.path()
+        var url = URL(string: base)!
+        
+        url = url.appendingQueryParameters(params)
+        var request = URLRequest(url: url)
+        request.allHTTPHeaderFields = route.headers()
+        request.httpMethod = route.method()
+        
         
         session.dataTask(with: request) { (data, res, err) in
             let httpResponse = res as? HTTPURLResponse
