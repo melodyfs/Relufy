@@ -28,11 +28,6 @@ class MatchesVC: UIViewController {
         DispatchQueue.main.async {
             self.collectionView.reloadData()
         }
-        var idList = [3, 2]
-        for id in idList {
-            print(id)
-            
-        }
     }
     
     func registerCollectionView() {

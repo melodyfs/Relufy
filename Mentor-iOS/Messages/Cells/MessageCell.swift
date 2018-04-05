@@ -10,7 +10,7 @@ import UIKit
 
 class MessageCell: UICollectionViewCell {
     
-    var viewModel: UserItemViewModel! {
+    var viewModel: MessageItemViewModel! {
         didSet {
             nameLabel.text = viewModel?.name
             profileImageView.getImageFromURL(url: (viewModel?.image)!)
@@ -19,7 +19,7 @@ class MessageCell: UICollectionViewCell {
     
     let nameLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 30)
+        label.font = UIFont.systemFont(ofSize: 20)
         label.textColor = UIColor.black
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -31,7 +31,7 @@ class MessageCell: UICollectionViewCell {
         imageView.image = UIImage(named: "Profile")
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.layer.masksToBounds = false
-        imageView.layer.cornerRadius = 75
+        imageView.layer.cornerRadius = 40
         imageView.clipsToBounds = true
         return imageView
     }()
@@ -46,16 +46,15 @@ class MessageCell: UICollectionViewCell {
         addSubview(profileImageView)
         addSubview(nameLabel)
         
-        //        profileImageView.leftAnchor.constraint(equalTo: leftAnchor, constant: 130).isActive = true
-        profileImageView.topAnchor.constraint(equalTo: topAnchor, constant: 20).isActive = true
-        profileImageView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        profileImageView.heightAnchor.constraint(equalToConstant: 150).isActive = true
-        profileImageView.widthAnchor.constraint(equalToConstant: 150).isActive = true
+        profileImageView.leftAnchor.constraint(equalTo: leftAnchor, constant: 10).isActive = true
+        profileImageView.topAnchor.constraint(equalTo: topAnchor, constant: 10).isActive = true
+        profileImageView.heightAnchor.constraint(equalToConstant: 80).isActive = true
+        profileImageView.widthAnchor.constraint(equalToConstant: 80).isActive = true
         
-//        nameLabel.leftAnchor.constraint(equalTo: profileImageView.leftAnchor).isActive = true
-//        nameLabel.centerYAnchor.constraint(equalTo: profileImageView.centerYAnchor, constant: 110).isActive = true
+        nameLabel.leftAnchor.constraint(equalTo: profileImageView.leftAnchor, constant: 100).isActive = true
+//        nameLabel.centerYAnchor.constraint(equalTo: profileImageView.centerYAnchor).isActive = true
 //        nameLabel.centerXAnchor.constraint(equalTo: profileImageView.centerXAnchor).isActive = true
-//        nameLabel.topAnchor.constraint(equalTo: topAnchor, constant: 50).isActive = true
+        nameLabel.topAnchor.constraint(equalTo: topAnchor, constant: 15).isActive = true
         //        nameLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: 5).isActive = true
         
     }

@@ -15,9 +15,12 @@ enum Route {
     case createMentee
     case getMentee
     case updateMentee
-    case connectPusher
+    case sendMessage
     case getMatchesAll
     case getMatchesImages
+    case getMessages
+    case saveMessage
+    case getSingleChatHistory
     
    
     func path() -> String {
@@ -27,15 +30,19 @@ enum Route {
             return "http://localhost:3000/mentors"
         case .createMentee, .updateMentee:
             return "http://localhost:3000/mentees"
-        case .connectPusher:
-            return "http://localhost:3000/pushers"
+        case .sendMessage:
+            return "http://localhost:3000/pushers/message"
         // TODO: Remove this after testing
         case .getMentee:
             return "http://localhost:3000/mentees/all"
         case .getMatchesImages:
             return "http://localhost:3000/matches/get_info"
         case .getMatchesAll:
-             return "http://localhost:3000/matches"
+            return "http://localhost:3000/matches"
+        case .getMessages, .saveMessage:
+            return "http://localhost:3000/messages"
+        case .getSingleChatHistory:
+            return "http://localhost:3000/messages/one"
         }
     }
     
@@ -55,7 +62,7 @@ enum Route {
         let encoder = JSONEncoder()
         
         switch self {
-        case .connectPusher:
+        case .sendMessage:
             return nil
         default:
             guard let model = data as? User else {return nil}
@@ -66,7 +73,7 @@ enum Route {
     
     func method() -> String {
         switch self {
-        case .createMentor, .createMentee, .connectPusher:
+        case .createMentor, .createMentee, .sendMessage, .saveMessage:
             return "POST"
         case .updateMentor, .updateMentee:
             return "PATCH"

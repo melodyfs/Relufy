@@ -23,7 +23,7 @@ class MessageViewModel {
         }
     }
     
-    func fetchMatches(callback: @escaping ([UserItemViewModel]) -> Void) {
+    func fetchMatches(callback: @escaping ([MessageItemViewModel]) -> Void) {
         networking.fetch(route: .getMatchesAll, data: nil) { (info) in
             let ids = try? JSONDecoder().decode([Int].self, from: info)
             self.matchIDs = ids!
@@ -32,8 +32,9 @@ class MessageViewModel {
                 ServerNetworking.shared.getInfo(route: .getMatchesImages, params: ["id": "\(i)"]) { info in
                     let userInfoList = try? JSONDecoder().decode([User].self, from: info)
                     self.userInfo += userInfoList!
-                    callback(self.userItems)
-                    print(self.userInfo)
+                    self.messageItems = self.getUsers(users: self.userInfo)
+                    callback(self.messageItems)
+                    print(self.messageItems)
                 }
             }
         }
@@ -46,6 +47,7 @@ class MessageViewModel {
     func convertToMessageItem(user: User) -> MessageItemViewModel {
         return MessageItemViewModel(
             name: "\(user.name ?? "None")",
+            email: "\(user.email ?? "None")",
             role: "\(user.role?.capitalized ?? "None")",
             years: user.years_experience ?? 0,
             company: "\(user.company ?? "None")",
@@ -58,6 +60,7 @@ class MessageViewModel {
 
 struct MessageItemViewModel {
     let name: String
+    var email: String
     var role: String
     var years: Int
     var company: String
