@@ -50,7 +50,6 @@ class ConversationVC: UIViewController, PusherDelegate {
         configureCell()
 
         view.addSubview(messageContainerView)
-
         messageContainerView.translatesAutoresizingMaskIntoConstraints = false
         messageContainerView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         messageContainerView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
@@ -67,13 +66,13 @@ class ConversationVC: UIViewController, PusherDelegate {
     
     @objc func handleSend() {
         let message = ConversationItemViewModel(sender: "kate@test.com", content: inputTextField.text!)
-        let sec = collectionView.dataSource?.numberOfSections!(in: collectionView)
-    
         dataSource.items.append(message)
-
+        
         let section = dataSource.items.count
         self.collectionView?.insertSections([section - 1])
-
+        inputTextField.text = nil
+        buttomConstraint?.constant = 0
+        dismissKeyboard()
     }
     
     @objc func handleNotificationKeyboard(notification: NSNotification) {
@@ -81,14 +80,17 @@ class ConversationVC: UIViewController, PusherDelegate {
         if let userinfo = notification.userInfo {
             let keyboardSize = (userinfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
             let isKeyboardShowing = notification.name == Notification.Name.UIKeyboardWillShow
-            buttomConstraint?.constant = isKeyboardShowing ? -(keyboardSize?.height)! + 48 : 0
+            buttomConstraint?.constant = isKeyboardShowing ? -(keyboardSize?.height)! + 49 : 0
             UIView.animate(withDuration: 0, delay: 0, usingSpringWithDamping: 0, initialSpringVelocity: 0, options: .curveEaseOut, animations: {
                 self.view.layoutIfNeeded()
 
             }, completion: {completed in
                 if isKeyboardShowing {
-                    let indexPath = NSIndexPath(item: 0, section: self.convs.count - 1)
-                    self.collectionView.scrollToItem(at: indexPath as IndexPath, at: .bottom, animated: true)
+                    if self.dataSource.items.count != 0 {
+                        let indexPath = NSIndexPath(item: 0, section: self.dataSource.items.count - 1)
+                        self.collectionView.scrollToItem(at: indexPath as IndexPath, at: .bottom, animated: true)
+                    }
+                   
                 }
             })
         }
@@ -101,15 +103,14 @@ class ConversationVC: UIViewController, PusherDelegate {
             self.collectionView.reloadData()
         }
         configureCell()
-        //        chan.trigger(eventName: "client-test", data: ["test": "some value"])
     }
     
     func setUpInputComponent() {
         messageContainerView.addSubview(inputTextField)
         inputTextField.translatesAutoresizingMaskIntoConstraints = false
-        inputTextField.anchor(top: messageContainerView.topAnchor, left: messageContainerView.leftAnchor, bottom: messageContainerView.bottomAnchor, right: messageContainerView.rightAnchor, paddingTop: 0, paddingLeft: 10, paddingBottom: 0, paddingRight: 0, width: 200, height: 0)
+        inputTextField.anchor(top: messageContainerView.topAnchor, left: messageContainerView.leftAnchor, bottom: messageContainerView.bottomAnchor, right: messageContainerView.rightAnchor, paddingTop: 0, paddingLeft: 10, paddingBottom: 0, paddingRight: 30, width: 200, height: 0)
         messageContainerView.addSubview(sendButton)
-        sendButton.anchor(top: messageContainerView.topAnchor, left: messageContainerView.leftAnchor, bottom: messageContainerView.bottomAnchor, right: messageContainerView.rightAnchor, paddingTop: 0, paddingLeft: 310, paddingBottom: 0, paddingRight: 0, width: 10, height: 0)
+        sendButton.anchor(top: messageContainerView.topAnchor, left: messageContainerView.leftAnchor, bottom: messageContainerView.bottomAnchor, right: messageContainerView.rightAnchor, paddingTop: 0, paddingLeft: 320, paddingBottom: 0, paddingRight: 0, width: 10, height: 0)
         
     }
     
@@ -132,7 +133,7 @@ class ConversationVC: UIViewController, PusherDelegate {
         collectionView.backgroundColor = UIColor.white
         collectionView.showsVerticalScrollIndicator = false
         self.view.addSubview(collectionView)
-        collectionView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 60, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 200, height: 300)
+        collectionView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 60, paddingLeft: 0, paddingBottom: 35, paddingRight: 0, width: 200, height: 300)
         
         collectionView.dataSource = dataSource
         collectionView.delegate = self
@@ -154,8 +155,13 @@ class ConversationVC: UIViewController, PusherDelegate {
             let cell = cv.dequeueReusableCell(withReuseIdentifier: self.cell, for: indexPath) as! ConversationCell
             cell.viewModel = self.dataSource.items[indexPath.section]
             //TODO: Which image - user's or other person's
-            cell.profileImageView.getImageFromURL(url: self.userInfo[indexPath.row].image)
-//            self.otherPersonEmail = self.userInfo[indexPath.row].email
+            let email = self.dataSource.items[indexPath.section].sender
+            if email == self.otherPersonEmail! {
+                cell.profileImageView.getImageFromURL(url: self.userInfo[indexPath.row].image)
+            } else {
+                //TODO: change to current user's
+                cell.profileImageView.getImageFromURL(url: "https://s3-us-west-2.amazonaws.com/mentor-development/image_files/5/thumb.jpg")
+            }
             return cell
         }
     }
@@ -177,14 +183,14 @@ class ConversationVC: UIViewController, PusherDelegate {
         
         let _ = chan.bind(eventName: "test", callback: { data in
             print(data)
-            //TODO: append message and insert item
-            //            let _ = self.pusher.subscribe("private-\(mentorEmail)-\(menteeEmail)")
-//            let _ = self.pusher.subscribe("private-\(self.otherPersonEmail!)-kate@test.com")
-//            if let data = data as? [String : AnyObject] {
-//                if let testVal = data["test"] as? String {
-//
-//                }
-//            }
+            if let data = data as? [String : AnyObject] {
+                if let content = data["message"] as? String {
+                      let message = ConversationItemViewModel(sender: "kelly@test.com", content: content)
+                    self.dataSource.items.append(message)
+                    let section = self.dataSource.items.count
+                    self.collectionView?.insertSections([section - 1])
+                }
+            }
         })
         
     }
@@ -201,11 +207,6 @@ class ConversationVC: UIViewController, PusherDelegate {
 }
 
 extension ConversationVC: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let selectedUser = dataSource.items[indexPath.section]
-        print(indexPath)
-    }
-    
     // cell size and position
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let frameSize = collectionView.frame.size

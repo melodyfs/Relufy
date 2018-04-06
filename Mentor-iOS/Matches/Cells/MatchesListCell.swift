@@ -10,7 +10,7 @@ import UIKit
 
 class MatchesListCell: UICollectionViewCell {
     
-    var viewModel: UserItemViewModel! {
+    var viewModel: MessageItemViewModel! {
         didSet {
             nameLabel.text = viewModel?.name
             roleLabel.text = (viewModel?.role)! + " for \(viewModel.years) year(s)"
@@ -83,15 +83,16 @@ class MatchesListCell: UICollectionViewCell {
         profileImageView.heightAnchor.constraint(equalToConstant: 150).isActive = true
         profileImageView.widthAnchor.constraint(equalToConstant: 150).isActive = true
         
-//        nameLabel.leftAnchor.constraint(equalTo: profileImageView.leftAnchor).isActive = true
-        nameLabel.centerYAnchor.constraint(equalTo: profileImageView.centerYAnchor, constant: 110).isActive = true
-        nameLabel.centerXAnchor.constraint(equalTo: profileImageView.centerXAnchor).isActive = true
-        nameLabel.topAnchor.constraint(equalTo: topAnchor, constant: 50).isActive = true
+//        nameLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 5).isActive = true
+        nameLabel.centerYAnchor.constraint(equalTo: centerYAnchor, constant: 110).isActive = true
+        nameLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        nameLabel.topAnchor.constraint(equalTo: topAnchor, constant: -90).isActive = true
 //        nameLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: 5).isActive = true
         
-        roleLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 20).isActive = true
-        roleLabel.centerYAnchor.constraint(equalTo: nameLabel.centerYAnchor, constant: 35).isActive = true
-        roleLabel.rightAnchor.constraint(equalTo: nameLabel.rightAnchor).isActive = true
+//        roleLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 20).isActive = true
+    
+        roleLabel.centerYAnchor.constraint(equalTo: nameLabel.centerYAnchor, constant: 30).isActive = true
+        roleLabel.centerXAnchor.constraint(equalTo: nameLabel.centerXAnchor).isActive = true
         
         companyLabel.leftAnchor.constraint(equalTo: roleLabel.leftAnchor).isActive = true
         companyLabel.centerYAnchor.constraint(equalTo: nameLabel.centerYAnchor, constant: 50).isActive = true

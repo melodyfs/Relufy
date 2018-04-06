@@ -12,8 +12,8 @@ import UIKit
 class MatchesVC: UIViewController {
     
     var collectionView: UICollectionView!
-    var dataSource = GenericCollectionViewDatasource<UserItemViewModel>()
-    let viewModel = MatchesViewModel()
+    var dataSource = GenericCollectionViewDatasource<MessageItemViewModel>()
+    let viewModel = MessageViewModel()
     let cellID = "matchesCell"
     
     
@@ -50,7 +50,7 @@ class MatchesVC: UIViewController {
     }
     
     func fetchUsers() {
-        viewModel.fetchUsers(callback: { [unowned self] (users) in
+        viewModel.fetchMatches(callback: { [unowned self] (users) in
             self.dataSource.items = users
             DispatchQueue.main.async {
                 self.collectionView.reloadData()
