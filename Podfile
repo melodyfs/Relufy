@@ -6,7 +6,8 @@ target 'Mentor-iOS' do
   use_frameworks!
 
   # Pods for Mentor-iOS
-  pod 'PusherSwift’
-  pod 'Koloda', '~> 4.3.1'
-  pod "UPCarouselFlowLayout"
+  pod 'PusherSwift'
+  pod 'KeychainSwift', '~> 9.0'
+  pod 'IQKeyboardManagerSwift'
+  pod 'Alamofire', '~> 4.6’
 end

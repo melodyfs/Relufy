@@ -7,6 +7,9 @@
 //
 
 import Foundation
+import KeychainSwift
+
+let keychain = KeychainSwift()
 
 enum Route {
     case createMentor
@@ -21,28 +24,37 @@ enum Route {
     case getMessages
     case saveMessage
     case getSingleChatHistory
-    
+    case confirmMatched
+    case getMenteeInfo
+    case getMentorInfo
+    case getMenteeImage
+    case getMentorImage
    
     func path() -> String {
         
         switch self {
-        case .createMentor, .getMentor, .updateMentor:
+        case .createMentor, .updateMentor, .getMentorInfo:
             return "http://localhost:3000/mentors"
-        case .createMentee, .updateMentee:
+        case .getMentor:
+             return "http://localhost:3000/mentors/one"
+        case .createMentee, .updateMentee, .getMenteeInfo:
             return "http://localhost:3000/mentees"
         case .sendMessage:
             return "http://localhost:3000/pushers/message"
-        // TODO: Remove this after testing
         case .getMentee:
-            return "http://localhost:3000/mentees/all"
+            return "http://localhost:3000/mentees/one"
         case .getMatchesImages:
             return "http://localhost:3000/matches/get_info"
-        case .getMatchesAll:
+        case .getMatchesAll, .confirmMatched:
             return "http://localhost:3000/matches"
         case .getMessages, .saveMessage:
             return "http://localhost:3000/messages"
         case .getSingleChatHistory:
             return "http://localhost:3000/messages/one"
+        case .getMenteeImage:
+             return "http://localhost:3000/mentees/one/model"
+        case .getMentorImage:
+             return "http://localhost:3000/mentors/one"
         }
     }
     
@@ -51,31 +63,17 @@ enum Route {
         case .createMentor, .createMentee:
             return [:]
         default:
-            let headers = ["Authorization": "Token token=e99edf19d5c8225109736af67c94b310"]
+            let headers = ["Authorization": "Token token=\(keychain.get("token")!)"]
             return headers
         }
         
-    }
-    
-    
-    func body(data: Encodable?) -> Data? {
-        let encoder = JSONEncoder()
-        
-        switch self {
-        case .sendMessage:
-            return nil
-        default:
-            guard let model = data as? User else {return nil}
-            let result = try? encoder.encode(model)
-            return result
-        }
     }
     
     func method() -> String {
         switch self {
         case .createMentor, .createMentee, .sendMessage, .saveMessage:
             return "POST"
-        case .updateMentor, .updateMentee:
+        case .updateMentor, .updateMentee, .confirmMatched:
             return "PATCH"
         default:
             return "GET"
@@ -90,31 +88,6 @@ class ServerNetworking {
     
     let session = URLSession.shared
     var statusCode = 0
-    
-    func fetch(route: Route, data: Encodable?, completion: @escaping (Data) -> Void) {
-        let base = route.path()
-        var url = URL(string: base)!
-        
-        var request = URLRequest(url: url)
-        request.allHTTPHeaderFields = route.headers()
-        request.httpBody = route.body(data: data)
-        request.httpMethod = route.method()
-        
-        session.dataTask(with: request) { (data, res, err) in
-            let httpResponse = res as? HTTPURLResponse
-            if let data = data {
-                self.statusCode = (httpResponse?.statusCode)!
-                print(self.statusCode)
-                completion(data)
-                print("Networking succeeded")
-            }
-            else {
-                print(err?.localizedDescription ?? "Error")
-            }
-            
-            }.resume()
-        
-    }
     
     func getInfo(route: Route, params: [String: String], completion: @escaping (Data) -> Void) {
         let base = route.path()
