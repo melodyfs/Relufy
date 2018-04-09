@@ -20,54 +20,44 @@ class MatchesVC: UIViewController {
     let keychain = KeychainSwift()
     let keys = AppKeys.instance
     var emptyView: UIView!
+    var userInfo = [MessageItemViewModel]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        setUpEmptyView()
         viewModel.confirmed = ["confirmed": "false"]
+//        setUpBgLabel()
         view.backgroundColor = UIColor.white
         registerCollectionView()
-        
-//        if viewModel.matchIDs.count == 0 {
-////            emptyView.removeFromSuperview()
-//            setUpEmptyView()
-//        } else {
-////            registerCollectionView()
-//        }
-        
+        setNameAndImage()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        ServerNetworking.shared.getInfo(route: .createMatches, params: [:]) {_ in}
         
-        if viewModel.matchIDs.count != 0 {
-            DispatchQueue.main.async {
-                self.collectionView.reloadData()
-            }
-//            if view.superview != nil {
-//                emptyView.removeFromSuperview()
-//
+//        if userInfo.count != 0 {
+//            DispatchQueue.main.async {
+//                self.collectionView.reloadData()
 //            }
-           
-        }
+//        } else {
+//            collectionView.isHidden = true
+//        }
+        
     }
     
-    lazy var getStartedLabel: UILabel = {
+    var getStartedLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 18)
         label.textColor = UIColor.black
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Get Started by Completing Your Profile!"
+        label.text = "Complete Your Profile & Check Back Soon!"
         return label
     }()
     
-    func setUpEmptyView() {
-        emptyView = UIView()
-        view.addSubview(emptyView)
-        emptyView.addSubview(getStartedLabel)
-        emptyView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 80, paddingLeft: 0, paddingBottom: 10, paddingRight: 0, width: 0, height: 200)
-        getStartedLabel.centerXAnchor.constraint(equalTo: emptyView.centerXAnchor).isActive = true
-        getStartedLabel.centerYAnchor.constraint(equalTo: emptyView.centerYAnchor).isActive = true
+    func setUpBgLabel() {
+        collectionView.addSubview(getStartedLabel)
+        getStartedLabel.centerXAnchor.constraint(equalTo: collectionView.centerXAnchor).isActive = true
+        getStartedLabel.centerYAnchor.constraint(equalTo: collectionView.centerYAnchor).isActive = true
         
     }
     
@@ -82,7 +72,8 @@ class MatchesVC: UIViewController {
         fetchUsers()
         
         collectionView.backgroundColor = UIColor.white
-        collectionView.showsVerticalScrollIndicator = false
+        collectionView.showsHorizontalScrollIndicator = false
+//        setUpBgLabel()
         self.view.addSubview(collectionView)
         collectionView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 80, paddingLeft: 0, paddingBottom: 10, paddingRight: 0, width: 0, height: 200)
         
@@ -93,6 +84,7 @@ class MatchesVC: UIViewController {
     func fetchUsers() {
         viewModel.fetchMatches(callback: { [unowned self] (users) in
             self.dataSource.items = users
+            self.userInfo = users
             self.matchIDs = self.viewModel.matchIDs
             DispatchQueue.main.async {
                 self.collectionView.reloadData()
@@ -104,6 +96,8 @@ class MatchesVC: UIViewController {
             cell.viewModel = self.dataSource.items[indexPath.section]
             cell.connectButton.tag = self.matchIDs[indexPath.section]
             cell.connectButton.addTarget(self, action: #selector(self.handleConnect), for: .touchUpInside)
+            cell.addShadow()
+            cell.roundCorner()
             return cell
         }
     }
@@ -129,6 +123,25 @@ class MatchesVC: UIViewController {
         self.collectionView.deleteSections([index!])
     }
     
+    func setNameAndImage() {
+        if AppKeys.instance.isMentor {
+            ServerNetworking.shared.getInfo(route: .getMentorImage, params: [:]) { info in
+                if let userinfo = try? JSONDecoder().decode([User].self, from: info) {
+                    UserDefaults.standard.set((userinfo.first?.image_file)!, forKey: "image")
+                    UserDefaults.standard.set(userinfo.first?.name, forKey: "name")
+                }
+            }
+        } else {
+            ServerNetworking.shared.getInfo(route: .getMenteeImage, params: [:]) { info in
+                if let userinfo = try? JSONDecoder().decode([User].self, from: info){
+                    UserDefaults.standard.set((userinfo.first?.image_file)!, forKey: "image")
+                    UserDefaults.standard.set(userinfo.first?.name, forKey: "name")
+                }
+            }
+        }
+        
+    }
+    
 
 }
 
@@ -141,12 +154,14 @@ extension MatchesVC: UICollectionViewDelegateFlowLayout {
     // cell size and position
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let frameSize = collectionView.frame.size
-        return CGSize(width: frameSize.width - 10, height: frameSize.height)
+        return CGSize(width: frameSize.width - 20, height: frameSize.height - 80)
 
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
+        return UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
     }
     
 }
+
+
 

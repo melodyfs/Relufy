@@ -8,9 +8,12 @@
 
 import UIKit
 import IQKeyboardManagerSwift
+import PusherSwift
+import UserNotifications
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
+    let pusher = Pusher(key: key)
 
     var window: UIWindow?
     let viewModel = AppDelegateViewModel.instance
@@ -19,6 +22,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func handleRootChange(viewController: UIViewController) {
         window?.rootViewController = viewController
         window?.makeKeyAndVisible()
+    }
+    
+    func adjustKeyboard() {
+        IQKeyboardManager.sharedManager().enabledToolbarClasses.append(LoginVC.self)
+        IQKeyboardManager.sharedManager().enabledToolbarClasses.append(EditVC.self)
+        IQKeyboardManager.sharedManager().enabledDistanceHandlingClasses.append(EditVC.self)
+        IQKeyboardManager.sharedManager().enabledDistanceHandlingClasses.append(LoginVC.self)
+        IQKeyboardManager.sharedManager().disabledToolbarClasses.append(ConversationVC.self)
+    }
+    
+    func style() {
+        UINavigationBar.appearance().tintColor = UIColor.violetBlue
+        UITabBar.appearance().tintColor = UIColor.violetBlue
     }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
@@ -31,13 +47,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             firstColor: UIColor.violetPurple,
             secondColor: UIColor.violetBlue
         )
-        
-        IQKeyboardManager.sharedManager().enabledToolbarClasses.append(LoginVC.self)
-        IQKeyboardManager.sharedManager().enabledToolbarClasses.append(EditVC.self)
-        IQKeyboardManager.sharedManager().disabledToolbarClasses.append(ConversationVC.self)
+        adjustKeyboard()
         window?.makeKeyAndVisible()
+        style()
+        
+        let center = UNUserNotificationCenter.current()
+        center.requestAuthorization(options: [.alert, .sound, .badge]) { (granted, error) in
+            // Enable or disable features based on authorization.
+        }
+        application.registerForRemoteNotifications()
         
         return true
+    }
+    
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        let deviceTokenString = deviceToken.reduce("", {$0 + String(format: "%02X", $1)})
+        
+        print("APNs device token: \(deviceTokenString)")
+        pusher.nativePusher.register(deviceToken: deviceToken)
+        pusher.nativePusher.subscribe(interestName: "testing")
+    }
+    
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        print(userInfo)
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

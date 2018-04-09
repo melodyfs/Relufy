@@ -23,8 +23,19 @@ class ConversationCell: UICollectionViewCell {
         textView.font = UIFont.systemFont(ofSize: 16)
         textView.textColor = UIColor.black
         textView.backgroundColor = UIColor.white
+        textView.sizeToFit()
         textView.isUserInteractionEnabled = false
+
         return textView
+    }()
+    
+    let nameLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.boldSystemFont(ofSize: 18.0)
+        label.text = "Name"
+        label.textColor = UIColor.black
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
     }()
     
     
@@ -36,6 +47,7 @@ class ConversationCell: UICollectionViewCell {
         imageView.layer.masksToBounds = false
         imageView.layer.cornerRadius = 20
         imageView.clipsToBounds = true
+        imageView.contentMode = .scaleAspectFit
         return imageView
     }()
     
@@ -49,13 +61,16 @@ class ConversationCell: UICollectionViewCell {
 //        backgroundColor = UIColor.lightGray
         addSubview(messageTextView)
         addSubview(profileImageView)
+        addSubview(nameLabel)
         
         profileImageView.leftAnchor.constraint(equalTo: leftAnchor, constant: 10).isActive = true
         profileImageView.topAnchor.constraint(equalTo: topAnchor, constant: 10).isActive = true
         profileImageView.heightAnchor.constraint(equalToConstant: 40).isActive = true
         profileImageView.widthAnchor.constraint(equalToConstant: 40).isActive = true
         
-        messageTextView.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 10, paddingLeft: 55, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        messageTextView.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 25, paddingLeft: 55, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        nameLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 60).isActive = true
+        nameLabel.topAnchor.constraint(equalTo: profileImageView.topAnchor).isActive = true
         
 //        nameLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 20).isActive = true
         

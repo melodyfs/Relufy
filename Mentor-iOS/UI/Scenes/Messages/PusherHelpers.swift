@@ -11,10 +11,10 @@ import PusherSwift
 
 class AuthRequestBuilder: AuthRequestBuilderProtocol {
     func requestFor(socketID: String, channelName: String) -> URLRequest? {
-        let base = URL(string: "http://localhost:3000/pushers")
+        let base = URL(string: "https://mentor-app-server.herokuapp.com/pushers")
         var request = URLRequest(url: base!)
         request.httpMethod = "POST"
-        request.allHTTPHeaderFields = ["Authorization": "Token token=e99edf19d5c8225109736af67c94b310"]
+        request.allHTTPHeaderFields = ["Authorization": "Token token=\(keychain.get("token")!)"]
         request.httpBody = "socket_id=\(socketID)&channel_name=\(channelName)".data(using: String.Encoding.utf8)
         return request
     }

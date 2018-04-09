@@ -49,11 +49,5 @@ extension UIImageView {
         self.image = anyImage
     }
     
-//    func setRounded() {
-//        let radius = self.frame / 2
-//        self.layer.cornerRadius = radius
-//        self.layer.masksToBounds = true
-//    }
-    
 }
 

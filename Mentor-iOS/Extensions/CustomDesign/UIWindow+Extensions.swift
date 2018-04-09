@@ -36,3 +36,18 @@ extension UIWindow {
         self.layer.insertSublayer(gradient, at: 0)
     }
 }
+
+extension UIView {
+    func setGradient(firstColor: UIColor, secondColor: UIColor) {
+        let gradient = CAGradientLayer()
+        
+        gradient.frame = self.bounds
+        
+        gradient.colors = [
+            firstColor.cgColor,
+            secondColor.cgColor
+        ]
+        
+        self.layer.insertSublayer(gradient, at: 0)
+    }
+}

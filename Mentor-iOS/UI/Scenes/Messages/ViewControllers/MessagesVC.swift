@@ -8,6 +8,7 @@
 
 import UIKit
 import PusherSwift
+import KeychainSwift
 
 class MessagesVC: UIViewController, PusherDelegate {
     
@@ -17,11 +18,14 @@ class MessagesVC: UIViewController, PusherDelegate {
     var viewModel = MessageViewModel()
     var userInfo = [MessageItemViewModel]()
     let cell = "messageCell"
+    let keys = AppKeys.instance
+    var channelName = ""
    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel.confirmed = ["confirmed": "true"]
+        fetchUsers()
         registerCollectionView()
         tabBarController?.tabBar.isHidden = false
     }
@@ -30,8 +34,10 @@ class MessagesVC: UIViewController, PusherDelegate {
         super.viewWillAppear(animated)
         self.tabBarController?.tabBar.isHidden = false
         DispatchQueue.main.async {
+            self.fetchUsers()
             self.collectionView.reloadData()
         }
+        
     
     }
     
@@ -43,8 +49,7 @@ class MessagesVC: UIViewController, PusherDelegate {
         collectionView.isPagingEnabled = true
         collectionView.isScrollEnabled = true
         
-        fetchUsers()
-        
+        configureCell()
         collectionView.backgroundColor = UIColor.white
         collectionView.showsVerticalScrollIndicator = false
         self.view.addSubview(collectionView)
@@ -52,7 +57,6 @@ class MessagesVC: UIViewController, PusherDelegate {
         
         collectionView.dataSource = dataSource
         collectionView.delegate = self
-        createChatRooms()
         
     }
     
@@ -64,22 +68,17 @@ class MessagesVC: UIViewController, PusherDelegate {
                 self.collectionView.reloadData()
             }
         })
-
+    }
+    func configureCell() {
         dataSource.configureCell = { cv, indexPath in
             let cell = cv.dequeueReusableCell(withReuseIdentifier: self.cell, for: indexPath) as! MessageCell
             cell.viewModel = self.dataSource.items[indexPath.section]
+            cell.addShadow()
             return cell
         }
     }
     
-    // TODO: call this when 'Confirmed' is true
-    func createChatRooms() {
-        for i in userInfo {
-            subToChannel(mentorEmail: i.email, menteeEmail: "mentee@test.com")
-        }
-    }
-    
-    func subToChannel(mentorEmail: String, menteeEmail: String) {
+    func subToChannel(channelName: String) {
         let options = PusherClientOptions(
             authMethod: AuthMethod.authRequestBuilder(authRequestBuilder: AuthRequestBuilder()),
             host: .cluster(cluster)
@@ -91,19 +90,7 @@ class MessagesVC: UIViewController, PusherDelegate {
         pusher.delegate = self
         pusher.connect()
         
-//        let chan = pusher.subscribe("private-\(mentorEmail)-\(menteeEmail)")
-        let chan = pusher.subscribe("private-u")
-        
-        let _ = chan.bind(eventName: "test", callback: { data in
-            print(data)
-//            let _ = self.pusher.subscribe("private-\(mentorEmail)-\(menteeEmail)")
-             let _ = self.pusher.subscribe("private-u")
-            if let data = data as? [String : AnyObject] {
-                if let testVal = data["message"] as? String {
-                    print(testVal)
-                }
-            }
-        })
+        let chan = pusher.subscribe(channelName)
     }
 }
 
@@ -111,8 +98,18 @@ extension MessagesVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let selectedUser = dataSource.items[indexPath.section]
         let chatRoomVC = ConversationVC()
+        let userEmail = KeychainSwift().get("email")
+        let otherPersonEmail = dataSource.items[indexPath.section].email
+        
+        if keys.isMentor {
+            channelName = "private-\(userEmail!)-\(otherPersonEmail)"
+        } else {
+            channelName = "private-\(otherPersonEmail)-\(userEmail!)"
+        }
+        
+        subToChannel(channelName: channelName)
         chatRoomVC.userInfo = [selectedUser]
-        chatRoomVC.otherPersonEmail = dataSource.items[indexPath.section].email
+        chatRoomVC.otherPersonEmail = otherPersonEmail
         self.navigationController?.pushViewController(chatRoomVC, animated: true)
     }
     

@@ -19,19 +19,14 @@ class TabBarController: UITabBarController {
     
     private func setUpTabBar() {
         
-        let matchesNavController = createNavigationController(navTitle: "Matches", tabBarTitle: "Matches", unselectedImageName: nil, selectedImageName: nil, rootViewController: MatchesVC())
+        let matchesNavController = createNavigationController(navTitle: "New Matches", tabBarTitle: "Matches", unselectedImageName: UIImage(named: "matches"), selectedImageName: UIImage(named: "matches"), rootViewController: MatchesVC())
 
-        let messagesNavController = createNavigationController(navTitle: "Messages", tabBarTitle: "Messages", unselectedImageName: nil, selectedImageName: nil, rootViewController: MessagesVC())
-            
-//            SavedController(collectionViewLayout: UICollectionViewFlowLayout()))
+        let messagesNavController = createNavigationController(navTitle: "Messages", tabBarTitle: "Messages", unselectedImageName: UIImage(named: "messages"), selectedImageName: UIImage(named: "messages"), rootViewController: MessagesVC())
         
-        let profileNavController = createNavigationController(navTitle: "My Profile", tabBarTitle: "Profile", unselectedImageName: nil, selectedImageName: nil, rootViewController: ProfileVC())
-        
-        // Add each controller in the view controllers array
+        let profileNavController = createNavigationController(navTitle: "My Profile", tabBarTitle: "Profile", unselectedImageName: UIImage(named: "profile"), selectedImageName: UIImage(named: "profile"), rootViewController: ProfileVC())
+    
         viewControllers = [matchesNavController, messagesNavController, profileNavController]
-        
-        
-        // modify tab bar item insets
+     
         guard let items = tabBar.items else { return }
         
         for item in items {
@@ -57,7 +52,7 @@ class TabBarController: UITabBarController {
             
         }
         
-        tabBar.isTranslucent = true
+        tabBar.isTranslucent = false
         
         return navigationController
     }

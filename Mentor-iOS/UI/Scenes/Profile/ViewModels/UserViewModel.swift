@@ -18,15 +18,17 @@ class UserViewModel {
     init() {
         if keys.isMentor {
             networking.getInfo(route: .getMentorInfo, params: [:]) { info in
-                let userInfoList = try? JSONDecoder().decode([User].self, from: info)
-                self.userInfo = userInfoList!
+                if let userInfoList = try? JSONDecoder().decode([User].self, from: info) {
+                self.userInfo = userInfoList
                 self.userItems = self.getUsers(users: self.userInfo)
+            }
             }
         } else {
             networking.getInfo(route: .getMenteeInfo, params: [:]) { info in
-                let userInfoList = try? JSONDecoder().decode([User].self, from: info)
-                self.userInfo = userInfoList!
+                if let userInfoList = try? JSONDecoder().decode([User].self, from: info) {
+                self.userInfo = (userInfoList)
                 self.userItems = self.getUsers(users: self.userInfo)
+            }
             }
         }
     }
@@ -35,19 +37,23 @@ class UserViewModel {
         
         if keys.isMentor {
             ServerNetworking.shared.getInfo(route: .getMentorInfo, params: [:]) { info in
-                let userInfoList = try? JSONDecoder().decode([User].self, from: info)
-                self.userInfo = userInfoList!
+                if let userInfoList = try? JSONDecoder().decode([User].self, from: info) {
+                self.userInfo = userInfoList
                 
                 self.userItems = self.getUsers(users: self.userInfo)
+                UserDefaults.standard.set(self.userInfo.first?.name, forKey: "name")
                 callback(self.userItems)
+            }
             }
         } else {
             ServerNetworking.shared.getInfo(route: .getMenteeInfo, params: [:]) { info in
-                let userInfoList = try? JSONDecoder().decode([User].self, from: info)
-                self.userInfo = userInfoList!
+                if let userInfoList = try? JSONDecoder().decode([User].self, from: info) {
+                self.userInfo = userInfoList
                 
                 self.userItems = self.getUsers(users: self.userInfo)
+                UserDefaults.standard.set(self.userInfo.first?.name, forKey: "name")
                 callback(self.userItems)
+            }
             }
         }
     }

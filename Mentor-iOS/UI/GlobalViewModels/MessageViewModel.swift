@@ -16,28 +16,38 @@ class MessageViewModel {
 //    var userItems: [UserItemViewModel] = []
     var matchIDs = [Int]()
     var confirmed = [String: String]()
+    var fetchedID = [Int]()
 
     init() {
         networking.getInfo(route: .getMatchesAll, params: [:]) { (info) in
-            let ids = try? JSONDecoder().decode([Int].self, from: info)
-            self.matchIDs = ids!
+            if let ids = try? JSONDecoder().decode([Int].self, from: info) {
+                self.matchIDs = ids
+            }
         }
     }
     
     func fetchMatches(callback: @escaping ([MessageItemViewModel]) -> Void) {
         networking.getInfo(route: .getMatchesAll, params: confirmed) { (info) in
-            let ids = try? JSONDecoder().decode([Int].self, from: info)
-            self.matchIDs = ids!
+            if let ids = try? JSONDecoder().decode([Int].self, from: info) {
+            self.matchIDs = ids
             
             for i in self.matchIDs {
-                ServerNetworking.shared.getInfo(route: .getMatchesImages, params: ["id": "\(i)"]) { info in
-                    let userInfoList = try? JSONDecoder().decode([User].self, from: info)
-                    self.userInfo += userInfoList!
-                    self.messageItems = self.getUsers(users: self.userInfo)
-                    callback(self.messageItems)
-                    print(self.messageItems)
+                if self.fetchedID.contains(i) {
+                   print("existed")
+                } else {
+                    self.fetchedID.append(i)
+                    ServerNetworking.shared.getInfo(route: .getMatchesImages, params: ["id": "\(i)"]) { info in
+                        let userInfoList = try? JSONDecoder().decode([User].self, from: info)
+                        self.userInfo += userInfoList!
+                        self.messageItems = self.getUsers(users: self.userInfo)
+                        callback(self.messageItems)
+                        print(self.messageItems)
+                    }
                 }
+               
+               
             }
+        }
         }
     }
    
@@ -69,6 +79,16 @@ struct MessageItemViewModel {
     var image: String
     var goal: String
 
+}
+
+extension Array where Element: Equatable {
+    func removingDuplicates() -> Array {
+        return reduce(into: []) { result, element in
+            if !result.contains(element) {
+                result.append(element)
+            }
+        }
+    }
 }
 
 

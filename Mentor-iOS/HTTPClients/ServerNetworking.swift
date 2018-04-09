@@ -29,38 +29,39 @@ enum Route {
     case getMentorInfo
     case getMenteeImage
     case getMentorImage
+    case createMatches
    
     func path() -> String {
         
         switch self {
         case .createMentor, .updateMentor, .getMentorInfo:
-            return "http://localhost:3000/mentors"
+            return "/mentors"
         case .getMentor:
-             return "http://localhost:3000/mentors/one"
+             return "/one"
         case .createMentee, .updateMentee, .getMenteeInfo:
-            return "http://localhost:3000/mentees"
+            return "/mentees"
         case .sendMessage:
-            return "http://localhost:3000/pushers/message"
+            return "/pushers/message"
         case .getMentee:
-            return "http://localhost:3000/mentees/one"
+            return "/mentees/one"
         case .getMatchesImages:
-            return "http://localhost:3000/matches/get_info"
-        case .getMatchesAll, .confirmMatched:
-            return "http://localhost:3000/matches"
+            return "/matches/get_info"
+        case .getMatchesAll, .confirmMatched, .createMatches:
+            return "/matches"
         case .getMessages, .saveMessage:
-            return "http://localhost:3000/messages"
+            return "/messages"
         case .getSingleChatHistory:
-            return "http://localhost:3000/messages/one"
+            return "/messages/one"
         case .getMenteeImage:
-             return "http://localhost:3000/mentees/one/model"
+             return "/mentees/one/model"
         case .getMentorImage:
-             return "http://localhost:3000/mentors/one"
+             return "/mentors/one/model"
         }
     }
     
     func headers() -> [String: String] {
         switch self {
-        case .createMentor, .createMentee:
+        case .createMentor, .createMentee, .getMentee, .getMentor:
             return [:]
         default:
             let headers = ["Authorization": "Token token=\(keychain.get("token")!)"]
@@ -71,7 +72,7 @@ enum Route {
     
     func method() -> String {
         switch self {
-        case .createMentor, .createMentee, .sendMessage, .saveMessage:
+        case .createMentor, .createMentee, .sendMessage, .saveMessage, .createMatches:
             return "POST"
         case .updateMentor, .updateMentee, .confirmMatched:
             return "PATCH"
@@ -90,8 +91,10 @@ class ServerNetworking {
     var statusCode = 0
     
     func getInfo(route: Route, params: [String: String], completion: @escaping (Data) -> Void) {
-        let base = route.path()
-        var url = URL(string: base)!
+        let base = "https://mentor-app-server.herokuapp.com"
+        let base2 = "http://localhost:3000"
+        let fullURL = base + route.path()
+        var url = URL(string: fullURL)!
         
         url = url.appendingQueryParameters(params)
         var request = URLRequest(url: url)

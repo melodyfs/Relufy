@@ -35,6 +35,7 @@ class MessageCell: UICollectionViewCell {
         imageView.layer.masksToBounds = false
         imageView.layer.cornerRadius = 40
         imageView.clipsToBounds = true
+        imageView.contentMode = .scaleAspectFit
         return imageView
     }()
     

@@ -15,8 +15,9 @@ class UploadImage {
     
     static func upload(route: Route, imageData: Data) {
         let session = URLSession.shared
-        let base = route.path()
-        var url = URL(string: base)!
+        let base = "https://mentor-app-server.herokuapp.com"
+        let fullURL = base + route.path()
+        var url = URL(string: fullURL)!
         let name = "image_file"
 
         Alamofire.upload(multipartFormData: { (multiPartFormData) in

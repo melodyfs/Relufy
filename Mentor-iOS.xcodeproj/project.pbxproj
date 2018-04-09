@@ -21,6 +21,10 @@
 		6C4A53F42078844D00D00C4F /* OpenningVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C4A53F32078844D00D00C4F /* OpenningVC.swift */; };
 		6C4A53F82079E3D500D00C4F /* EditVC+PhotoExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C4A53F62079E3D400D00C4F /* EditVC+PhotoExtension.swift */; };
 		6C4A53F92079E3D500D00C4F /* UploadImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C4A53F72079E3D400D00C4F /* UploadImage.swift */; };
+		6C4A53FE207A13CC00D00C4F /* EditVC+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C4A53FD207A13CC00D00C4F /* EditVC+Extension.swift */; };
+		6C4A5400207AF1E900D00C4F /* UICollectionCell+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C4A53FF207AF1E800D00C4F /* UICollectionCell+Extension.swift */; };
+		6C4A5403207AF33100D00C4F /* UIButton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C4A5402207AF33100D00C4F /* UIButton+Extension.swift */; };
+		6C4A5405207B201400D00C4F /* UITextField+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C4A5404207B201400D00C4F /* UITextField+Extension.swift */; };
 		6C56189A20670FEE00DCAA46 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C56189920670FEE00DCAA46 /* AppDelegate.swift */; };
 		6C56189C20670FEE00DCAA46 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C56189B20670FEE00DCAA46 /* ViewController.swift */; };
 		6C5618A120670FEE00DCAA46 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6C5618A020670FEE00DCAA46 /* Assets.xcassets */; };
@@ -64,6 +68,10 @@
 		6C4A53F32078844D00D00C4F /* OpenningVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenningVC.swift; sourceTree = "<group>"; };
 		6C4A53F62079E3D400D00C4F /* EditVC+PhotoExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "EditVC+PhotoExtension.swift"; path = "Mentor-iOS/UI/Scenes/Profile/EditVC+PhotoExtension.swift"; sourceTree = SOURCE_ROOT; };
 		6C4A53F72079E3D400D00C4F /* UploadImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UploadImage.swift; path = "Mentor-iOS/UI/Scenes/Profile/UploadImage.swift"; sourceTree = SOURCE_ROOT; };
+		6C4A53FD207A13CC00D00C4F /* EditVC+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditVC+Extension.swift"; sourceTree = "<group>"; };
+		6C4A53FF207AF1E800D00C4F /* UICollectionCell+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionCell+Extension.swift"; sourceTree = "<group>"; };
+		6C4A5402207AF33100D00C4F /* UIButton+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extension.swift"; sourceTree = "<group>"; };
+		6C4A5404207B201400D00C4F /* UITextField+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extension.swift"; sourceTree = "<group>"; };
 		6C56189620670FEE00DCAA46 /* Mentor-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Mentor-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6C56189920670FEE00DCAA46 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6C56189B20670FEE00DCAA46 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -138,6 +146,7 @@
 			children = (
 				6C5618B8206B7B1600DCAA46 /* ProfileVC.swift */,
 				6C4A53E42078481400D00C4F /* EditVC.swift */,
+				6C4A53FD207A13CC00D00C4F /* EditVC+Extension.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -180,6 +189,19 @@
 				6C4A53F72079E3D400D00C4F /* UploadImage.swift */,
 			);
 			path = PhotoUpload;
+			sourceTree = "<group>";
+		};
+		6C4A5401207AF2E100D00C4F /* CustomDesign */ = {
+			isa = PBXGroup;
+			children = (
+				6C4A53FF207AF1E800D00C4F /* UICollectionCell+Extension.swift */,
+				6C4A53ED207860AE00D00C4F /* UIColor+Extensions.swift */,
+				6C4A53EB2078603500D00C4F /* UIWindow+Extensions.swift */,
+				6C5618BA206C15F000DCAA46 /* UIView+AutoLayout.swift */,
+				6C4A5402207AF33100D00C4F /* UIButton+Extension.swift */,
+				6C4A5404207B201400D00C4F /* UITextField+Extension.swift */,
+			);
+			path = CustomDesign;
 			sourceTree = "<group>";
 		};
 		6C56188D20670FEE00DCAA46 = {
@@ -285,11 +307,9 @@
 		6CE702F620706CCF00D2A630 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				6C4A5401207AF2E100D00C4F /* CustomDesign */,
 				6C5618C3206C533100DCAA46 /* UIImageView+Extension.swift */,
-				6C5618BA206C15F000DCAA46 /* UIView+AutoLayout.swift */,
 				6CC44BB12073000500AB92A4 /* URLParam+Extension.swift */,
-				6C4A53EB2078603500D00C4F /* UIWindow+Extensions.swift */,
-				6C4A53ED207860AE00D00C4F /* UIColor+Extensions.swift */,
 				6C4A53EF2078716600D00C4F /* UIViewController+Extensions.swift */,
 			);
 			path = Extensions;
@@ -391,6 +411,11 @@
 					6C56189520670FEE00DCAA46 = {
 						CreatedOnToolsVersion = 9.2;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -479,8 +504,10 @@
 			files = (
 				6C5618B5206B7A6300DCAA46 /* MatchesVC.swift in Sources */,
 				6C5618AE206B647B00DCAA46 /* PusherHelpers.swift in Sources */,
+				6C4A5403207AF33100D00C4F /* UIButton+Extension.swift in Sources */,
 				6C4A53EA20784B1E00D00C4F /* AppKeys.swift in Sources */,
 				6CE70301207081B100D2A630 /* MessageCell.swift in Sources */,
+				6C4A5405207B201400D00C4F /* UITextField+Extension.swift in Sources */,
 				6C5618C4206C533100DCAA46 /* UIImageView+Extension.swift in Sources */,
 				6CE702F92070801A00D2A630 /* TableDataSource.swift in Sources */,
 				6C5618AC206714C700DCAA46 /* Credentials.swift in Sources */,
@@ -491,6 +518,7 @@
 				6CE702FE207080E100D2A630 /* MessageViewModel.swift in Sources */,
 				6C5618B9206B7B1600DCAA46 /* ProfileVC.swift in Sources */,
 				6CC44BB620744A7400AB92A4 /* ConversationCell.swift in Sources */,
+				6C4A5400207AF1E900D00C4F /* UICollectionCell+Extension.swift in Sources */,
 				6C4A53E8207849CA00D00C4F /* AppDelegateViewModel.swift in Sources */,
 				6C3FED302074A79A006D45D5 /* ConversationViewModel.swift in Sources */,
 				6C5618C2206C4E9400DCAA46 /* UserViewModel.swift in Sources */,
@@ -507,6 +535,7 @@
 				6C4A53F22078726700D00C4F /* UserSignUp.swift in Sources */,
 				6C4A53F92079E3D500D00C4F /* UploadImage.swift in Sources */,
 				6C4A53EE207860AE00D00C4F /* UIColor+Extensions.swift in Sources */,
+				6C4A53FE207A13CC00D00C4F /* EditVC+Extension.swift in Sources */,
 				6C56189A20670FEE00DCAA46 /* AppDelegate.swift in Sources */,
 				6C4A53E3207847E800D00C4F /* LoginVC.swift in Sources */,
 				6C4A53F02078716600D00C4F /* UIViewController+Extensions.swift in Sources */,
@@ -649,7 +678,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Melody-Yang.Mentor-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -665,7 +694,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Melody-Yang.Mentor-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

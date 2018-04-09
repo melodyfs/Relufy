@@ -23,6 +23,8 @@ class LoginVC: UIViewController {
         button.setTitle("Log In", for: .normal)
         button.setTitleColor(UIColor.white, for: .normal)
         button.addTarget(self, action: #selector(handleLogin), for: .touchUpInside)
+        button.addBorder(color: UIColor.white)
+        button.makeRounded()
         return button
     }()
     
@@ -44,25 +46,19 @@ class LoginVC: UIViewController {
         return textField
     }()
     
-    let orLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 18)
-        label.textColor = UIColor.white
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "or"
-        return label
-    }()
-    
     let signUpButton: UIButton = {
         let button = UIButton(type: .custom)
         button.setTitle("Sign Up", for: .normal)
         button.setTitleColor(UIColor.white, for: .normal)
+        button.backgroundColor = UIColor.violetBlue
         button.addTarget(self, action: #selector(handleSignUp), for: .touchUpInside)
+        button.addBorder(color: UIColor.white)
+        button.makeRounded()
         return button
     }()
     
    
-    @objc func handleLogin() {
+    @objc func handleLogin(sender: UIButton) {
         setKeychainCredential()
         let email = keychain.get("email")!
         let password = keychain.get("password")!
@@ -72,34 +68,49 @@ class LoginVC: UIViewController {
         
         if keys.isMentor {
             networking.getInfo(route: .getMentor, params: user) { data in
-                let list = try? JSONDecoder().decode(User.self, from: data)
-                self.keychain.set((list?.token)!, forKey: "token")
-                self.keychain.set(String((list?.id)!), forKey: "id")
-                DispatchQueue.main.async {
-                    if self.networking.statusCode != 200 {
-                        self.informSignUpFailure()
-                        UIViewController.removeSpinner(spinner: sv)
-                    } else {
-                        self.authorize()
-                        UIViewController.removeSpinner(spinner: sv)
+                if let list = try? JSONDecoder().decode(User.self, from: data) {
+                    self.keychain.set((list.token)!, forKey: "token")
+                    self.keychain.set(String((list.id)!), forKey: "id")
+                    DispatchQueue.main.async {
+                        if self.networking.statusCode != 200{
+                            self.informSignUpFailure()
+                            self.unauthorize()
+                            UIViewController.removeSpinner(spinner: sv)
+                        } else {
+                            self.authorize()
+                            UIViewController.removeSpinner(spinner: sv)
+                        }
                     }
+                } else {
+                    self.informSignUpFailure()
+                    self.unauthorize()
+                    UIViewController.removeSpinner(spinner: sv)
+                    
                 }
+               
             }
         } else {
             keys.setMentorOrMentee(isMentor: false)
             networking.getInfo(route: .getMentee, params: user) { data in
-                let list = try? JSONDecoder().decode(User.self, from: data)
-                self.keychain.set((list?.token)!, forKey: "token")
-                self.keychain.set(String((list?.id)!), forKey: "id")
-                DispatchQueue.main.async {
-                    if self.networking.statusCode != 200 {
-                        self.informSignUpFailure()
-                        UIViewController.removeSpinner(spinner: sv)
-                    } else {
-                        self.authorize()
-                        UIViewController.removeSpinner(spinner: sv)
+                if let list = try? JSONDecoder().decode(User.self, from: data) {
+                    self.keychain.set((list.token)!, forKey: "token")
+                    self.keychain.set(String((list.id)!), forKey: "id")
+                    DispatchQueue.main.async {
+                        if self.networking.statusCode != 200 {
+                            self.informSignUpFailure()
+                            UIViewController.removeSpinner(spinner: sv)
+                            self.unauthorize()
+                        } else {
+                            self.authorize()
+                            UIViewController.removeSpinner(spinner: sv)
+                        }
                     }
+                } else {
+                    self.informSignUpFailure()
+                    self.unauthorize()
+                    UIViewController.removeSpinner(spinner: sv)
                 }
+               
             }
         }
     }
@@ -116,13 +127,15 @@ class LoginVC: UIViewController {
             keys.setMentorOrMentee(isMentor: true)
             networking.getInfo(route: .createMentor, params: user) { data in
                 let list = try? JSONDecoder().decode(User.self, from: data)
-                self.keychain.set((list?.token)!, forKey: "token")
-                self.keychain.set(String((list?.id)!), forKey: "id")
+                
                  DispatchQueue.main.async {
                     if self.networking.statusCode != 201 {
                         self.informSignUpFailure()
                         UIViewController.removeSpinner(spinner: sv)
+                        self.unauthorize()
                     } else {
+                        self.keychain.set((list?.token)!, forKey: "token")
+                        self.keychain.set(String((list?.id)!), forKey: "id")
                         self.authorize()
                         UIViewController.removeSpinner(spinner: sv)
                     }
@@ -132,20 +145,20 @@ class LoginVC: UIViewController {
             keys.setMentorOrMentee(isMentor: false)
             networking.getInfo(route: .createMentee, params: user) { data in
                 let list = try? JSONDecoder().decode(User.self, from: data)
-                self.keychain.set((list?.token)!, forKey: "token")
-                self.keychain.set(String((list?.id)!), forKey: "id")
                 DispatchQueue.main.async {
                     if self.networking.statusCode != 201 {
                         self.informSignUpFailure()
                         UIViewController.removeSpinner(spinner: sv)
+                        self.unauthorize()
                     } else {
+                        self.keychain.set((list?.token)!, forKey: "token")
+                        self.keychain.set(String((list?.id)!), forKey: "id")
                         self.authorize()
                         UIViewController.removeSpinner(spinner: sv)
                     }
                 }
             }
         }
-        
         
     }
     
@@ -192,12 +205,13 @@ class LoginVC: UIViewController {
         view.addSubview(logInButton)
         view.addSubview(emailTextField)
         view.addSubview(passwordTextField)
-        view.addSubview(orLabel)
         view.addSubview(signUpButton)
        
         logInButton.translatesAutoresizingMaskIntoConstraints = false
-        logInButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        logInButton.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: -80).isActive = true
         logInButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 150).isActive = true
+        logInButton.widthAnchor.constraint(equalToConstant: 150).isActive = true
+        logInButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
         
         emailTextField.translatesAutoresizingMaskIntoConstraints = false
         emailTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
@@ -209,34 +223,21 @@ class LoginVC: UIViewController {
         passwordTextField.centerYAnchor.constraint(equalTo: emailTextField.centerYAnchor, constant: 70).isActive = true
         passwordTextField.widthAnchor.constraint(equalToConstant: 300).isActive = true
         
-        orLabel.translatesAutoresizingMaskIntoConstraints = false
-        orLabel.centerXAnchor.constraint(equalTo: logInButton.centerXAnchor).isActive = true
-        orLabel.centerYAnchor.constraint(equalTo: logInButton.centerYAnchor, constant: 50).isActive = true
         
         signUpButton.translatesAutoresizingMaskIntoConstraints = false
-        signUpButton.centerXAnchor.constraint(equalTo: orLabel.centerXAnchor).isActive = true
-        signUpButton.centerYAnchor.constraint(equalTo: orLabel.centerYAnchor, constant: 50).isActive = true
+        signUpButton.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 80).isActive = true
+        signUpButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 150).isActive = true
+        signUpButton.widthAnchor.constraint(equalToConstant: 150).isActive = true
+        signUpButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
         
     }
     
     func authorize() {
         appDelegate.changeStatus(authStatus: .authorized)
     }
+    
+    func unauthorize() {
+        appDelegate.changeStatus(authStatus: .unauthorized)
+    }
 }
 
-extension UITextField {
-    
-    func setBottomLine(borderColor: UIColor) {
-        
-        self.borderStyle = UITextBorderStyle.none
-        self.backgroundColor = UIColor.clear
-        
-        let borderLine = UIView()
-        let height = 1.0
-        borderLine.frame = CGRect(x: 0, y: Double(self.frame.height) - height, width: Double(self.frame.width), height: height)
-        
-        borderLine.backgroundColor = borderColor
-        self.addSubview(borderLine)
-    }
-    
-}

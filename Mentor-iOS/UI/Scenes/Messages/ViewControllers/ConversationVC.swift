@@ -30,8 +30,8 @@ class ConversationVC: UIViewController, PusherDelegate, UITextViewDelegate {
         textField.text = "Enter a message..."
         textField.textColor = UIColor.lightGray
         textField.isEditable = true
-        textField.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.regular)
-
+        textField.font = UIFont.systemFont(ofSize: 18, weight: UIFont.Weight.regular)
+//        textField.sizeToFit()
         return textField
     }()
 
@@ -50,7 +50,6 @@ class ConversationVC: UIViewController, PusherDelegate, UITextViewDelegate {
     let sendButton: UIButton = {
         let button = UIButton(type: .custom)
         button.setTitleColor(UIColor.violetBlue, for: .normal)
-//        button.setTitleColor(UIColor.violetPurple, for: .touchUpInside)
         button.setTitle("Send", for: .normal)
         button.addTarget(self, action: #selector(handleSend), for: .touchUpInside)
         return button
@@ -86,7 +85,7 @@ class ConversationVC: UIViewController, PusherDelegate, UITextViewDelegate {
         messageContainerView.translatesAutoresizingMaskIntoConstraints = false
         messageContainerView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         messageContainerView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        messageContainerView.heightAnchor.constraint(equalTo: collectionView.heightAnchor, constant: -550).isActive = true
+        messageContainerView.heightAnchor.constraint(equalToConstant: 60).isActive = true
         buttomConstraint = messageContainerView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         buttomConstraint?.isActive = true
         
@@ -124,8 +123,8 @@ class ConversationVC: UIViewController, PusherDelegate, UITextViewDelegate {
             }, completion: {completed in
                 if isKeyboardShowing {
                     if self.dataSource.items.count != 0 {
-                        let indexPath = NSIndexPath(item: 0, section: self.dataSource.items.count - 1)
-                        self.collectionView.scrollToItem(at: indexPath as IndexPath, at: .bottom, animated: true)
+                        let indexPath = IndexPath(item: 0, section: self.dataSource.items.count - 1)
+                        self.collectionView.scrollToItem(at: indexPath, at: .bottom, animated: true)
                     }
                    
                 }
@@ -172,13 +171,18 @@ class ConversationVC: UIViewController, PusherDelegate, UITextViewDelegate {
         
     }
     
+    
     func setUpInputComponent() {
         messageContainerView.addSubview(inputTextField)
         inputTextField.translatesAutoresizingMaskIntoConstraints = false
         inputTextField.anchor(top: messageContainerView.topAnchor, left: messageContainerView.leftAnchor, bottom: messageContainerView.bottomAnchor, right: messageContainerView.rightAnchor, paddingTop: 0, paddingLeft: 10, paddingBottom: 0, paddingRight: 80, width: 200, height: 0)
         messageContainerView.addSubview(sendButton)
-        sendButton.anchor(top: messageContainerView.topAnchor, left: messageContainerView.leftAnchor, bottom: messageContainerView.bottomAnchor, right: messageContainerView.rightAnchor, paddingTop: 0, paddingLeft: 320, paddingBottom: 0, paddingRight: 0, width: 10, height: 0)
+        sendButton.anchor(top: messageContainerView.topAnchor, left: nil, bottom: messageContainerView.bottomAnchor, right: messageContainerView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 15, width: 0, height: 0)
         
+    }
+    
+    override func viewDidLayoutSubviews() {
+        messageContainerView.layer.addBorder(edge: .top, color: UIColor.gray, thickness: 0.5)
     }
     
     func registerCollectionView() {
@@ -194,7 +198,7 @@ class ConversationVC: UIViewController, PusherDelegate, UITextViewDelegate {
         collectionView.backgroundColor = UIColor.white
         collectionView.showsVerticalScrollIndicator = false
         self.view.addSubview(collectionView)
-        collectionView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 60, paddingLeft: 0, paddingBottom: 35, paddingRight: 0, width: 200, height: 300)
+        collectionView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 60, paddingLeft: 0, paddingBottom: 70, paddingRight: 0, width: 200, height: 300)
         
         collectionView.dataSource = dataSource
         collectionView.delegate = self
@@ -218,9 +222,10 @@ class ConversationVC: UIViewController, PusherDelegate, UITextViewDelegate {
             let email = self.dataSource.items[indexPath.section].sender
             if email == self.otherPersonEmail! {
                 cell.profileImageView.getImageFromURL(url: self.userInfo[indexPath.row].image)
+                cell.nameLabel.text = self.userInfo.first?.name
             } else {
-                //TODO: change to current user's
-                cell.profileImageView.getImageFromURL(url: keychain.get("image")!)
+                cell.profileImageView.getImageFromURL(url: UserDefaults.standard.string(forKey: "image")!)
+                cell.nameLabel.text =  UserDefaults.standard.string(forKey: "name")
             }
             return cell
         }
@@ -229,12 +234,28 @@ class ConversationVC: UIViewController, PusherDelegate, UITextViewDelegate {
 }
 
 extension ConversationVC: UICollectionViewDelegateFlowLayout {
-    // cell size and position
+    
+    // dynamic cell size
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let frameSize = collectionView.frame.size
-        return CGSize(width: frameSize.width, height: 100)
+        var height: CGFloat = 100
         
+        let text = self.dataSource.items[indexPath.section].content
+        height = estimateFrameForText(text: text).height
+        return CGSize(width: view.frame.width, height: height + 50)
+
     }
+    //estimate each cell's height
+    private func estimateFrameForText(text: String) -> CGRect {
+        let height: CGFloat = 100
+        let frameSize = collectionView.frame.size
+        
+        let size = CGSize(width: 250, height: 1000)
+        let options = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
+        let attributes = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.light)]
+        
+        return NSString(string: text).boundingRect(with: size, options: options, attributes: attributes, context: nil)
+    }
+
     
 }
 

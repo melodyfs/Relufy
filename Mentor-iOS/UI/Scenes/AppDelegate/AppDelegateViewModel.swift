@@ -77,6 +77,7 @@ class AppDelegateViewModel {
             keys.set(isLoggedIn: true)
         case .unauthorized:
             rootViewController = OpenningVC()
+            keys.set(isLoggedIn: false)
         case .backToProfile:
             TabBarController().tabBarController?.selectedIndex = 2
             let vc = TabBarController().tabBarController?.selectedViewController

@@ -17,17 +17,19 @@ class ConversationViewModel {
     
     init() {
         networking.getInfo(route: .getSingleChatHistory, params: channelName) { (msg) in
-            let messageList = try? JSONDecoder().decode([Message].self, from: msg)
-            self.messages = messageList!
+            if let messageList = try? JSONDecoder().decode([Message].self, from: msg) {
+            self.messages = messageList
+            }
         }
     }
     
     func fetchConversation(callback: @escaping ([ConversationItemViewModel]) -> Void) {
         networking.getInfo(route: .getSingleChatHistory, params: channelName) { (msg) in
-            let messageList = try? JSONDecoder().decode([Message].self, from: msg)
-            self.messages = messageList!
+            if let messageList = try? JSONDecoder().decode([Message].self, from: msg) {
+            self.messages = messageList
             self.convItems = self.getConv(msg: self.messages)
             callback(self.convItems)
+            }
             
         }
     }

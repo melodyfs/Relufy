@@ -14,7 +14,7 @@ class OpenningVC: UIViewController {
     
     let optionLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 18)
+        label.font = UIFont.systemFont(ofSize: 25)
         label.textColor = UIColor.white
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "I'd like to ..."
@@ -25,15 +25,21 @@ class OpenningVC: UIViewController {
         let button = UIButton(type: .custom)
         button.setTitle("Give advices", for: .normal)
         button.setTitleColor(UIColor.white, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 23)
         button.addTarget(self, action: #selector(giveOrReceive), for: .touchUpInside)
+        button.addBorder(color: UIColor.white)
+        button.makeRounded()
         return button
     }()
     
     let receiveButton: UIButton = {
         let button = UIButton(type: .custom)
         button.setTitle("Receive advices", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 23)
         button.setTitleColor(UIColor.white, for: .normal)
         button.addTarget(self, action: #selector(giveOrReceive), for: .touchUpInside)
+        button.addBorder(color: UIColor.white)
+        button.makeRounded()
         return button
     }()
     
@@ -41,7 +47,9 @@ class OpenningVC: UIViewController {
         let button = UIButton(type: .custom)
         button.setTitle("Next >", for: .normal)
         button.setTitleColor(UIColor.white, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 27)
         button.addTarget(self, action: #selector(handleNext), for: .touchUpInside)
+        button.setTitleColor(UIColor(red:1.00, green:1.00, blue:1.00, alpha:0.5), for: .selected)
         return button
     }()
     
@@ -61,7 +69,7 @@ class OpenningVC: UIViewController {
         
     }
     
-    @objc func handleNext() {
+    @objc func handleNext(sender: UIButton) {
         if giveButton.isSelected {
             keys.setMentorOrMentee(isMentor: true)
         } else {
@@ -76,6 +84,7 @@ class OpenningVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpViews()
+        giveOrReceive(sender: giveButton)
     }
     
     func setUpViews() {
@@ -84,14 +93,25 @@ class OpenningVC: UIViewController {
         view.addSubview(receiveButton)
         view.addSubview(nextButton)
         
-        optionLabel.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: nil, paddingTop: 200, paddingLeft: 55, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        giveButton.anchor(top: optionLabel.topAnchor, left: optionLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 30, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        receiveButton.anchor(top: giveButton.topAnchor, left: giveButton.leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 130, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        optionLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        optionLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -130).isActive = true
+        
+        giveButton.translatesAutoresizingMaskIntoConstraints = false
+        giveButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        giveButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -60).isActive = true
+        giveButton.widthAnchor.constraint(equalToConstant: 200).isActive = true
+        
+        receiveButton.translatesAutoresizingMaskIntoConstraints = false
+        receiveButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        receiveButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 0).isActive = true
+        receiveButton.widthAnchor.constraint(equalToConstant: 200).isActive = true
         
         nextButton.translatesAutoresizingMaskIntoConstraints = false
         nextButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         nextButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 150).isActive = true
     }
+    
+
     
 
 
