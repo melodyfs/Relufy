@@ -15,15 +15,16 @@ class TabBarController: UITabBarController {
         super.viewDidLoad()
         
         setUpTabBar()
+//        tabBarController?.selectedIndex = 2
     }
     
     private func setUpTabBar() {
         
-        let matchesNavController = createNavigationController(navTitle: "New Matches", tabBarTitle: "Matches", unselectedImageName: UIImage(named: "matches"), selectedImageName: UIImage(named: "matches"), rootViewController: MatchesVC())
+        let matchesNavController = createNavigationController(navTitle: "Recommended", tabBarTitle: "Browse", unselectedImageName: UIImage(named: "matches"), selectedImageName: UIImage(named: "matches"), rootViewController: MatchesVC())
 
         let messagesNavController = createNavigationController(navTitle: "Messages", tabBarTitle: "Messages", unselectedImageName: UIImage(named: "messages"), selectedImageName: UIImage(named: "messages"), rootViewController: MessagesVC())
         
-        let profileNavController = createNavigationController(navTitle: "My Profile", tabBarTitle: "Profile", unselectedImageName: UIImage(named: "profile"), selectedImageName: UIImage(named: "profile"), rootViewController: ProfileVC())
+        let profileNavController = createNavigationController(navTitle: nil, tabBarTitle: "Profile", unselectedImageName: UIImage(named: "profileImageHolder"), selectedImageName: UIImage(named: "profileImageHolder"), rootViewController: ProfileVC())
     
         viewControllers = [matchesNavController, messagesNavController, profileNavController]
      
@@ -32,7 +33,6 @@ class TabBarController: UITabBarController {
         for item in items {
             item.imageInsets = UIEdgeInsets(top: 4, left: 0, bottom: -4, right: 0)
         }
-        
     }
     
     // Create and return a custom tab bar navigation controller

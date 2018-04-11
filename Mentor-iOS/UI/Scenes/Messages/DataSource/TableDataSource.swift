@@ -30,7 +30,7 @@ class TableDatasource<Item>: NSObject, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         guard let configureCell = configureCell else {
-            precondition(false, "You did pass a configuration closure to configureCell, you must do so")
+            fatalError("You did pass a configuration closure to configureCell, you must do so")
         }
         
         return configureCell(tableView, indexPath)

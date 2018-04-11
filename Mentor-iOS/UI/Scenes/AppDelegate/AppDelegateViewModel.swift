@@ -79,9 +79,9 @@ class AppDelegateViewModel {
             rootViewController = OpenningVC()
             keys.set(isLoggedIn: false)
         case .backToProfile:
-            TabBarController().tabBarController?.selectedIndex = 2
-            let vc = TabBarController().tabBarController?.selectedViewController
-            rootViewController = vc!
+            keys.set(isLoggedIn: true)
+            rootViewController = TabBarController()
+            rootViewController.tabBarController?.selectedIndex = 2
 //            rootViewController.tabBarController?
         case .editProfile:
             rootViewController = EditVC()

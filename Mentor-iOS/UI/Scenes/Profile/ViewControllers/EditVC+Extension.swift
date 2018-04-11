@@ -34,7 +34,7 @@ extension EditVC {
     func fetchUser() {
         viewModel.fetchUsers(callback: { [unowned self] (users) in
             DispatchQueue.main.async {
-                let year = String(describing: users.first!.years)
+//                let year = String(describing: users.first!.years)
                 self.nameTextView.text = users.first?.name
                 //                self.ro.text = (users.first?.role)! + " for \(year) year(s)"
                 self.yearTextView.text = String(describing: users.first!.years)
@@ -76,40 +76,38 @@ extension EditVC {
     }
     
     func setUpViews() {
+//        setUpScrollView()
+        scrollView.addSubview(profileImageView)
+        scrollView.addSubview(nameLabel)
+        scrollView.addSubview(nameTextView)
+        scrollView.addSubview(roleLabel)
+        scrollView.addSubview(softwareEngineerButton)
+        scrollView.addSubview(productManagerButton)
+        scrollView.addSubview(designerButton)
+        scrollView.addSubview(forLabel)
+        scrollView.addSubview(yearTextView)
+        scrollView.addSubview(yearLabel)
+        scrollView.addSubview(companyLabel)
+        scrollView.addSubview(companyTextView)
+        scrollView.addSubview(goalLabel)
+        scrollView.addSubview(goalTextView)
+        scrollView.addSubview(raceLabel)
+        scrollView.addSubview(raceTextView)
+        scrollView.addSubview(genderLabel)
+        scrollView.addSubview(genderTextView)
         
-        view.addSubview(profileImageView)
-        view.addSubview(nameLabel)
-        view.addSubview(nameTextView)
-        view.addSubview(roleLabel)
-        view.addSubview(softwareEngineerButton)
-        view.addSubview(productManagerButton)
-        view.addSubview(designerButton)
-        view.addSubview(forLabel)
-        view.addSubview(yearTextView)
-        view.addSubview(yearLabel)
-        view.addSubview(companyLabel)
-        view.addSubview(companyTextView)
-        view.addSubview(goalLabel)
-        view.addSubview(goalTextView)
-        view.addSubview(dismissButton)
-        view.addSubview(saveButton)
-        view.addSubview(raceLabel)
-        view.addSubview(raceTextView)
-        view.addSubview(genderLabel)
-        view.addSubview(genderTextView)
-        
-        profileImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 60).isActive = true
-        profileImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        profileImageView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 60).isActive = true
+        profileImageView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
         profileImageView.heightAnchor.constraint(equalToConstant: 100).isActive = true
         profileImageView.widthAnchor.constraint(equalToConstant: 100).isActive = true
         
-        nameLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10).isActive = true
-        nameLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 150).isActive = true
+        nameLabel.leftAnchor.constraint(equalTo: scrollView.leftAnchor, constant: 10).isActive = true
+        nameLabel.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 170).isActive = true
         
         nameTextView.anchor(top: nameLabel.topAnchor, left: nameLabel.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 20, paddingLeft: 0, paddingBottom: 0, paddingRight: 30, width: 70, height: 40)
         
         roleLabel.leftAnchor.constraint(equalTo: nameLabel.leftAnchor).isActive = true
-        roleLabel.topAnchor.constraint(equalTo: nameLabel.topAnchor, constant: 80).isActive = true
+        roleLabel.topAnchor.constraint(equalTo: nameLabel.topAnchor, constant: 100).isActive = true
         
         softwareEngineerButton.anchor(top: roleLabel.topAnchor, left: nameLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 25, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: softwareEngineerButton.intrinsicContentSize.width + 5, height: softwareEngineerButton.intrinsicContentSize.height + 5)
         
@@ -118,7 +116,7 @@ extension EditVC {
         designerButton.anchor(top: roleLabel.topAnchor, left: softwareEngineerButton.leftAnchor, bottom: nil, right: nil, paddingTop: 25, paddingLeft: 291, paddingBottom: 0, paddingRight: 0, width: designerButton.intrinsicContentSize.width + 5, height: designerButton.intrinsicContentSize.height + 5)
         
         forLabel.leftAnchor.constraint(equalTo: nameLabel.leftAnchor).isActive = true
-        forLabel.topAnchor.constraint(equalTo: roleLabel.topAnchor, constant: 75).isActive = true
+        forLabel.topAnchor.constraint(equalTo: roleLabel.topAnchor, constant: 100).isActive = true
         
         yearTextView.anchor(top: forLabel.topAnchor, left: forLabel.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 20, paddingLeft: 0, paddingBottom: 0, paddingRight: 200, width: 40, height: 40)
         
@@ -126,28 +124,26 @@ extension EditVC {
         yearLabel.topAnchor.constraint(equalTo: yearTextView.topAnchor, constant: 7).isActive = true
         
         companyLabel.leftAnchor.constraint(equalTo: nameLabel.leftAnchor).isActive = true
-        companyLabel.topAnchor.constraint(equalTo: forLabel.topAnchor, constant: 75).isActive = true
+        companyLabel.topAnchor.constraint(equalTo: forLabel.topAnchor, constant: 100).isActive = true
         
         companyTextView.anchor(top: companyLabel.topAnchor, left: forLabel.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 20, paddingLeft: 0, paddingBottom: 0, paddingRight: 100, width: 40, height: 40)
         
         goalLabel.leftAnchor.constraint(equalTo: nameLabel.leftAnchor).isActive = true
-        goalLabel.topAnchor.constraint(equalTo: companyLabel.topAnchor, constant: 75).isActive = true
+        goalLabel.topAnchor.constraint(equalTo: companyLabel.topAnchor, constant: 100).isActive = true
         
         goalTextView.anchor(top: goalLabel.topAnchor, left: goalLabel.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 20, paddingLeft: 0, paddingBottom: 0, paddingRight: 50, width: 40, height: 40)
         
         raceLabel.leftAnchor.constraint(equalTo: nameLabel.leftAnchor).isActive = true
-        raceLabel.topAnchor.constraint(equalTo: goalLabel.topAnchor, constant: 75).isActive = true
+        raceLabel.topAnchor.constraint(equalTo: goalLabel.topAnchor, constant: 100).isActive = true
         
         raceTextView.anchor(top: raceLabel.topAnchor, left: raceLabel.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 20, paddingLeft: 0, paddingBottom: 0, paddingRight: 50, width: 40, height: 40)
         
         genderLabel.leftAnchor.constraint(equalTo: nameLabel.leftAnchor).isActive = true
-        genderLabel.topAnchor.constraint(equalTo: raceLabel.topAnchor, constant: 75).isActive = true
+        genderLabel.topAnchor.constraint(equalTo: raceLabel.topAnchor, constant: 100).isActive = true
         
         genderTextView.anchor(top: genderLabel.topAnchor, left: genderLabel.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 15, paddingLeft: 0, paddingBottom: 0, paddingRight: 50, width: 40, height: 40)
         
-        dismissButton.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: nil, paddingTop: 30, paddingLeft: 20, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        
-        saveButton.anchor(top: view.topAnchor, left: nil, bottom: nil, right: view.rightAnchor, paddingTop: 30, paddingLeft: 0, paddingBottom: 0, paddingRight: 20, width: 0, height: 0)
+       
         
     }
 

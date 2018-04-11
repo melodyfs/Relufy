@@ -25,24 +25,18 @@ class MatchesVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel.confirmed = ["confirmed": "false"]
-//        setUpBgLabel()
         view.backgroundColor = UIColor.white
         registerCollectionView()
         setNameAndImage()
+        navigationController?.navigationBar.prefersLargeTitles = true
+         print(userInfo.count)
+    
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         ServerNetworking.shared.getInfo(route: .createMatches, params: [:]) {_ in}
-        
-//        if userInfo.count != 0 {
-//            DispatchQueue.main.async {
-//                self.collectionView.reloadData()
-//            }
-//        } else {
-//            collectionView.isHidden = true
-//        }
-        
+       fetchUsers()
     }
     
     var getStartedLabel: UILabel = {
@@ -73,7 +67,6 @@ class MatchesVC: UIViewController {
         
         collectionView.backgroundColor = UIColor.white
         collectionView.showsHorizontalScrollIndicator = false
-//        setUpBgLabel()
         self.view.addSubview(collectionView)
         collectionView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 80, paddingLeft: 0, paddingBottom: 10, paddingRight: 0, width: 0, height: 200)
         
@@ -91,13 +84,25 @@ class MatchesVC: UIViewController {
             }
         })
         
+       configureCell()
+    }
+    
+    func configureCell() {
+        
+        if self.dataSource.items.count == 0 {
+            self.collectionView.setEmptyMessage("Complete Your Profile & Check Back Soon!")
+        }
+        
         dataSource.configureCell = { cv, indexPath in
             let cell = cv.dequeueReusableCell(withReuseIdentifier: self.cellID, for: indexPath) as! MatchesListCell
-            cell.viewModel = self.dataSource.items[indexPath.section]
-            cell.connectButton.tag = self.matchIDs[indexPath.section]
-            cell.connectButton.addTarget(self, action: #selector(self.handleConnect), for: .touchUpInside)
-            cell.addShadow()
-            cell.roundCorner()
+            
+           
+                cell.viewModel = self.dataSource.items[indexPath.section]
+                cell.connectButton.tag = self.matchIDs[indexPath.section]
+                cell.connectButton.addTarget(self, action: #selector(self.handleConnect), for: .touchUpInside)
+                cell.addShadow()
+                cell.roundCorner()
+            
             return cell
         }
     }
@@ -148,7 +153,6 @@ class MatchesVC: UIViewController {
 extension MatchesVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let selectedUser = dataSource.items[indexPath.row]
-//        goToDetailController(selectedMemo: selectedMemo)
     }
     
     // cell size and position

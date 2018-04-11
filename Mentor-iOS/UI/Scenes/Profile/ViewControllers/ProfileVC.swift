@@ -64,7 +64,6 @@ class ProfileVC: UIViewController {
         label.font = UIFont.systemFont(ofSize: 16)
         label.textColor = UIColor.gray
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Goal"
         return label
     }()
     
@@ -72,7 +71,6 @@ class ProfileVC: UIViewController {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 20)
         label.textColor = UIColor.black
-//        label.text = "Goal: "
         label.translatesAutoresizingMaskIntoConstraints = false
         label.layer.addBorder(edge: .bottom, color: UIColor.lightGray, thickness: 1.0)
         return label
@@ -91,7 +89,6 @@ class ProfileVC: UIViewController {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 20)
         label.textColor = UIColor.black
-//        label.text = "race "
         label.translatesAutoresizingMaskIntoConstraints = false
         label.layer.addBorder(edge: .bottom, color: UIColor.lightGray, thickness: 1.0)
         return label
@@ -102,7 +99,6 @@ class ProfileVC: UIViewController {
         label.font = UIFont.systemFont(ofSize: 16)
         label.textColor = UIColor.gray
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Gender"
         return label
     }()
     
@@ -110,18 +106,12 @@ class ProfileVC: UIViewController {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 20)
         label.textColor = UIColor.black
-//        label.text = "Gender"
         label.translatesAutoresizingMaskIntoConstraints = false
         label.layer.addBorder(edge: .bottom, color: UIColor.lightGray, thickness: 1.0)
         return label
     }()
     
-    var bgView: UIView!
-    
-    override func viewDidLayoutSubviews() {
-//         goalLabel.layer.addBorder(edge: .top, color: UIColor.lightGray, thickness: 1.0)
-        
-    }
+    var bgView: UIImageView!
     
     let profileImageView: UIImageView = {
         let imageView = UIImageView()
@@ -149,11 +139,14 @@ class ProfileVC: UIViewController {
         setUpViews()
         fetchUser()
         setImage()
+        navigationController?.navigationBar.barTintColor = UIColor.clear.withAlphaComponent(0.1)
     }
     
     func setUpBackground() {
-        let bgView = UIView()
-        bgView.backgroundColor = UIColor.violetPurple
+        let bgView = UIImageView()
+        bgView.getImageFromURL(url: UserDefaults.standard.string(forKey: "image")!)
+        bgView.addBlurEffect()
+        bgView.backgroundColor = UIColor.clear
         
         view.addSubview(bgView)
         bgView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 60, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 200, height: 260)
@@ -170,6 +163,8 @@ class ProfileVC: UIViewController {
                 self.roleLabel.text = (users.first?.role)! + " for \(year) year(s)"
                 self.companyInputLabel.text = (users.first?.company)!
                 self.goalInputLabel.text = (users.first?.goal)!
+                self.raceInputLabel.text = users.first?.race
+                self.genderInputLabel.text = users.first?.gender
             }
         })
         
@@ -177,7 +172,7 @@ class ProfileVC: UIViewController {
     
     func setImage() {
         if AppKeys.instance.isMentor {
-            ServerNetworking.shared.getInfo(route: .getMentorImage, params: [:]) { info in
+            ServerNetworking.shared.getInfo(route: .getMentorImage, params: [:]) { [unowned self] info in
                 if let userinfo = try? JSONDecoder().decode([User].self, from: info) {
                 DispatchQueue.main.async {
                     self.profileImageView.getImageFromURL(url: (userinfo.first?.image_file)!)
@@ -186,7 +181,7 @@ class ProfileVC: UIViewController {
                 }
             }
         } else {
-            ServerNetworking.shared.getInfo(route: .getMenteeImage, params: [:]) { info in
+            ServerNetworking.shared.getInfo(route: .getMenteeImage, params: [:]) { [unowned self] info in
                 if let userinfo = try? JSONDecoder().decode([User].self, from: info){
                 DispatchQueue.main.async {
                     self.profileImageView.getImageFromURL(url: (userinfo.first?.image_file)!)
@@ -200,14 +195,16 @@ class ProfileVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.setImage()
+        setImage()
+        navigationController?.navigationBar.isTranslucent = true
     
     }
     
     @objc func handleEdit() {
         print("edit")
         let editVC = EditVC()
-        self.present(editVC, animated: true)
+        self.navigationController?.pushViewController(editVC, animated: true)
+//        self.present(editVC, animated: true)
     }
     
     func setUpViews() {

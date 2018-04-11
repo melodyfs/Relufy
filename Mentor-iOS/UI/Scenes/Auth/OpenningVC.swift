@@ -49,9 +49,13 @@ class OpenningVC: UIViewController {
         button.setTitleColor(UIColor.white, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 27)
         button.addTarget(self, action: #selector(handleNext), for: .touchUpInside)
-        button.setTitleColor(UIColor(red:1.00, green:1.00, blue:1.00, alpha:0.5), for: .selected)
+        button.addTarget(self, action: #selector(touchDown), for: .touchDown)
         return button
     }()
+    
+    @objc func touchDown(sender: UIButton) {
+        sender.setTitleColor(UIColor.violetPurple, for: UIControlState.normal)
+    }
     
     @objc func giveOrReceive(sender: UIButton) {
         let buttons = [giveButton, receiveButton]

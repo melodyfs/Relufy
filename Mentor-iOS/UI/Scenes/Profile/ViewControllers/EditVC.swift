@@ -230,25 +230,37 @@ class EditVC: UIViewController, UIImagePickerControllerDelegate {
     }
     
     let saveButton: UIButton = {
-        let button = UIButton(type: .system)
+        let button = UIButton(type: .custom)
         button.setTitle("Save", for: .normal)
+        button.setTitleColor(UIColor.violetBlue, for: .normal)
         button.addTarget(self, action: #selector(handleSave), for: .touchUpInside)
+        button.addTarget(self, action: #selector(touchDown), for: .touchDown)
         return button
     }()
     
     let dismissButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("Dismiss", for: .normal)
+        button.setBackgroundImage(UIImage(named: "dismiss"), for: .normal) 
         button.addTarget(self, action: #selector(handleDismiss), for: .touchUpInside)
+        button.addTarget(self, action: #selector(touchDown), for: .touchDown)
         return button
     }()
     
     @objc func handleDismiss() {
         print("dismiss")
 
-        self.dismiss(animated: false, completion: {
-            AppDelegateViewModel.instance.changeStatus(authStatus: .authorized)
-        })
+        self.navigationController?.popViewController(animated: true)
+//        self.dismiss(animated: false, completion: {
+////            AppDelegateViewModel.instance.changeStatus(authStatus: .authorized)
+//        })
+    }
+    
+    deinit {
+        
+    }
+    
+    @objc func touchDown(sender: UIButton) {
+        sender.setTitleColor(UIColor.white, for: UIControlState.normal)
     }
     
     @objc func handleSave() {
@@ -263,12 +275,42 @@ class EditVC: UIViewController, UIImagePickerControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setUpScrollView()
         view.backgroundColor = UIColor.white
         setUpViews()
         fetchUser()
+        addBar()
+        
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapImage))
         profileImageView.addGestureRecognizer(tapGestureRecognizer)
         profileImageView.isUserInteractionEnabled = true
+    }
+    
+    var bar: UIView!
+    
+    func addBar() {
+        bar = UIView()
+        view.addSubview(bar)
+        bar.backgroundColor = UIColor.white
+        bar.anchor(top: scrollView.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom:0, paddingRight: 0, width: view.frame.size.width, height: 70)
+        bar.addSubview(dismissButton)
+        bar.addSubview(saveButton)
+        
+        dismissButton.anchor(top: bar.topAnchor, left: bar.leftAnchor, bottom: nil, right: nil, paddingTop: 30, paddingLeft: 20, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        
+        saveButton.anchor(top: bar.topAnchor, left: nil, bottom: nil, right: bar.rightAnchor, paddingTop: 30, paddingLeft: 0, paddingBottom: 0, paddingRight: 20, width: 0, height: 0)
+    }
+    
+    var scrollView: UIScrollView!
+    
+    func setUpScrollView() {
+        scrollView = UIScrollView()
+        let screensize: CGRect = UIScreen.main.bounds
+        let screenWidth = screensize.width
+        self.scrollView.contentSize = CGSize(width:screenWidth, height: 1000)
+        self.scrollView.isScrollEnabled = true
+        self.scrollView.frame = self.view.bounds
+        view.addSubview(scrollView)
     }
     
     override func viewDidLayoutSubviews() {
@@ -278,6 +320,7 @@ class EditVC: UIViewController, UIImagePickerControllerDelegate {
         yearTextView.layer.addBorder(edge: .bottom, color: UIColor.lightGray, thickness: 0.6)
         genderTextView.layer.addBorder(edge: .bottom, color: UIColor.lightGray, thickness: 0.6)
         raceTextView.layer.addBorder(edge: .bottom, color: UIColor.lightGray, thickness: 0.6)
+        bar.layer.addBorder(edge: .bottom, color: UIColor.gray, thickness: 0.8)
     }
 
 

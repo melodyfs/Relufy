@@ -17,14 +17,14 @@ class UserViewModel {
     
     init() {
         if keys.isMentor {
-            networking.getInfo(route: .getMentorInfo, params: [:]) { info in
+            networking.getInfo(route: .getMentorInfo, params: [:]) { [unowned self] info in
                 if let userInfoList = try? JSONDecoder().decode([User].self, from: info) {
                 self.userInfo = userInfoList
                 self.userItems = self.getUsers(users: self.userInfo)
             }
             }
         } else {
-            networking.getInfo(route: .getMenteeInfo, params: [:]) { info in
+            networking.getInfo(route: .getMenteeInfo, params: [:]) { [unowned self] info in
                 if let userInfoList = try? JSONDecoder().decode([User].self, from: info) {
                 self.userInfo = (userInfoList)
                 self.userItems = self.getUsers(users: self.userInfo)
@@ -36,7 +36,7 @@ class UserViewModel {
     func fetchUsers(callback: @escaping ([UserItemViewModel]) -> Void) {
         
         if keys.isMentor {
-            ServerNetworking.shared.getInfo(route: .getMentorInfo, params: [:]) { info in
+            ServerNetworking.shared.getInfo(route: .getMentorInfo, params: [:]) { [unowned self] info in
                 if let userInfoList = try? JSONDecoder().decode([User].self, from: info) {
                 self.userInfo = userInfoList
                 
@@ -46,7 +46,7 @@ class UserViewModel {
             }
             }
         } else {
-            ServerNetworking.shared.getInfo(route: .getMenteeInfo, params: [:]) { info in
+            ServerNetworking.shared.getInfo(route: .getMenteeInfo, params: [:]) { [unowned self] info in
                 if let userInfoList = try? JSONDecoder().decode([User].self, from: info) {
                 self.userInfo = userInfoList
                 

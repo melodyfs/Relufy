@@ -17,6 +17,7 @@ class MatchesListCell: UICollectionViewCell {
             companyInputLabel.text = (viewModel?.company)!
             goalInputLabel.text = viewModel.goal
             profileImageView.getImageFromURL(url: (viewModel?.image)!)
+            bgView.getImageFromURL(url: (viewModel?.image)!)
         }
     }
     
@@ -79,6 +80,7 @@ class MatchesListCell: UICollectionViewCell {
         imageView.layer.masksToBounds = false
         imageView.layer.cornerRadius = 50
         imageView.clipsToBounds = true
+        imageView.contentMode = .scaleAspectFit
         return imageView
     }()
     
@@ -89,21 +91,26 @@ class MatchesListCell: UICollectionViewCell {
         button.backgroundColor = UIColor.violetBlue
         button.addShadow()
         button.makeRounded()
+        button.addTarget(self, action: #selector(touchDown), for: .touchDown)
         return button
     }()
+    
+    @objc func touchDown(sender: UIButton) {
+        sender.backgroundColor = UIColor.white
+        sender.setTitleColor(UIColor.violetBlue, for: UIControlState.normal)
+    }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         setUpBackgroundView()
-//        bgView.setGradient(firstColor: UIColor.violetPurple, secondColor: UIColor.violetBlue)
         setUpViews()
        
     }
     
-    var bgView: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor.violetPurple
-        view.layer.configureGradientBackground(firstColors: UIColor.violetPurple.cgColor, secondColor: UIColor.violetBlue.cgColor)
+    var bgView: UIImageView = {
+        let view = UIImageView()
+        view.backgroundColor = UIColor.clear
+        view.addBlurEffect()
         return view
     }()
     
@@ -139,8 +146,7 @@ class MatchesListCell: UICollectionViewCell {
         goalLabel.topAnchor.constraint(equalTo: topAnchor, constant: 280).isActive = true
         goalInputLabel.leftAnchor.constraint(equalTo: goalLabel.leftAnchor).isActive = true
         goalInputLabel.topAnchor.constraint(equalTo: goalLabel.topAnchor, constant: 20).isActive = true
-//        goalLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -210).isActive = true
-        
+
         connectButton.translatesAutoresizingMaskIntoConstraints = false
         connectButton.centerYAnchor.constraint(equalTo: centerYAnchor, constant: 200).isActive = true
         connectButton.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
@@ -151,7 +157,6 @@ class MatchesListCell: UICollectionViewCell {
     
     func setUpBackgroundView() {
         addSubview(bgView)
-        
         bgView.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 200, height: 210)
     }
     

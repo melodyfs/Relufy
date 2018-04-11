@@ -29,12 +29,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         IQKeyboardManager.sharedManager().enabledToolbarClasses.append(EditVC.self)
         IQKeyboardManager.sharedManager().enabledDistanceHandlingClasses.append(EditVC.self)
         IQKeyboardManager.sharedManager().enabledDistanceHandlingClasses.append(LoginVC.self)
+        IQKeyboardManager.sharedManager().disabledDistanceHandlingClasses.append(ConversationVC.self)
         IQKeyboardManager.sharedManager().disabledToolbarClasses.append(ConversationVC.self)
     }
     
     func style() {
         UINavigationBar.appearance().tintColor = UIColor.violetBlue
+//        UINavigationBar.appearance().backgroundColor = UIColor.black
         UITabBar.appearance().tintColor = UIColor.violetBlue
+        UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey.foregroundColor : UIColor.violetBlue]
     }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
@@ -70,6 +73,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         print(userInfo)
+        completionHandler(.newData)
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
@@ -92,6 +96,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    }
+    
+    // PusherDelegate functions
+    func subscribedToInterest(name: String) {
+        print("Subscribed to interest: \(name)")
+    }
+    
+    func registeredForPushNotifications(clientId: String) {
+        print("Registered with Pusher for push notifications with clientId: \(clientId)")
+        
     }
 
 

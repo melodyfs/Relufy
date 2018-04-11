@@ -30,20 +30,14 @@ class ConversationVC: UIViewController, PusherDelegate, UITextViewDelegate {
         textField.text = "Enter a message..."
         textField.textColor = UIColor.lightGray
         textField.isEditable = true
-        textField.font = UIFont.systemFont(ofSize: 18, weight: UIFont.Weight.regular)
-//        textField.sizeToFit()
+        textField.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.regular)
+        textField.sizeToFit()
         return textField
     }()
 
     let messageContainerView: UIView =  {
         let view = UIView()
         view.backgroundColor = UIColor.white
-        return view
-    }()
-    
-    let infoContainerView: UIView =  {
-        let view = UIView()
-        view.backgroundColor = UIColor.blue
         return view
     }()
     
@@ -77,6 +71,7 @@ class ConversationVC: UIViewController, PusherDelegate, UITextViewDelegate {
         
         NotificationCenter.default.addObserver(self, selector: #selector(handleNotificationKeyboard(notification:)), name: Notification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleNotificationKeyboard(notification:)), name: Notification.Name.UIKeyboardWillHide, object: nil)
+        tabBarController?.tabBar.isTranslucent = true
     }
     
     func setUpLayout()  {
@@ -139,7 +134,7 @@ class ConversationVC: UIViewController, PusherDelegate, UITextViewDelegate {
         DispatchQueue.main.async {
             self.collectionView.reloadData()
         }
-        configureCell()
+//        configureCell()
     }
     
     func listenToMessages() {
@@ -198,7 +193,7 @@ class ConversationVC: UIViewController, PusherDelegate, UITextViewDelegate {
         collectionView.backgroundColor = UIColor.white
         collectionView.showsVerticalScrollIndicator = false
         self.view.addSubview(collectionView)
-        collectionView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 60, paddingLeft: 0, paddingBottom: 70, paddingRight: 0, width: 200, height: 300)
+        collectionView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 60, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 200, height: view.frame.size.height)
         
         collectionView.dataSource = dataSource
         collectionView.delegate = self
@@ -244,7 +239,7 @@ extension ConversationVC: UICollectionViewDelegateFlowLayout {
         return CGSize(width: view.frame.width, height: height + 50)
 
     }
-    //estimate each cell's height
+    //estimates each cell's height
     private func estimateFrameForText(text: String) -> CGRect {
         let height: CGFloat = 100
         let frameSize = collectionView.frame.size

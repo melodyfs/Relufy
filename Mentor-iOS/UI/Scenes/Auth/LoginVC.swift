@@ -25,6 +25,7 @@ class LoginVC: UIViewController {
         button.addTarget(self, action: #selector(handleLogin), for: .touchUpInside)
         button.addBorder(color: UIColor.white)
         button.makeRounded()
+        button.addTarget(self, action: #selector(touchDown), for: .touchDown)
         return button
     }()
     
@@ -34,6 +35,7 @@ class LoginVC: UIViewController {
         textField.font = UIFont.systemFont(ofSize: 20)
         textField.textColor = UIColor.white
         textField.backgroundColor = UIColor.clear
+        textField.keyboardType = UIKeyboardType.emailAddress
         return textField
     }()
     
@@ -43,6 +45,7 @@ class LoginVC: UIViewController {
         textField.font = UIFont.systemFont(ofSize: 20)
         textField.textColor = UIColor.white
         textField.backgroundColor = UIColor.clear
+        textField.isSecureTextEntry = true
         return textField
     }()
     
@@ -54,9 +57,14 @@ class LoginVC: UIViewController {
         button.addTarget(self, action: #selector(handleSignUp), for: .touchUpInside)
         button.addBorder(color: UIColor.white)
         button.makeRounded()
+        button.addTarget(self, action: #selector(touchDown), for: .touchDown)
         return button
     }()
     
+    @objc func touchDown(sender: UIButton) {
+        sender.backgroundColor = UIColor.white
+        sender.setTitleColor(UIColor.violetBlue, for: UIControlState.normal)
+    }
    
     @objc func handleLogin(sender: UIButton) {
         setKeychainCredential()
