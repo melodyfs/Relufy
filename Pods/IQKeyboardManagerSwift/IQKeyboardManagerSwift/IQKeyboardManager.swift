@@ -82,43 +82,52 @@ open class IQKeyboardManager: NSObject, UIGestureRecognizerDelegate {
         
         var isEnabled = enable
         
-        if let textFieldViewController = _textFieldView?.viewController() {
-            
-            if isEnabled == false {
+//        let enableMode = _textFieldView?.enableMode
+//
+//        if enableMode == .enabled {
+//            isEnabled = true
+//        } else if enableMode == .disabled {
+//            isEnabled = false
+//        } else {
+        
+            if let textFieldViewController = _textFieldView?.viewController() {
                 
-                //If viewController is kind of enable viewController class, then assuming it's enabled.
-                for enabledClass in enabledDistanceHandlingClasses {
+                if isEnabled == false {
                     
-                    if textFieldViewController.isKind(of: enabledClass) {
-                        isEnabled = true
-                        break
-                    }
-                }
-            }
-            
-            if isEnabled == true {
-                
-                //If viewController is kind of disabled viewController class, then assuming it's disabled.
-                for disabledClass in disabledDistanceHandlingClasses {
-                    
-                    if textFieldViewController.isKind(of: disabledClass) {
-                        isEnabled = false
-                        break
+                    //If viewController is kind of enable viewController class, then assuming it's enabled.
+                    for enabledClass in enabledDistanceHandlingClasses {
+                        
+                        if textFieldViewController.isKind(of: enabledClass) {
+                            isEnabled = true
+                            break
+                        }
                     }
                 }
                 
-                //Special Controllers
                 if isEnabled == true {
                     
-                    let classNameString = NSStringFromClass(type(of:textFieldViewController.self))
+                    //If viewController is kind of disabled viewController class, then assuming it's disabled.
+                    for disabledClass in disabledDistanceHandlingClasses {
+                        
+                        if textFieldViewController.isKind(of: disabledClass) {
+                            isEnabled = false
+                            break
+                        }
+                    }
                     
-                    //_UIAlertControllerTextFieldViewController
-                    if (classNameString.contains("UIAlertController") && classNameString.hasSuffix("TextFieldViewController")) {
-                        isEnabled = false
+                    //Special Controllers
+                    if isEnabled == true {
+                        
+                        let classNameString = NSStringFromClass(type(of:textFieldViewController.self))
+                        
+                        //_UIAlertControllerTextFieldViewController
+                        if (classNameString.contains("UIAlertController") && classNameString.hasSuffix("TextFieldViewController")) {
+                            isEnabled = false
+                        }
                     }
                 }
             }
-        }
+//        }
         
         return isEnabled
     }
@@ -367,39 +376,47 @@ open class IQKeyboardManager: NSObject, UIGestureRecognizerDelegate {
         
         var shouldResign = shouldResignOnTouchOutside
         
-        if let textFieldViewController = _textFieldView?.viewController() {
-            
-            if shouldResign == false {
+        let enableMode = _textFieldView?.shouldResignOnTouchOutsideMode
+        
+        if enableMode == .enabled {
+            shouldResign = true
+        } else if enableMode == .disabled {
+            shouldResign = false
+        } else {
+            if let textFieldViewController = _textFieldView?.viewController() {
                 
-                //If viewController is kind of enable viewController class, then assuming shouldResignOnTouchOutside is enabled.
-                for enabledClass in enabledTouchResignedClasses {
+                if shouldResign == false {
                     
-                    if textFieldViewController.isKind(of: enabledClass) {
-                        shouldResign = true
-                        break
-                    }
-                }
-            }
-            
-            if shouldResign == true {
-                
-                //If viewController is kind of disable viewController class, then assuming shouldResignOnTouchOutside is disable.
-                for disabledClass in disabledTouchResignedClasses {
-                    
-                    if textFieldViewController.isKind(of: disabledClass) {
-                        shouldResign = false
-                        break
+                    //If viewController is kind of enable viewController class, then assuming shouldResignOnTouchOutside is enabled.
+                    for enabledClass in enabledTouchResignedClasses {
+                        
+                        if textFieldViewController.isKind(of: enabledClass) {
+                            shouldResign = true
+                            break
+                        }
                     }
                 }
                 
-                //Special Controllers
                 if shouldResign == true {
                     
-                    let classNameString = NSStringFromClass(type(of:textFieldViewController.self))
+                    //If viewController is kind of disable viewController class, then assuming shouldResignOnTouchOutside is disable.
+                    for disabledClass in disabledTouchResignedClasses {
+                        
+                        if textFieldViewController.isKind(of: disabledClass) {
+                            shouldResign = false
+                            break
+                        }
+                    }
                     
-                    //_UIAlertControllerTextFieldViewController
-                    if (classNameString.contains("UIAlertController") && classNameString.hasSuffix("TextFieldViewController")) {
-                        shouldResign = false
+                    //Special Controllers
+                    if shouldResign == true {
+                        
+                        let classNameString = NSStringFromClass(type(of:textFieldViewController.self))
+                        
+                        //_UIAlertControllerTextFieldViewController
+                        if (classNameString.contains("UIAlertController") && classNameString.hasSuffix("TextFieldViewController")) {
+                            shouldResign = false
+                        }
                     }
                 }
             }
@@ -557,10 +574,10 @@ open class IQKeyboardManager: NSObject, UIGestureRecognizerDelegate {
                 let isAcceptAsFirstResponder = goPrevious()
                 
                 if isAcceptAsFirstResponder &&
-                    barButton.invocation.target != nil &&
-                    barButton.invocation.action != nil {
+                    barButton.invocation?.target != nil &&
+                    barButton.invocation?.action != nil {
                     
-                    UIApplication.shared.sendAction(barButton.invocation.action!, to: barButton.invocation.target, from: textFieldRetain, for: UIEvent())
+                    UIApplication.shared.sendAction(barButton.invocation!.action!, to: barButton.invocation!.target, from: textFieldRetain, for: UIEvent())
                 }
             }
         }
@@ -581,10 +598,10 @@ open class IQKeyboardManager: NSObject, UIGestureRecognizerDelegate {
                 let isAcceptAsFirstResponder = goNext()
                 
                 if isAcceptAsFirstResponder &&
-                    barButton.invocation.target != nil &&
-                    barButton.invocation.action != nil {
+                    barButton.invocation?.target != nil &&
+                    barButton.invocation?.action != nil {
                     
-                    UIApplication.shared.sendAction(barButton.invocation.action!, to: barButton.invocation.target, from: textFieldRetain, for: UIEvent())
+                    UIApplication.shared.sendAction(barButton.invocation!.action!, to: barButton.invocation!.target, from: textFieldRetain, for: UIEvent())
                 }
             }
         }
@@ -604,10 +621,10 @@ open class IQKeyboardManager: NSObject, UIGestureRecognizerDelegate {
             let isResignedFirstResponder = resignFirstResponder()
             
             if isResignedFirstResponder &&
-                barButton.invocation.target != nil &&
-                barButton.invocation.action != nil{
+                barButton.invocation?.target != nil &&
+                barButton.invocation?.action != nil{
                 
-                UIApplication.shared.sendAction(barButton.invocation.action!, to: barButton.invocation.target, from: textFieldRetain, for: UIEvent())
+                UIApplication.shared.sendAction(barButton.invocation!.action!, to: barButton.invocation!.target, from: textFieldRetain, for: UIEvent())
             }
         }
     }
@@ -924,15 +941,15 @@ open class IQKeyboardManager: NSObject, UIGestureRecognizerDelegate {
             
 #if swift(>=3.2)
     
-            var safeAreaNewInset = UIEdgeInsets.zero;
+            var safeAreaNewInset = UIEdgeInsets.zero
 
             if canAdjustAdditionalSafeAreaInsets {
         
                 if #available(iOS 11, *) {
                     
                     if let textFieldView = _textFieldView {
-                        safeAreaNewInset = _initialAdditionalSafeAreaInsets;
-                        let viewMovement : CGFloat = _topViewBeginRect.maxY - newFrame.maxY;
+                        safeAreaNewInset = _initialAdditionalSafeAreaInsets
+                        let viewMovement : CGFloat = _topViewBeginRect.maxY - newFrame.maxY
                         
                         //Maintain keyboardDistanceFromTextField
                         var specialKeyboardDistanceFromTextField = textFieldView.keyboardDistanceFromTextField
@@ -946,8 +963,8 @@ open class IQKeyboardManager: NSObject, UIGestureRecognizerDelegate {
                         
                         let newKeyboardDistanceFromTextField = (specialKeyboardDistanceFromTextField == kIQUseDefaultKeyboardDistance) ? keyboardDistanceFromTextField : specialKeyboardDistanceFromTextField
                         
-                        let textFieldDistance = textFieldView.frame.size.height + newKeyboardDistanceFromTextField;
-                        safeAreaNewInset.bottom += min(viewMovement, textFieldDistance);
+                        let textFieldDistance = textFieldView.frame.size.height + newKeyboardDistanceFromTextField
+                        safeAreaNewInset.bottom += min(viewMovement, textFieldDistance)
                     }
                 }
             }
@@ -959,7 +976,7 @@ open class IQKeyboardManager: NSObject, UIGestureRecognizerDelegate {
 #if swift(>=3.2)
                 if self.canAdjustAdditionalSafeAreaInsets {
                     if #available(iOS 11, *) {
-                        unwrappedController.additionalSafeAreaInsets = safeAreaNewInset;
+                        unwrappedController.additionalSafeAreaInsets = safeAreaNewInset
                     }
                 }
 #endif
@@ -1504,7 +1521,7 @@ open class IQKeyboardManager: NSObject, UIGestureRecognizerDelegate {
                 
 #if swift(>=3.2)
                 if #available(iOS 11, *) {
-                    _initialAdditionalSafeAreaInsets = unwrappedRootController.additionalSafeAreaInsets;
+                    _initialAdditionalSafeAreaInsets = unwrappedRootController.additionalSafeAreaInsets
                 }
 #endif
                 if _topViewBeginRect.origin.y != 0 &&
@@ -1676,7 +1693,7 @@ open class IQKeyboardManager: NSObject, UIGestureRecognizerDelegate {
                         
 #if swift(>=3.2)
                         if #available(iOS 11, *) {
-                            rootViewController.additionalSafeAreaInsets = self._initialAdditionalSafeAreaInsets;
+                            rootViewController.additionalSafeAreaInsets = self._initialAdditionalSafeAreaInsets
                         }
 #endif
 
@@ -1729,7 +1746,7 @@ open class IQKeyboardManager: NSObject, UIGestureRecognizerDelegate {
         
 #if swift(>=3.2)
         if #available(iOS 11, *) {
-            _initialAdditionalSafeAreaInsets = .zero;
+            _initialAdditionalSafeAreaInsets = .zero
         }
 #endif
         
@@ -1818,7 +1835,7 @@ open class IQKeyboardManager: NSObject, UIGestureRecognizerDelegate {
                     
 #if swift(>=3.2)
                     if #available(iOS 11, *) {
-                        _initialAdditionalSafeAreaInsets = rootViewController.additionalSafeAreaInsets;
+                        _initialAdditionalSafeAreaInsets = rootViewController.additionalSafeAreaInsets
                     }
 #endif
 
@@ -1926,7 +1943,7 @@ open class IQKeyboardManager: NSObject, UIGestureRecognizerDelegate {
         if let rootViewController = _rootViewController {
             if #available(iOS 11, *) {
                 if UIEdgeInsetsEqualToEdgeInsets(_initialAdditionalSafeAreaInsets, rootViewController.additionalSafeAreaInsets) {
-                    rootViewController.additionalSafeAreaInsets = _initialAdditionalSafeAreaInsets;
+                    rootViewController.additionalSafeAreaInsets = _initialAdditionalSafeAreaInsets
                 }
             }
         }
@@ -1956,17 +1973,17 @@ open class IQKeyboardManager: NSObject, UIGestureRecognizerDelegate {
         let startTime = CACurrentMediaTime()
         showLog("****** \(#function) started ******")
         
-        if _rootViewController != nil &&
-            !_topViewBeginRect.equalTo(_rootViewController!.view.frame) == true {
+        if let unwrappedRootController = _rootViewController {
 
-            if let unwrappedRootController = _rootViewController {
+            if !_topViewBeginRect.equalTo(unwrappedRootController.view.frame) == true {
+
                 _topViewBeginRect = unwrappedRootController.view.frame
                 
-#if swift(>=3.2)
-                if #available(iOS 11, *) {
-                    _initialAdditionalSafeAreaInsets = unwrappedRootController.additionalSafeAreaInsets;
-                }
-#endif
+                #if swift(>=3.2)
+                    if #available(iOS 11, *) {
+                        _initialAdditionalSafeAreaInsets = unwrappedRootController.additionalSafeAreaInsets
+                    }
+                #endif
                 
                 if _topViewBeginRect.origin.y != 0 &&
                     shouldFixInteractivePopGestureRecognizer == true &&
@@ -1982,11 +1999,12 @@ open class IQKeyboardManager: NSObject, UIGestureRecognizerDelegate {
                 }
                 
                 showLog("Saving \(unwrappedRootController._IQDescription()) beginning Frame: \(_topViewBeginRect)")
-            } else {
-                _topViewBeginRect = CGRect.zero
             }
+            
+        } else {
+            _topViewBeginRect = CGRect.zero
         }
-        
+
         //If _textFieldView is inside UITableViewController then let UITableViewController to handle it (Bug ID: #37) (Bug ID: #76) See note:- https://developer.apple.com/library/ios/documentation/StringsTextFonts/Conceptual/TextAndWebiPhoneOS/KeyboardManagement/KeyboardManagement.html If it is UIAlertView textField then do not affect anything (Bug ID: #70).
         
         if _privateIsKeyboardShowing == true &&

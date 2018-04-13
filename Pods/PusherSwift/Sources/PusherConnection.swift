@@ -176,6 +176,15 @@ public typealias PusherEventJSON = [String: AnyObject]
             self.channels.remove(name: channelName)
         }
     }
+    
+    /**
+        Unsubscribes from all PusherChannels
+    */
+    internal func unsubscribeAll() {
+        for (_, channel) in channels.channels {
+            unsubscribe(channelName: channel.name)
+        }
+    }
 
     /**
         Either writes a string directly to the websocket with the given event name
@@ -604,7 +613,7 @@ public typealias PusherEventJSON = [String: AnyObject]
                         return
                     }
 
-                    handleAuthInfo(authString: authInfo.auth, channelData: authInfo.channelData, channel: channel)
+                    self.handleAuthInfo(authString: authInfo.auth, channelData: authInfo.channelData, channel: channel)
                 }
 
                 return true

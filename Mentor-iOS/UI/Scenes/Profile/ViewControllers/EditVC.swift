@@ -250,7 +250,7 @@ class EditVC: UIViewController, UIImagePickerControllerDelegate {
         print("dismiss")
 
         self.navigationController?.popViewController(animated: true)
-//        self.dismiss(animated: false, completion: {
+//        dismiss(animated: true, completion: {
 ////            AppDelegateViewModel.instance.changeStatus(authStatus: .authorized)
 //        })
     }
@@ -299,6 +299,7 @@ class EditVC: UIViewController, UIImagePickerControllerDelegate {
         dismissButton.anchor(top: bar.topAnchor, left: bar.leftAnchor, bottom: nil, right: nil, paddingTop: 30, paddingLeft: 20, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         
         saveButton.anchor(top: bar.topAnchor, left: nil, bottom: nil, right: bar.rightAnchor, paddingTop: 30, paddingLeft: 0, paddingBottom: 0, paddingRight: 20, width: 0, height: 0)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(handleSave))
     }
     
     var scrollView: UIScrollView!

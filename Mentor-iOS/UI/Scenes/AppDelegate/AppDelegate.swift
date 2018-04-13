@@ -10,10 +10,12 @@ import UIKit
 import IQKeyboardManagerSwift
 import PusherSwift
 import UserNotifications
+import PushNotifications
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     let pusher = Pusher(key: key)
+    let pushNotifications = PushNotifications.shared
 
     var window: UIWindow?
     let viewModel = AppDelegateViewModel.instance
@@ -39,6 +41,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UITabBar.appearance().tintColor = UIColor.violetBlue
         UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey.foregroundColor : UIColor.violetBlue]
     }
+    
+    func configNotifications() {
+        self.pushNotifications.start(instanceId: instanceID)
+        self.pushNotifications.registerForRemoteNotifications()
+    }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
@@ -54,21 +61,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.makeKeyAndVisible()
         style()
         
-        let center = UNUserNotificationCenter.current()
-        center.requestAuthorization(options: [.alert, .sound, .badge]) { (granted, error) in
-            // Enable or disable features based on authorization.
-        }
-        application.registerForRemoteNotifications()
+        configNotifications()
         
         return true
     }
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        let deviceTokenString = deviceToken.reduce("", {$0 + String(format: "%02X", $1)})
-        
-        print("APNs device token: \(deviceTokenString)")
-        pusher.nativePusher.register(deviceToken: deviceToken)
-        pusher.nativePusher.subscribe(interestName: "testing")
+        self.pushNotifications.registerDeviceToken(deviceToken) {
+            try? self.pushNotifications.subscribe(interest: "new")
+        }
     }
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {

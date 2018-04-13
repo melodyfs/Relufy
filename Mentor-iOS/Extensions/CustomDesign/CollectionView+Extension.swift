@@ -22,4 +22,11 @@ extension UICollectionView {
         self.backgroundView = messageLabel;
     }
     
+    func setImageView(_ image: UIImage) {
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: self.bounds.size.width, height: self.bounds.size.height))
+        imageView.image = image
+        imageView.sizeToFit()
+        
+        self.backgroundView = imageView
+    }
 }

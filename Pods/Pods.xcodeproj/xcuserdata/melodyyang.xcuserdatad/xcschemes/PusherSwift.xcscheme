@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0700"
+   LastUpgradeVersion = "0930"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -13,11 +13,11 @@
             buildForProfiling = "YES"
             buildForArchiving = "YES">
             <BuildableReference
-               BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '557684111879638E87C24765D1C30E0D'
-               BlueprintName = 'PusherSwift'
-               ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'PusherSwift.framework'>
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "6BA3BDCED122D3665B8E77BB7AFF42D2"
+               BlueprintName = "PusherSwift"
+               ReferencedContainer = "container:Pods.xcodeproj"
+               BuildableName = "PusherSwift.framework">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

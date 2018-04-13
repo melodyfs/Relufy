@@ -43,6 +43,8 @@ open class IQTextView : UITextView {
     }
     
     deinit {
+        placeholderLabel?.removeFromSuperview()
+        placeholderLabel = nil
         NotificationCenter.default.removeObserver(self)
     }
     
@@ -98,7 +100,7 @@ open class IQTextView : UITextView {
 
     @objc open func refreshPlaceholder() {
         
-        if text.characters.count != 0 {
+        if !text.isEmpty {
             placeholderLabel?.alpha = 0
         } else {
             placeholderLabel?.alpha = 1

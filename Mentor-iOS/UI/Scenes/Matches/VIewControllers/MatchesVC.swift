@@ -91,12 +91,11 @@ class MatchesVC: UIViewController {
         
         if self.dataSource.items.count == 0 {
             self.collectionView.setEmptyMessage("Complete Your Profile & Check Back Soon!")
+            self.collectionView.setImageView(UIImage(named: "matches")!)
         }
         
         dataSource.configureCell = { cv, indexPath in
             let cell = cv.dequeueReusableCell(withReuseIdentifier: self.cellID, for: indexPath) as! MatchesListCell
-            
-           
                 cell.viewModel = self.dataSource.items[indexPath.section]
                 cell.connectButton.tag = self.matchIDs[indexPath.section]
                 cell.connectButton.addTarget(self, action: #selector(self.handleConnect), for: .touchUpInside)

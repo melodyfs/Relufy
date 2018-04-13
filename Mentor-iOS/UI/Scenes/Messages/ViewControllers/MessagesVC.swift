@@ -50,7 +50,8 @@ class MessagesVC: UIViewController, PusherDelegate {
         collectionView.isPagingEnabled = true
         collectionView.isScrollEnabled = true
         
-        configureCell()
+        fetchUsers()
+        
         collectionView.backgroundColor = UIColor.white
         collectionView.showsVerticalScrollIndicator = false
         self.view.addSubview(collectionView)
@@ -69,11 +70,12 @@ class MessagesVC: UIViewController, PusherDelegate {
                 self.collectionView.reloadData()
             }
         })
+        configureCell()
     }
     func configureCell() {
-        if self.dataSource.items.count == 0 {
-            self.collectionView.setEmptyMessage("Connect & Check Back Soon!")
-        }
+//        if self.dataSource.items.count == 0 {
+//            self.collectionView.setEmptyMessage("Connect & Check Back Soon!")
+//        }
         dataSource.configureCell = { cv, indexPath in
             let cell = cv.dequeueReusableCell(withReuseIdentifier: self.cell, for: indexPath) as! MessageCell
             cell.viewModel = self.dataSource.items[indexPath.section]

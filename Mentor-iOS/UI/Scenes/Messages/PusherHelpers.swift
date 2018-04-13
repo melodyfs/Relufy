@@ -11,6 +11,7 @@ import PusherSwift
 
 class AuthRequestBuilder: AuthRequestBuilderProtocol {
     func requestFor(socketID: String, channelName: String) -> URLRequest? {
+//        let base = URL(string: "http://localhost:3000/pushers")
         let base = URL(string: "https://mentor-app-server.herokuapp.com/pushers")
         var request = URLRequest(url: base!)
         request.httpMethod = "POST"

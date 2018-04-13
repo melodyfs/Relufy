@@ -17,14 +17,14 @@ class UserViewModel {
     
     init() {
         if keys.isMentor {
-            networking.getInfo(route: .getMentorInfo, params: [:]) { [unowned self] info in
+            networking.getInfo(route: .getMentorInfo, params: [:]) { info in
                 if let userInfoList = try? JSONDecoder().decode([User].self, from: info) {
                 self.userInfo = userInfoList
                 self.userItems = self.getUsers(users: self.userInfo)
             }
             }
         } else {
-            networking.getInfo(route: .getMenteeInfo, params: [:]) { [unowned self] info in
+            networking.getInfo(route: .getMenteeInfo, params: [:]) { info in
                 if let userInfoList = try? JSONDecoder().decode([User].self, from: info) {
                 self.userInfo = (userInfoList)
                 self.userItems = self.getUsers(users: self.userInfo)

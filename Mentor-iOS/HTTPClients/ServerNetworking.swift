@@ -30,6 +30,7 @@ enum Route {
     case getMenteeImage
     case getMentorImage
     case createMatches
+    case postNotification
    
     func path() -> String {
         
@@ -56,12 +57,15 @@ enum Route {
              return "/mentees/one/model"
         case .getMentorImage:
              return "/mentors/one/model"
+        case .postNotification:
+            return "/pushers/notify"
         }
     }
     
     func headers() -> [String: String] {
         switch self {
-        case .createMentor, .createMentee, .getMentee, .getMentor:
+        case .createMentor, .createMentee,
+             .getMentee, .getMentor, .postNotification:
             return [:]
         default:
             let headers = ["Authorization": "Token token=\(keychain.get("token")!)"]
@@ -72,7 +76,8 @@ enum Route {
     
     func method() -> String {
         switch self {
-        case .createMentor, .createMentee, .sendMessage, .saveMessage, .createMatches:
+        case .createMentor, .createMentee, .sendMessage,
+             .saveMessage, .createMatches, .postNotification:
             return "POST"
         case .updateMentor, .updateMentee, .confirmMatched:
             return "PATCH"

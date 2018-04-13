@@ -54,7 +54,16 @@ class ConversationVC: UIViewController, PusherDelegate, UITextViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
-        
+        setChannelName()
+        registerCollectionView()
+        listenToMessages()
+        configureCell()
+        setUpLayout()
+        inputTextField.delegate = self
+        addNotifications()
+    }
+    
+    func setChannelName() {
         if keys.isMentor {
             viewModel.channelName = ["channel_name": "private-\(userEmail!)-\(otherPersonEmail!)"]
             channelName = "private-\(userEmail!)-\(otherPersonEmail!)"
@@ -62,16 +71,13 @@ class ConversationVC: UIViewController, PusherDelegate, UITextViewDelegate {
             viewModel.channelName = ["channel_name": "private-\(otherPersonEmail!)-\(userEmail!)"]
             channelName = "private-\(otherPersonEmail!)-\(userEmail!)"
         }
-
-        registerCollectionView()
-        listenToMessages()
-        configureCell()
-        setUpLayout()
-        inputTextField.delegate = self
-        
+    }
+    
+    func addNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(handleNotificationKeyboard(notification:)), name: Notification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleNotificationKeyboard(notification:)), name: Notification.Name.UIKeyboardWillHide, object: nil)
         tabBarController?.tabBar.isTranslucent = true
+        NotificationCenter.default.addObserver(self, selector: #selector(listenToMessagesInBackground), name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
     }
     
     func setUpLayout()  {
@@ -164,6 +170,46 @@ class ConversationVC: UIViewController, PusherDelegate, UITextViewDelegate {
             }
         })
         
+    }
+    
+    @objc func listenToMessagesInBackground(notification: Notification) {
+        print(notification.userInfo)
+        print("app in forground")
+//        notifyNewMessage(title: "Foreground", body: "content")
+//        let options = PusherClientOptions(
+//            authMethod: AuthMethod.authRequestBuilder(authRequestBuilder: AuthRequestBuilder()),
+//            host: .cluster(cluster)
+//        )
+//        pusher = Pusher(
+//            key: key,
+//            options: options
+//        )
+//        pusher.delegate = self
+//        pusher.connect()
+//
+//        let chan = pusher.subscribe(channelName)
+//        let _ = chan.bind(eventName: "chat", callback: { data in
+//            print(data)
+//            if let data = data as? [String : AnyObject] {
+//                if let sender = data["sender"] as? String {
+//                    if let content = data["content"] as? String {
+//                        let message = ConversationItemViewModel(sender: sender, content: content)
+//                        self.dataSource.items.append(message)
+//                        let section = self.dataSource.items.count
+//                        self.collectionView?.insertSections([section - 1])
+//                        self.notifyNewMessage(title: (self.userInfo.first?.name)!,
+//                                              body: content)
+//                    }
+//                }
+//            }
+//        })
+
+    }
+    
+    func notifyNewMessage(title: String, body: String) {
+        var params = ["title": title,
+                      "body": body]
+        ServerNetworking.shared.getInfo(route: .postNotification, params: params) {_ in}
     }
     
     

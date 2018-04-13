@@ -63,6 +63,7 @@ class ProfileVC: UIViewController {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16)
         label.textColor = UIColor.gray
+        label.text = "Goal"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -98,6 +99,7 @@ class ProfileVC: UIViewController {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16)
         label.textColor = UIColor.gray
+        label.text = "Gender"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -199,12 +201,17 @@ class ProfileVC: UIViewController {
         navigationController?.navigationBar.isTranslucent = true
     
     }
-    
+//    weak var editVC = EditVC!.self
+    var editVC = EditVC()
     @objc func handleEdit() {
         print("edit")
-        let editVC = EditVC()
+        
         self.navigationController?.pushViewController(editVC, animated: true)
-//        self.present(editVC, animated: true)
+//        present(editVC, animated: true)
+    }
+    
+    deinit {
+        
     }
     
     func setUpViews() {
@@ -255,7 +262,7 @@ class ProfileVC: UIViewController {
         genderLabel.leftAnchor.constraint(equalTo: raceInputLabel.leftAnchor).isActive = true
         genderLabel.topAnchor.constraint(equalTo: raceInputLabel.topAnchor, constant: 40).isActive = true
         genderInputLabel.leftAnchor.constraint(equalTo: genderLabel.leftAnchor).isActive = true
-        genderInputLabel.topAnchor.constraint(equalTo: genderLabel.topAnchor, constant: 35).isActive = true
+        genderInputLabel.topAnchor.constraint(equalTo: genderLabel.topAnchor, constant: 20).isActive = true
         
     }
 }
