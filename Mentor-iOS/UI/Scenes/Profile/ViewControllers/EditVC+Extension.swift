@@ -76,7 +76,6 @@ extension EditVC {
     }
     
     func setUpViews() {
-//        setUpScrollView()
         scrollView.addSubview(profileImageView)
         scrollView.addSubview(nameLabel)
         scrollView.addSubview(nameTextView)
@@ -101,7 +100,7 @@ extension EditVC {
         profileImageView.heightAnchor.constraint(equalToConstant: 100).isActive = true
         profileImageView.widthAnchor.constraint(equalToConstant: 100).isActive = true
         
-        nameLabel.leftAnchor.constraint(equalTo: scrollView.leftAnchor, constant: 10).isActive = true
+        nameLabel.leftAnchor.constraint(equalTo: scrollView.leftAnchor, constant: 20).isActive = true
         nameLabel.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 170).isActive = true
         
         nameTextView.anchor(top: nameLabel.topAnchor, left: nameLabel.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 20, paddingLeft: 0, paddingBottom: 0, paddingRight: 30, width: 70, height: 40)
@@ -111,12 +110,12 @@ extension EditVC {
         
         softwareEngineerButton.anchor(top: roleLabel.topAnchor, left: nameLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 25, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: softwareEngineerButton.intrinsicContentSize.width + 5, height: softwareEngineerButton.intrinsicContentSize.height + 5)
         
-        productManagerButton.anchor(top: roleLabel.topAnchor, left: softwareEngineerButton.leftAnchor, bottom: nil, right: nil, paddingTop: 25, paddingLeft: 150, paddingBottom: 0, paddingRight: 0, width: productManagerButton.intrinsicContentSize.width + 5, height: productManagerButton.intrinsicContentSize.height + 5)
+        productManagerButton.anchor(top: roleLabel.topAnchor, left: softwareEngineerButton.leftAnchor, bottom: nil, right: nil, paddingTop: 25, paddingLeft: 160, paddingBottom: 0, paddingRight: 0, width: productManagerButton.intrinsicContentSize.width + 5, height: productManagerButton.intrinsicContentSize.height + 5)
         
-        designerButton.anchor(top: roleLabel.topAnchor, left: softwareEngineerButton.leftAnchor, bottom: nil, right: nil, paddingTop: 25, paddingLeft: 291, paddingBottom: 0, paddingRight: 0, width: designerButton.intrinsicContentSize.width + 5, height: designerButton.intrinsicContentSize.height + 5)
+        designerButton.anchor(top: roleLabel.topAnchor, left: softwareEngineerButton.leftAnchor, bottom: nil, right: nil, paddingTop: 75, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: designerButton.intrinsicContentSize.width + 5, height: designerButton.intrinsicContentSize.height + 5)
         
         forLabel.leftAnchor.constraint(equalTo: nameLabel.leftAnchor).isActive = true
-        forLabel.topAnchor.constraint(equalTo: roleLabel.topAnchor, constant: 100).isActive = true
+        forLabel.topAnchor.constraint(equalTo: roleLabel.topAnchor, constant: 130).isActive = true
         
         yearTextView.anchor(top: forLabel.topAnchor, left: forLabel.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 20, paddingLeft: 0, paddingBottom: 0, paddingRight: 200, width: 40, height: 40)
         

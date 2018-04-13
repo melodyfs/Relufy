@@ -52,7 +52,7 @@ class TabBarController: UITabBarController {
             
         }
         
-        tabBar.isTranslucent = false
+        tabBar.isTranslucent = true
         
         return navigationController
     }

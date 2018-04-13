@@ -73,9 +73,6 @@ class MessagesVC: UIViewController, PusherDelegate {
         configureCell()
     }
     func configureCell() {
-//        if self.dataSource.items.count == 0 {
-//            self.collectionView.setEmptyMessage("Connect & Check Back Soon!")
-//        }
         dataSource.configureCell = { cv, indexPath in
             let cell = cv.dequeueReusableCell(withReuseIdentifier: self.cell, for: indexPath) as! MessageCell
             cell.viewModel = self.dataSource.items[indexPath.section]

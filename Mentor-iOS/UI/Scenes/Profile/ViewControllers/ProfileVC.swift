@@ -63,7 +63,7 @@ class ProfileVC: UIViewController {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16)
         label.textColor = UIColor.gray
-        label.text = "Goal"
+        label.text = "Reason I am in Tech"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -136,71 +136,15 @@ class ProfileVC: UIViewController {
   
     override func viewDidLoad() {
         super.viewDidLoad()
+        setUpScrollView()
         view.backgroundColor = UIColor.white
-        setUpBackground()
-        setUpViews()
         fetchUser()
         setImage()
-        navigationController?.navigationBar.barTintColor = UIColor.clear.withAlphaComponent(0.1)
+        setUpBackground()
+        setUpViews()
+        setUpHeaders()
     }
     
-    func setUpBackground() {
-        let bgView = UIImageView()
-        bgView.getImageFromURL(url: UserDefaults.standard.string(forKey: "image")!)
-        bgView.addBlurEffect()
-        bgView.backgroundColor = UIColor.clear
-        
-        view.addSubview(bgView)
-        bgView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 60, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 200, height: 260)
-    }
-    
-    func fetchUser() {
-        viewModel.fetchUsers(callback: { [unowned self] (users) in
-            DispatchQueue.main.async {
-                let year = String(describing: users.first!.years)
-                self.userInfoItems = users
-                UserDefaults.standard.set(users.first?.name, forKey: "name")
-                UserDefaults.standard.set(users.first?.image, forKey: "image")
-                self.nameLabel.text = users.first?.name
-                self.roleLabel.text = (users.first?.role)! + " for \(year) year(s)"
-                self.companyInputLabel.text = (users.first?.company)!
-                self.goalInputLabel.text = (users.first?.goal)!
-                self.raceInputLabel.text = users.first?.race
-                self.genderInputLabel.text = users.first?.gender
-            }
-        })
-        
-    }
-    
-    func setImage() {
-        if AppKeys.instance.isMentor {
-            ServerNetworking.shared.getInfo(route: .getMentorImage, params: [:]) { [unowned self] info in
-                if let userinfo = try? JSONDecoder().decode([User].self, from: info) {
-                DispatchQueue.main.async {
-                    self.profileImageView.getImageFromURL(url: (userinfo.first?.image_file)!)
-                }
-                UserDefaults.standard.set((userinfo.first?.image_file)!, forKey: "image")
-                }
-            }
-        } else {
-            ServerNetworking.shared.getInfo(route: .getMenteeImage, params: [:]) { [unowned self] info in
-                if let userinfo = try? JSONDecoder().decode([User].self, from: info){
-                DispatchQueue.main.async {
-                    self.profileImageView.getImageFromURL(url: (userinfo.first?.image_file)!)
-                }
-                UserDefaults.standard.set((userinfo.first?.image_file)!, forKey: "image")
-            }
-            }
-        }
-        
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        setImage()
-        navigationController?.navigationBar.isTranslucent = true
-    
-    }
 //    weak var editVC = EditVC!.self
     var editVC = EditVC()
     @objc func handleEdit() {
@@ -214,23 +158,23 @@ class ProfileVC: UIViewController {
         
     }
     
-    func setUpViews() {
-        let editButtonItem = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(handleEdit))
-        navigationItem.rightBarButtonItem = editButtonItem
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Log Out", style: .plain, target: self, action: #selector(handleLogout))
-        
+    var scrollView: UIScrollView!
+    
+    func setUpScrollView() {
+        scrollView = UIScrollView()
+       
+        let screensize: CGRect = UIScreen.main.bounds
+        let screenWidth = screensize.width
+        self.scrollView.contentSize = CGSize(width:screenWidth, height: 800)
+        self.scrollView.isScrollEnabled = true
+        self.scrollView.frame = CGRect(x: 0, y: 30, width: screenWidth, height: 800)
+         view.addSubview(scrollView)
+    }
+    
+    func setUpHeaders() {
         view.addSubview(profileImageView)
         view.addSubview(nameLabel)
         view.addSubview(roleLabel)
-        view.addSubview(yearLabel)
-        view.addSubview(companyInputLabel)
-        view.addSubview(goalInputLabel)
-        view.addSubview(companyLabel)
-        view.addSubview(goalLabel)
-        view.addSubview(raceLabel)
-        view.addSubview(raceInputLabel)
-        view.addSubview(genderLabel)
-        view.addSubview(genderInputLabel)
         
         profileImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 80).isActive = true
         profileImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
@@ -243,10 +187,27 @@ class ProfileVC: UIViewController {
         
         roleLabel.centerYAnchor.constraint(equalTo: nameLabel.centerYAnchor, constant: 30).isActive = true
         roleLabel.centerXAnchor.constraint(equalTo: nameLabel.centerXAnchor).isActive = true
+    }
+    
+    
+    func setUpViews() {
+        navigationController?.navigationBar.barTintColor = UIColor.clear.withAlphaComponent(0.1)
+        let editButtonItem = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(handleEdit))
+        navigationItem.rightBarButtonItem = editButtonItem
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Log Out", style: .plain, target: self, action: #selector(handleLogout))
         
-        companyLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20).isActive = true
-        companyLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 335).isActive = true
-        companyInputLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20).isActive = true
+        scrollView.addSubview(companyInputLabel)
+        scrollView.addSubview(goalInputLabel)
+        scrollView.addSubview(companyLabel)
+        scrollView.addSubview(goalLabel)
+        scrollView.addSubview(raceLabel)
+        scrollView.addSubview(raceInputLabel)
+        scrollView.addSubview(genderLabel)
+        scrollView.addSubview(genderInputLabel)
+        
+        companyLabel.leftAnchor.constraint(equalTo: scrollView.leftAnchor, constant: 20).isActive = true
+        companyLabel.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 270).isActive = true
+        companyInputLabel.leftAnchor.constraint(equalTo: scrollView.leftAnchor, constant: 20).isActive = true
         companyInputLabel.topAnchor.constraint(equalTo: companyLabel.topAnchor, constant: 20).isActive = true
         
         goalLabel.leftAnchor.constraint(equalTo: companyInputLabel.leftAnchor).isActive = true
@@ -255,7 +216,7 @@ class ProfileVC: UIViewController {
         goalInputLabel.topAnchor.constraint(equalTo: goalLabel.topAnchor, constant: 20).isActive = true
         
         raceLabel.leftAnchor.constraint(equalTo: goalInputLabel.leftAnchor).isActive = true
-        raceLabel.topAnchor.constraint(equalTo: goalInputLabel.topAnchor, constant: 40).isActive = true
+        raceLabel.topAnchor.constraint(equalTo: goalInputLabel.topAnchor, constant: 80).isActive = true
         raceInputLabel.leftAnchor.constraint(equalTo: raceLabel.leftAnchor).isActive = true
         raceInputLabel.topAnchor.constraint(equalTo: raceLabel.topAnchor, constant: 20).isActive = true
         

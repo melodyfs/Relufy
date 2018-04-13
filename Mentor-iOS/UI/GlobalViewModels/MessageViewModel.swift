@@ -63,7 +63,9 @@ class MessageViewModel {
             years: user.years_experience ?? 0,
             company: "\(user.company ?? "None")",
             image: "\(user.image_file ?? "None")",
-            goal: "\(user.goal ?? "None")"
+            goal: "\(user.goal ?? "None")",
+            race: "\(user.race ?? "None")",
+            gender: "\(user.gender ?? "None")"
         )
 
     }
@@ -78,6 +80,8 @@ struct MessageItemViewModel {
     var company: String
     var image: String
     var goal: String
+    var race: String
+    var gender: String
 
 }
 

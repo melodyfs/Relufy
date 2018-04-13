@@ -96,12 +96,14 @@ class MatchesVC: UIViewController {
         
         dataSource.configureCell = { cv, indexPath in
             let cell = cv.dequeueReusableCell(withReuseIdentifier: self.cellID, for: indexPath) as! MatchesListCell
-                cell.viewModel = self.dataSource.items[indexPath.section]
-                cell.connectButton.tag = self.matchIDs[indexPath.section]
-                cell.connectButton.addTarget(self, action: #selector(self.handleConnect), for: .touchUpInside)
-                cell.addShadow()
-                cell.roundCorner()
-            
+            cell.viewModel = self.dataSource.items[indexPath.section]
+            cell.connectButton.tag = self.matchIDs[indexPath.section]
+            cell.connectButton.addTarget(self, action: #selector(self.handleConnect), for: .touchUpInside)
+            cell.addShadow()
+            cell.roundCorner()
+            let frameSize = self.collectionView.frame.size
+            cell.scrollView.frame = CGRect(x: 0, y: 0, width: frameSize.width - 20, height: frameSize.height - 120)
+            cell.scrollView.contentSize = CGSize(width: frameSize.width - 20, height: 650)
             return cell
         }
     }
@@ -157,7 +159,7 @@ extension MatchesVC: UICollectionViewDelegateFlowLayout {
     // cell size and position
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let frameSize = collectionView.frame.size
-        return CGSize(width: frameSize.width - 20, height: frameSize.height - 80)
+        return CGSize(width: frameSize.width - 20, height: frameSize.height - 120)
 
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {

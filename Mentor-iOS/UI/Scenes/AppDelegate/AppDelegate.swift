@@ -37,7 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func style() {
         UINavigationBar.appearance().tintColor = UIColor.violetBlue
-//        UINavigationBar.appearance().backgroundColor = UIColor.black
+//        UINavigationBar.appearance().backgroundColor = UIColor.violetBlue
         UITabBar.appearance().tintColor = UIColor.violetBlue
         UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey.foregroundColor : UIColor.violetBlue]
     }

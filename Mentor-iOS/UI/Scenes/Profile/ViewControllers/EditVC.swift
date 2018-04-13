@@ -27,14 +27,10 @@ class EditVC: UIViewController, UIImagePickerControllerDelegate {
     
     let nameTextView: UITextView = {
         let textView = UITextView()
-//        textView.text = "Name textview"
         textView.font = UIFont.systemFont(ofSize: 20)
         textView.textColor = UIColor.black
         textView.backgroundColor = UIColor.white
         textView.isUserInteractionEnabled = true
-//        textView.layer.borderColor = UIColor.violetBlue.cgColor
-//        textView.layer.borderWidth = 1
-//        textView.layer.cornerRadius = 5
         return textView
     }()
     
@@ -58,14 +54,10 @@ class EditVC: UIViewController, UIImagePickerControllerDelegate {
     
     let yearTextView: UITextView = {
         let textView = UITextView()
-//        textView.text = "3"
         textView.font = UIFont.systemFont(ofSize: 20)
         textView.textColor = UIColor.black
         textView.backgroundColor = UIColor.white
         textView.isUserInteractionEnabled = true
-//        textView.layer.borderColor = UIColor.violetBlue.cgColor
-//        textView.layer.borderWidth = 1
-//        textView.layer.cornerRadius = 5
         return textView
     }()
     
@@ -143,14 +135,10 @@ class EditVC: UIViewController, UIImagePickerControllerDelegate {
     
     let companyTextView: UITextView = {
         let textView = UITextView()
-//        textView.text = "company textview"
         textView.font = UIFont.systemFont(ofSize: 20)
         textView.textColor = UIColor.black
         textView.backgroundColor = UIColor.white
         textView.isUserInteractionEnabled = true
-//        textView.layer.borderColor = UIColor.violetBlue.cgColor
-//        textView.layer.borderWidth = 1
-//        textView.layer.cornerRadius = 5
         return textView
     }()
     
@@ -158,7 +146,7 @@ class EditVC: UIViewController, UIImagePickerControllerDelegate {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16)
         label.textColor = UIColor.gray
-        label.text = "What's your goal for giving/receiving mentorship?"
+        label.text = "The reason I am in tech"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -216,7 +204,7 @@ class EditVC: UIViewController, UIImagePickerControllerDelegate {
     let profileImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.backgroundColor = UIColor.white
-        imageView.image = UIImage(named: "Profile")
+        imageView.image = UIImage(named: "profileImageHolder")
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.layer.masksToBounds = false
         imageView.layer.cornerRadius = 50
@@ -279,11 +267,13 @@ class EditVC: UIViewController, UIImagePickerControllerDelegate {
         view.backgroundColor = UIColor.white
         setUpViews()
         fetchUser()
-        addBar()
         
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapImage))
         profileImageView.addGestureRecognizer(tapGestureRecognizer)
         profileImageView.isUserInteractionEnabled = true
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(handleSave))
+        addBorders()
     }
     
     var bar: UIView!
@@ -297,9 +287,8 @@ class EditVC: UIViewController, UIImagePickerControllerDelegate {
         bar.addSubview(saveButton)
         
         dismissButton.anchor(top: bar.topAnchor, left: bar.leftAnchor, bottom: nil, right: nil, paddingTop: 30, paddingLeft: 20, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        
         saveButton.anchor(top: bar.topAnchor, left: nil, bottom: nil, right: bar.rightAnchor, paddingTop: 30, paddingLeft: 0, paddingBottom: 0, paddingRight: 20, width: 0, height: 0)
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(handleSave))
+       
     }
     
     var scrollView: UIScrollView!
@@ -314,14 +303,23 @@ class EditVC: UIViewController, UIImagePickerControllerDelegate {
         view.addSubview(scrollView)
     }
     
+    func addBorders() {
+        nameTextView.layer.addBorder(edge: .bottom, color: UIColor.lightGray, thickness: 0.8)
+        companyTextView.layer.addBorder(edge: .bottom, color: UIColor.lightGray, thickness: 0.8)
+        goalTextView.layer.addBorder(edge: .bottom, color: UIColor.lightGray, thickness: 0.8)
+        yearTextView.layer.addBorder(edge: .bottom, color: UIColor.lightGray, thickness: 0.8)
+        genderTextView.layer.addBorder(edge: .bottom, color: UIColor.lightGray, thickness: 0.8)
+        raceTextView.layer.addBorder(edge: .bottom, color: UIColor.lightGray, thickness: 0.8)
+    }
+    
     override func viewDidLayoutSubviews() {
-        nameTextView.layer.addBorder(edge: .bottom, color: UIColor.lightGray, thickness: 0.6)
-        companyTextView.layer.addBorder(edge: .bottom, color: UIColor.lightGray, thickness: 0.6)
-        goalTextView.layer.addBorder(edge: .bottom, color: UIColor.lightGray, thickness: 0.6)
-        yearTextView.layer.addBorder(edge: .bottom, color: UIColor.lightGray, thickness: 0.6)
-        genderTextView.layer.addBorder(edge: .bottom, color: UIColor.lightGray, thickness: 0.6)
-        raceTextView.layer.addBorder(edge: .bottom, color: UIColor.lightGray, thickness: 0.6)
-        bar.layer.addBorder(edge: .bottom, color: UIColor.gray, thickness: 0.8)
+        nameTextView.layer.addBorder(edge: .bottom, color: UIColor.lightGray, thickness: 0.8)
+        companyTextView.layer.addBorder(edge: .bottom, color: UIColor.lightGray, thickness: 0.8)
+        goalTextView.layer.addBorder(edge: .bottom, color: UIColor.lightGray, thickness: 0.8)
+        yearTextView.layer.addBorder(edge: .bottom, color: UIColor.lightGray, thickness: 0.8)
+        genderTextView.layer.addBorder(edge: .bottom, color: UIColor.lightGray, thickness: 0.8)
+        raceTextView.layer.addBorder(edge: .bottom, color: UIColor.lightGray, thickness: 0.8)
+//        bar.layer.addBorder(edge: .bottom, color: UIColor.gray, thickness: 0.8)
     }
 
 

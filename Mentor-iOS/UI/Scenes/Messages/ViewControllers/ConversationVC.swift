@@ -95,21 +95,23 @@ class ConversationVC: UIViewController, PusherDelegate, UITextViewDelegate {
     }
     
     @objc func handleSend() {
-        let message = ConversationItemViewModel(sender: "\(userEmail!)", content: inputTextField.text!)
-        dataSource.items.append(message)
-        
-        let section = dataSource.items.count
-        self.collectionView?.insertSections([section - 1])
-        sendMessage()
-        inputTextField.text = nil
-        buttomConstraint?.constant = 0
-        dismissKeyboard()
+        if let content = inputTextField.text {
+            let body = content
+            let message = ConversationItemViewModel(sender: "\(userEmail!)", content: content)
+            dataSource.items.append(message)
+            let section = dataSource.items.count
+            self.collectionView?.insertSections([section - 1])
+            sendMessage(content: body)
+            inputTextField.text = nil
+            buttomConstraint?.constant = 0
+            dismissKeyboard()
+        }
     }
     
     //Send & save a message thru server
-    func sendMessage() {
-        ServerNetworking.shared.getInfo(route: .sendMessage, params: ["channel_name": channelName, "content": inputTextField.text!, "event": "chat", "sender": userEmail!]) { _ in }
-        ServerNetworking.shared.getInfo(route: .saveMessage, params:["channel_name": channelName, "content": inputTextField.text!, "event": "chat", "sender": userEmail!]) { _ in }
+    func sendMessage(content: String) {
+        ServerNetworking.shared.getInfo(route: .sendMessage, params: ["channel_name": channelName, "content": content, "event": "chat", "sender": userEmail!]) { _ in }
+        ServerNetworking.shared.getInfo(route: .saveMessage, params:["channel_name": channelName, "content": content, "event": "chat", "sender": userEmail!]) { _ in }
     }
     
     @objc func handleNotificationKeyboard(notification: NSNotification) {
@@ -140,7 +142,6 @@ class ConversationVC: UIViewController, PusherDelegate, UITextViewDelegate {
         DispatchQueue.main.async {
             self.collectionView.reloadData()
         }
-//        configureCell()
     }
     
     func listenToMessages() {
