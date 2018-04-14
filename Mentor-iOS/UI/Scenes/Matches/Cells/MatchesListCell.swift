@@ -146,7 +146,7 @@ class MatchesListCell: UICollectionViewCell {
     
     var bgView: UIImageView = {
         let view = UIImageView()
-        view.backgroundColor = UIColor.clear
+        view.backgroundColor = UIColor.violetBlue.withAlphaComponent(0.5)
         view.addBlurEffect()
         return view
     }()

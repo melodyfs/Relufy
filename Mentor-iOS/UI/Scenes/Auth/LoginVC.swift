@@ -31,7 +31,11 @@ class LoginVC: UIViewController {
     
     let emailTextField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "email"
+        var myMutableStringTitle = NSMutableAttributedString()
+        let title  = "email"
+        myMutableStringTitle = NSMutableAttributedString(string:title, attributes: [NSAttributedStringKey.font:UIFont.systemFont(ofSize: 20)])
+        myMutableStringTitle.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor.white.withAlphaComponent(0.6), range:NSRange(location:0,length:title.characters.count))
+        textField.attributedPlaceholder = myMutableStringTitle
         textField.font = UIFont.systemFont(ofSize: 20)
         textField.textColor = UIColor.white
         textField.backgroundColor = UIColor.clear
@@ -41,7 +45,11 @@ class LoginVC: UIViewController {
     
     let passwordTextField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "password"
+        let title  = "password"
+        var myMutableStringTitle = NSMutableAttributedString()
+        myMutableStringTitle = NSMutableAttributedString(string:title, attributes: [NSAttributedStringKey.font:UIFont.systemFont(ofSize: 20)]) // Font
+        myMutableStringTitle.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor.white.withAlphaComponent(0.6), range:NSRange(location:0,length:title.characters.count))
+        textField.attributedPlaceholder = myMutableStringTitle
         textField.font = UIFont.systemFont(ofSize: 20)
         textField.textColor = UIColor.white
         textField.backgroundColor = UIColor.clear
@@ -59,6 +67,16 @@ class LoginVC: UIViewController {
         button.makeRounded()
         button.addTarget(self, action: #selector(touchDown), for: .touchDown)
         return button
+    }()
+    
+    let iconImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.backgroundColor = UIColor.white
+        imageView.image = UIImage(named: "empty")
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFit
+        imageView.backgroundColor = UIColor.clear
+        return imageView
     }()
     
     @objc func touchDown(sender: UIButton) {
@@ -90,10 +108,11 @@ class LoginVC: UIViewController {
                         }
                     }
                 } else {
-                    self.informSignUpFailure()
-                    self.unauthorize()
-                    UIViewController.removeSpinner(spinner: sv)
-                    
+                    DispatchQueue.main.async {
+                        self.informSignUpFailure()
+                        UIViewController.removeSpinner(spinner: sv)
+                        self.unauthorize()
+                    }
                 }
                
             }
@@ -114,9 +133,12 @@ class LoginVC: UIViewController {
                         }
                     }
                 } else {
-                    self.informSignUpFailure()
-                    self.unauthorize()
-                    UIViewController.removeSpinner(spinner: sv)
+                    DispatchQueue.main.async {
+                        self.informSignUpFailure()
+                        UIViewController.removeSpinner(spinner: sv)
+                        self.unauthorize()
+                    }
+                    
                 }
                
             }
@@ -144,8 +166,8 @@ class LoginVC: UIViewController {
                     } else {
                         self.keychain.set((list?.token)!, forKey: "token")
                         self.keychain.set(String((list?.id)!), forKey: "id")
-                        self.authorize()
                         UIViewController.removeSpinner(spinner: sv)
+                        self.authorize()
                     }
                 }
             }
@@ -161,8 +183,8 @@ class LoginVC: UIViewController {
                     } else {
                         self.keychain.set((list?.token)!, forKey: "token")
                         self.keychain.set(String((list?.id)!), forKey: "id")
-                        self.authorize()
                         UIViewController.removeSpinner(spinner: sv)
+                        self.authorize()
                     }
                 }
             }
@@ -210,10 +232,18 @@ class LoginVC: UIViewController {
     
     
     func setUpViews() {
+        view.addSubview(iconImageView)
         view.addSubview(logInButton)
         view.addSubview(emailTextField)
         view.addSubview(passwordTextField)
         view.addSubview(signUpButton)
+        
+        iconImageView.translatesAutoresizingMaskIntoConstraints = false
+        iconImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        iconImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -180).isActive = true
+        iconImageView.widthAnchor.constraint(equalToConstant: 200).isActive = true
+        iconImageView.heightAnchor.constraint(equalToConstant: 200).isActive = true
+
        
         logInButton.translatesAutoresizingMaskIntoConstraints = false
         logInButton.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: -80).isActive = true

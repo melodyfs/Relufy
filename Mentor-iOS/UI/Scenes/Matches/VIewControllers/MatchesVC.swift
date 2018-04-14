@@ -29,7 +29,7 @@ class MatchesVC: UIViewController {
         registerCollectionView()
         setNameAndImage()
         navigationController?.navigationBar.prefersLargeTitles = true
-         print(userInfo.count)
+        print(userInfo.count)
     
     }
     
@@ -87,12 +87,17 @@ class MatchesVC: UIViewController {
        configureCell()
     }
     
+   
+    
     func configureCell() {
+        let sv = UIViewController.displaySpinner(onView: self.view)
         
         if self.dataSource.items.count == 0 {
             self.collectionView.setEmptyMessage("Complete Your Profile & Check Back Soon!")
-            self.collectionView.setImageView(UIImage(named: "matches")!)
+//            self.collectionView.setImageView(UIImage(named: "empty")!)
         }
+        
+       
         
         dataSource.configureCell = { cv, indexPath in
             let cell = cv.dequeueReusableCell(withReuseIdentifier: self.cellID, for: indexPath) as! MatchesListCell
@@ -106,6 +111,8 @@ class MatchesVC: UIViewController {
             cell.scrollView.contentSize = CGSize(width: frameSize.width - 20, height: 650)
             return cell
         }
+        
+         UIViewController.removeSpinner(spinner: sv)
     }
     
     @objc func handleConnect(sender: UIButton) {

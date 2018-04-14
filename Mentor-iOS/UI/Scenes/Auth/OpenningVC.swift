@@ -12,6 +12,15 @@ class OpenningVC: UIViewController {
     
     let keys = AppKeys.instance
     
+    let titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 30)
+        label.textColor = UIColor.white
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "Relate. Accelerate."
+        return label
+    }()
+    
     let optionLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 25)
@@ -53,6 +62,17 @@ class OpenningVC: UIViewController {
         return button
     }()
     
+    let iconImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.backgroundColor = UIColor.white
+        imageView.image = UIImage(named: "whiteIcon")
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFit
+        imageView.backgroundColor = UIColor.clear
+        return imageView
+    }()
+    
+    
     @objc func touchDown(sender: UIButton) {
         sender.setTitleColor(UIColor.violetPurple, for: UIControlState.normal)
     }
@@ -92,27 +112,38 @@ class OpenningVC: UIViewController {
     }
     
     func setUpViews() {
+        view.addSubview(titleLabel)
         view.addSubview(optionLabel)
         view.addSubview(giveButton)
         view.addSubview(receiveButton)
         view.addSubview(nextButton)
+        view.addSubview(iconImageView)
+        
+        
+        iconImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        iconImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -200).isActive = true
+        iconImageView.widthAnchor.constraint(equalToConstant: 200).isActive = true
+        iconImageView.heightAnchor.constraint(equalToConstant: 200).isActive = true
+        
+        titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        titleLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -70).isActive = true
         
         optionLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        optionLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -130).isActive = true
+        optionLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 20).isActive = true
         
         giveButton.translatesAutoresizingMaskIntoConstraints = false
         giveButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        giveButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -60).isActive = true
+        giveButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 80).isActive = true
         giveButton.widthAnchor.constraint(equalToConstant: 200).isActive = true
         
         receiveButton.translatesAutoresizingMaskIntoConstraints = false
         receiveButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        receiveButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 0).isActive = true
+        receiveButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 140).isActive = true
         receiveButton.widthAnchor.constraint(equalToConstant: 200).isActive = true
         
         nextButton.translatesAutoresizingMaskIntoConstraints = false
         nextButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        nextButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 150).isActive = true
+        nextButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 250).isActive = true
     }
     
 
