@@ -12,7 +12,8 @@ To accelerate your career growth, Relate today! Be part of this community where 
 
 ## Features
 - Real-time messaging
-- 
+- Match mentors/mentees based on years of experiences, role, gender, race
+- Share personal background in professional world and stories in tech
 
 ## Usage
 ### Prerequisites
