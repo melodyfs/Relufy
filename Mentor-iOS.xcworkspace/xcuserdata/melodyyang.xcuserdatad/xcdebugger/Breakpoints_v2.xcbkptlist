@@ -330,7 +330,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Mentor-iOS/HTTPClients/ServerNetworking.swift"
-            timestampString = "545302973.08767"
+            timestampString = "545352934.665141"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "108"
@@ -378,11 +378,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Mentor-iOS/UI/Scenes/Auth/LoginVC.swift"
-            timestampString = "545176013.043824"
+            timestampString = "545360420.9738801"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "104"
-            endingLineNumber = "104"
+            startingLineNumber = "123"
+            endingLineNumber = "123"
             landmarkName = "handleLogin(sender:)"
             landmarkType = "7">
             <Locations>
@@ -426,7 +426,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Mentor-iOS/HTTPClients/ServerNetworking.swift"
-            timestampString = "545302973.087759"
+            timestampString = "545352934.665255"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "107"
@@ -474,7 +474,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Mentor-iOS/UI/Scenes/Profile/ViewControllers/EditVC+Extension.swift"
-            timestampString = "545303224.348114"
+            timestampString = "545360420.974123"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "49"
@@ -506,7 +506,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Mentor-iOS/UI/GlobalViewModels/MessageViewModel.swift"
-            timestampString = "545303224.348245"
+            timestampString = "545378395.941919"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "39"
@@ -522,7 +522,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Mentor-iOS/UI/Scenes/Profile/ViewControllers/EditVC.swift"
-            timestampString = "545303224.348314"
+            timestampString = "545360420.9743249"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "247"
@@ -538,7 +538,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Mentor-iOS/UI/Scenes/Matches/VIewControllers/MatchesVC.swift"
-            timestampString = "545303224.348387"
+            timestampString = "545378395.942063"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "32"
@@ -554,7 +554,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Mentor-iOS/UI/Scenes/Matches/VIewControllers/MatchesVC.swift"
-            timestampString = "545303224.348837"
+            timestampString = "545378395.9421459"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "39"
@@ -569,72 +569,8 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Mentor-iOS/UI/Scenes/Matches/VIewControllers/MatchesVC.swift"
-            timestampString = "545303224.349088"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "81"
-            endingLineNumber = "81"
-            landmarkName = "fetchUsers()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Mentor-iOS/UI/Scenes/Matches/VIewControllers/MatchesVC.swift"
-            timestampString = "545303224.349328"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "87"
-            endingLineNumber = "87"
-            landmarkName = "fetchUsers()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Mentor-iOS/UI/Scenes/Matches/VIewControllers/MatchesVC.swift"
-            timestampString = "545303224.3495981"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "91"
-            endingLineNumber = "91"
-            landmarkName = "configureCell()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Mentor-iOS/UI/Scenes/Messages/ViewControllers/ConversationVC.swift"
-            timestampString = "545301507.718809"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "167"
-            endingLineNumber = "167"
-            landmarkName = "listenToMessages()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "Mentor-iOS/UI/Scenes/Profile/ViewControllers/ProfileVC.swift"
-            timestampString = "545303224.349884"
+            timestampString = "545360420.974738"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "158"
@@ -650,13 +586,93 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Mentor-iOS/UI/Scenes/Profile/ViewControllers/EditVC.swift"
-            timestampString = "545303224.349959"
+            timestampString = "545360420.974854"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "316"
             endingLineNumber = "316"
             landmarkName = "viewDidLayoutSubviews()"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Mentor-iOS/UI/Scenes/Matches/Cells/MatchesListCell.swift"
+            timestampString = "545375572.038146"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "133"
+            endingLineNumber = "133"
+            landmarkName = "MatchesListCell"
+            landmarkType = "3">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Mentor-iOS/UI/Scenes/Matches/VIewControllers/MatchesVC.swift"
+            timestampString = "545378395.942387"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "83"
+            endingLineNumber = "83"
+            landmarkName = "fetchUsers()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Mentor-iOS/UI/GlobalViewModels/MessageViewModel.swift"
+            timestampString = "545378395.942463"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "66"
+            endingLineNumber = "66"
+            landmarkName = "convertToMessageItem(user:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Mentor_iOS.MessageViewModel.convertToMessageItem(user: Mentor_iOS.User) -&gt; Mentor_iOS.MessageItemViewModel"
+                  moduleName = "Mentor-iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/melodyyang/Desktop/Mentor-iOS/Mentor-iOS/UI/GlobalViewModels/MessageViewModel.swift"
+                  timestampString = "545375732.772902"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "66"
+                  endingLineNumber = "66"
+                  offsetFromSymbolStart = "5785">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "implicit closure #7 : @autoclosure () throws -&gt; Swift.String in Mentor_iOS.MessageViewModel.convertToMessageItem(user: Mentor_iOS.User) -&gt; Mentor_iOS.MessageItemViewModel"
+                  moduleName = "Mentor-iOS"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/melodyyang/Desktop/Mentor-iOS/Mentor-iOS/UI/GlobalViewModels/MessageViewModel.swift"
+                  timestampString = "545375732.777012"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "66"
+                  endingLineNumber = "66"
+                  offsetFromSymbolStart = "4">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

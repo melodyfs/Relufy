@@ -36,7 +36,11 @@ class MatchesVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         ServerNetworking.shared.getInfo(route: .createMatches, params: [:]) {_ in}
-       fetchUsers()
+        fetchUsers()
+        DispatchQueue.main.async {
+            self.collectionView.reloadData()
+        }
+//        configureCell()
     }
     
     var getStartedLabel: UILabel = {
