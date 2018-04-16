@@ -1,4 +1,4 @@
-
+[<img src="https://github.com/melodyfs/Relate/blob/master/relateIcon.png" width="150" height="150" />](https://itunes.apple.com/us/app/relate-connect-grow/id1372381485?ls=1&mt=8)
 
 # Relate
 
@@ -28,6 +28,10 @@ Clone this repo and run `pod install`
 ## Technologies Used
 - [Pusher](https://github.com/pusher/pusher-http-ruby)
 - [IQKeyboardManager](https://github.com/hackiftekhar/IQKeyboardManager)
+
+## Demos
+<img src="https://github.com/melodyfs/Relate/blob/master/relate-1.gif" width="270" height="500" /> <img src="https://github.com/melodyfs/Relate/blob/master/relate-2.gif" width="270" height="500" /> </br>
+<img src="https://github.com/melodyfs/Relate/blob/master/relate-3.gif" width="270" height="500" /> <img src="https://github.com/melodyfs/Relate/blob/master/relate-4.gif" width="270" height="500" />
 
 ## Links
 [Relate on the App Store](https://itunes.apple.com/us/app/relate-connect-grow/id1372381485?ls=1&mt=8)
