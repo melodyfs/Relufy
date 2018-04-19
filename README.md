@@ -25,6 +25,9 @@ To accelerate your career growth, Relate today! Be part of this community where 
 ### Installation
 Clone this repo and run `pod install`
 
+## Backend
+- [Server with Ruby on Rails](https://github.com/melodyfs/Relate-Backend)
+
 ## Technologies Used
 - [Pusher](https://github.com/pusher/pusher-http-ruby)
 - [IQKeyboardManager](https://github.com/hackiftekhar/IQKeyboardManager)
