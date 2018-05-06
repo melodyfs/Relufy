@@ -29,8 +29,11 @@ Clone this repo and run `pod install`
 - [Server with Ruby on Rails](https://github.com/melodyfs/Relate-Backend)
 
 ## Technologies Used
+- [UIKit](https://developer.apple.com/documentation/uikit)
 - [Pusher](https://github.com/pusher/pusher-http-ruby)
+- [Keychain Swift](https://github.com/evgenyneu/keychain-swift)
 - [IQKeyboardManager](https://github.com/hackiftekhar/IQKeyboardManager)
+
 
 ## Demos
 <img src="https://github.com/melodyfs/Relate/blob/master/relate-1.gif" width="270" height="500" /> <img src="https://github.com/melodyfs/Relate/blob/master/relate-2.gif" width="270" height="500" /> </br>
