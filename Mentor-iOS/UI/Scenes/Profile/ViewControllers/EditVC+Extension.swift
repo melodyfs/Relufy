@@ -12,18 +12,18 @@ extension EditVC {
     
     func collectParams() -> [String: String]{
         var role = ""
-        let buttons = [softwareEngineerButton, productManagerButton, designerButton]
-        for button in buttons {
-            if button.isSelected {
-                role = (button.titleLabel?.text)!
-            }
-        }
+//        let buttons = [softwareEngineerButton, productManagerButton, designerButton]
+//        for button in buttons {
+//            if button.isSelected {
+//                role = (button.titleLabel?.text)!
+//            }
+//        }
         
         let params = ["name": nameTextView.text ?? "None",
                       "years_experience": yearTextView.text ?? "0",
                       "company": companyTextView.text ?? "None",
                       "goal": goalTextView.text ?? "None",
-                      "role": role,
+                      "role": roleTextView.text ?? "None",
                       "race": raceTextView.text ?? "None",
                       "gender": genderTextView.text ?? "None"]
         return params
@@ -43,13 +43,7 @@ extension EditVC {
                 self.raceTextView.text = users.first?.race
                 self.genderTextView.text = users.first?.gender
                 self.profileImageView.getImageFromURL(url: (UserDefaults.standard.string(forKey: "image"))!)
-                
-                let buttons = [self.softwareEngineerButton, self.productManagerButton, self.designerButton]
-                for button in buttons {
-                    if button.titleLabel?.text == users.first?.role {
-                        self.buttonSelected(sender: button)
-                    }
-                }
+                self.roleTextView.text = users.first?.role
             }
         })
         
@@ -58,20 +52,14 @@ extension EditVC {
     
     func updateInfo() {
         let params = collectParams()
-//        if keys.isMentor {
-            ServerNetworking.shared.getInfo(route: .updateMentor, params: params) {_ in}
-//        } else {
-            ServerNetworking.shared.getInfo(route: .updateMentee, params: params) {_ in}
-//        }
+        ServerNetworking.shared.getInfo(route: .updateMentor, params: params) {_ in}
+        ServerNetworking.shared.getInfo(route: .updateMentee, params: params) {_ in}
     }
     
     func updateProfileImage() {
         if imageData != nil {
-//            if keys.isMentor {
-                UploadImage.upload(route: .updateMentor,  imageData: imageData!)
-//            } else {
-                UploadImage.upload(route: .updateMentee, imageData: imageData!)
-//            }
+            UploadImage.upload(route: .updateMentor,  imageData: imageData!)
+            UploadImage.upload(route: .updateMentee, imageData: imageData!)
         }
     }
     
@@ -80,9 +68,9 @@ extension EditVC {
         scrollView.addSubview(nameLabel)
         scrollView.addSubview(nameTextView)
         scrollView.addSubview(roleLabel)
-        scrollView.addSubview(softwareEngineerButton)
-        scrollView.addSubview(productManagerButton)
-        scrollView.addSubview(designerButton)
+        scrollView.addSubview(roleTextView)
+        scrollView.addSubview(roleDropButton)
+        scrollView.addSubview(genderDropButton)
         scrollView.addSubview(forLabel)
         scrollView.addSubview(yearTextView)
         scrollView.addSubview(yearLabel)
@@ -92,6 +80,7 @@ extension EditVC {
         scrollView.addSubview(goalTextView)
         scrollView.addSubview(raceLabel)
         scrollView.addSubview(raceTextView)
+        scrollView.addSubview(raceDropButton)
         scrollView.addSubview(genderLabel)
         scrollView.addSubview(genderTextView)
         
@@ -108,11 +97,10 @@ extension EditVC {
         roleLabel.leftAnchor.constraint(equalTo: nameLabel.leftAnchor).isActive = true
         roleLabel.topAnchor.constraint(equalTo: nameLabel.topAnchor, constant: 100).isActive = true
         
-        softwareEngineerButton.anchor(top: roleLabel.topAnchor, left: nameLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 25, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: softwareEngineerButton.intrinsicContentSize.width + 5, height: softwareEngineerButton.intrinsicContentSize.height + 5)
+        roleTextView.anchor(top: roleLabel.topAnchor, left: nameLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 25, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 200, height: 40)
         
-        productManagerButton.anchor(top: roleLabel.topAnchor, left: softwareEngineerButton.leftAnchor, bottom: nil, right: nil, paddingTop: 25, paddingLeft: 160, paddingBottom: 0, paddingRight: 0, width: productManagerButton.intrinsicContentSize.width + 5, height: productManagerButton.intrinsicContentSize.height + 5)
+        roleDropButton.anchor(top: roleTextView.topAnchor, left: roleTextView.leftAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 230, paddingBottom: 0, paddingRight: 0, width: 50, height: 20)
         
-        designerButton.anchor(top: roleLabel.topAnchor, left: softwareEngineerButton.leftAnchor, bottom: nil, right: nil, paddingTop: 75, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: designerButton.intrinsicContentSize.width + 5, height: designerButton.intrinsicContentSize.height + 5)
         
         forLabel.leftAnchor.constraint(equalTo: nameLabel.leftAnchor).isActive = true
         forLabel.topAnchor.constraint(equalTo: roleLabel.topAnchor, constant: 130).isActive = true
@@ -127,22 +115,24 @@ extension EditVC {
         
         companyTextView.anchor(top: companyLabel.topAnchor, left: forLabel.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 20, paddingLeft: 0, paddingBottom: 0, paddingRight: 100, width: 40, height: 40)
         
-        goalLabel.leftAnchor.constraint(equalTo: nameLabel.leftAnchor).isActive = true
-        goalLabel.topAnchor.constraint(equalTo: companyLabel.topAnchor, constant: 100).isActive = true
-        
-        goalTextView.anchor(top: goalLabel.topAnchor, left: goalLabel.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 20, paddingLeft: 0, paddingBottom: 0, paddingRight: 50, width: 40, height: 40)
         
         raceLabel.leftAnchor.constraint(equalTo: nameLabel.leftAnchor).isActive = true
-        raceLabel.topAnchor.constraint(equalTo: goalLabel.topAnchor, constant: 100).isActive = true
+        raceLabel.topAnchor.constraint(equalTo: companyLabel.topAnchor, constant: 100).isActive = true
         
-        raceTextView.anchor(top: raceLabel.topAnchor, left: raceLabel.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 20, paddingLeft: 0, paddingBottom: 0, paddingRight: 50, width: 40, height: 40)
+        raceTextView.anchor(top: raceLabel.topAnchor, left: raceLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 20, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 320, height: 40)
+        raceDropButton.anchor(top: raceTextView.topAnchor, left: raceTextView.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 330, paddingBottom: 0, paddingRight: 0, width: 40, height: 40)
         
         genderLabel.leftAnchor.constraint(equalTo: nameLabel.leftAnchor).isActive = true
         genderLabel.topAnchor.constraint(equalTo: raceLabel.topAnchor, constant: 100).isActive = true
         
-        genderTextView.anchor(top: genderLabel.topAnchor, left: genderLabel.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 15, paddingLeft: 0, paddingBottom: 0, paddingRight: 50, width: 40, height: 40)
+        genderTextView.anchor(top: genderLabel.topAnchor, left: genderLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 20, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 100, height: 40)
+        genderDropButton.anchor(top: genderTextView.topAnchor, left: genderTextView.leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 120, paddingBottom: 0, paddingRight: 0, width: 45, height: 40)
         
-       
+        
+        goalLabel.leftAnchor.constraint(equalTo: genderLabel.leftAnchor).isActive = true
+        goalLabel.topAnchor.constraint(equalTo: genderLabel.topAnchor, constant: 100).isActive = true
+        
+        goalTextView.anchor(top: goalLabel.topAnchor, left: goalLabel.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 20, paddingLeft: 0, paddingBottom: 0, paddingRight: 30, width: 300, height: 200)
         
     }
 

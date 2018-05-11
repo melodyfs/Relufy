@@ -23,7 +23,7 @@ class SignUpVC: UIViewController, UIImagePickerControllerDelegate, UITextViewDel
     let roleDropdown = DropDown()
     let raceDropdown = DropDown()
     let yearDropdown = DropDown()
-    let mentorOrMenteeDropdown = DropDown()
+//    let mentorOrMenteeDropdown = DropDown()
     
     let nameLabel: UILabel = {
         let label = UILabel()
@@ -152,38 +152,7 @@ class SignUpVC: UIViewController, UIImagePickerControllerDelegate, UITextViewDel
         roleDropdown.show()
         
     }
-    
-    let mentorOrMenteeLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16)
-        label.textColor = UIColor.gray
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "I want to ..."
-        return label
-    }()
-    
-    let mentorOrMenteeTextView: UITextView = {
-        let textView = UITextView()
-        textView.font = UIFont.systemFont(ofSize: 20)
-        textView.textColor = UIColor.black
-        textView.backgroundColor = UIColor.white
-        textView.isUserInteractionEnabled = false
-        return textView
-    }()
-    
-    let mentorMenteeDropButton: UIButton = {
-        let button = UIButton(type: .custom)
-        button.setTitle("select", for: .normal)
-        button.setTitleColor(UIColor.violetBlue, for: .normal)
-        button.titleLabel?.font = UIFont(name: "System", size: 16)
-        button.addTarget(self, action: #selector(handleMentorMenteeDrop), for: .touchUpInside)
-        return button
-    }()
-    
-    @objc func handleMentorMenteeDrop() {
-        mentorOrMenteeDropdown.show()
-        
-    }
+
     
     let companyTextView: UITextView = {
         let textView = UITextView()
@@ -345,11 +314,7 @@ class SignUpVC: UIViewController, UIImagePickerControllerDelegate, UITextViewDel
     }
     
     func setMentorOrMentee() {
-//        if mentorOrMenteeTextView.text == "Give advice" {
-//            keys.setMentorOrMentee(isMentor: true)
-//        } else {
         keys.setMentorOrMentee(isMentor: false)
-//        }
     }
     
     var eachFieldIsFilled = false
@@ -372,28 +337,20 @@ class SignUpVC: UIViewController, UIImagePickerControllerDelegate, UITextViewDel
         setKeychainCredential()
         let params = collectedParams()
         let sv = UIViewController.displaySpinner(onView: self.view)
-        
-//        if keys.isMentor {
-            networking.getInfo(route: .createMentor, params: params) { data in
+        networking.getInfo(route: .createMentor, params: params) { data in
                 let list = try? JSONDecoder().decode(User.self, from: data)
                 
                 DispatchQueue.main.async {
                     if self.networking.statusCode != 201 {
-//                        self.informSignUpFailure()
-//                        UIViewController.removeSpinner(spinner: sv)
-//                        self.unauthorize()
                     } else {
                         self.keychain.set((list?.token)!, forKey: "token-mentor")
                         self.keychain.set(String((list?.id)!), forKey: "id-mentor")
-//                        UIViewController.removeSpinner(spinner: sv)
-//                        self.authorize()
                     }
                 }
             }
             
-//            UploadImage.upload(route: .updateMentor,  imageData: imageData!)
-//        } else {
-            networking.getInfo(route: .createMentee, params: params) { data in
+
+        networking.getInfo(route: .createMentee, params: params) { data in
                 let list = try? JSONDecoder().decode(User.self, from: data)
                 DispatchQueue.main.async {
                     if self.networking.statusCode != 201 {
@@ -410,8 +367,7 @@ class SignUpVC: UIViewController, UIImagePickerControllerDelegate, UITextViewDel
                     }
                 }
             }
-//            UploadImage.upload(route: .updateMentee,  imageData: imageData!)
-//        }
+        keys.setMentorOrMentee(isMentor: false)
     }
     
     func informSignUpFailure() {
@@ -479,12 +435,6 @@ class SignUpVC: UIViewController, UIImagePickerControllerDelegate, UITextViewDel
         raceDropdown.selectionAction = { [weak self] (index, item) in
             self?.raceTextView.text = item
         }
-        
-//        mentorOrMenteeDropdown.anchorView = mentorOrMenteeTextView
-//        mentorOrMenteeDropdown.dataSource = ["Give advice", "Receive advice"]
-//        mentorOrMenteeDropdown.selectionAction = { [weak self] (index, item) in
-//            self?.mentorOrMenteeTextView.text = item
-//        }
 
     }
     
@@ -533,7 +483,7 @@ class SignUpVC: UIViewController, UIImagePickerControllerDelegate, UITextViewDel
         roleTextView.layer.addBorder(edge: .bottom, color: UIColor.lightGray, thickness: 0.8)
         emailTextView.layer.addBorder(edge: .bottom, color: UIColor.lightGray, thickness: 0.8)
         passwordTextView.layer.addBorder(edge: .bottom, color: UIColor.lightGray, thickness: 0.8)
-        mentorOrMenteeTextView.layer.addBorder(edge: .bottom, color: UIColor.lightGray, thickness: 0.8)
+//        mentorOrMenteeTextView.layer.addBorder(edge: .bottom, color: UIColor.lightGray, thickness: 0.8)
        
 //        bar.layer.shadowOffset =
     }

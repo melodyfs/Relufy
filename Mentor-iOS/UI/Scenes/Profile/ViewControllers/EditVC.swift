@@ -8,6 +8,7 @@
 
 import UIKit
 import Photos
+import DropDown
 
 class EditVC: UIViewController, UIImagePickerControllerDelegate {
     
@@ -15,6 +16,10 @@ class EditVC: UIViewController, UIImagePickerControllerDelegate {
     let keys = AppKeys.instance
     var imageData: Data?
     let viewModel = UserViewModel()
+    let genderDropdown = DropDown()
+    let roleDropdown = DropDown()
+    let raceDropdown = DropDown()
+    let yearDropdown = DropDown()
     static var instance = EditVC()
 
     let nameLabel: UILabel = {
@@ -59,6 +64,7 @@ class EditVC: UIViewController, UIImagePickerControllerDelegate {
         textView.textColor = UIColor.black
         textView.backgroundColor = UIColor.white
         textView.isUserInteractionEnabled = true
+        textView.keyboardType = .numberPad
         return textView
     }()
     
@@ -67,7 +73,7 @@ class EditVC: UIViewController, UIImagePickerControllerDelegate {
         label.font = UIFont.systemFont(ofSize: 18)
         label.textColor = UIColor.black
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "year(s)"
+        label.text = "years"
         return label
     }()
     
@@ -80,57 +86,45 @@ class EditVC: UIViewController, UIImagePickerControllerDelegate {
         return label
     }()
     
-    
-    let softwareEngineerButton: UIButton = {
-        let button = UIButton(type: .custom)
-        button.setTitle("Software Engineer", for: .normal)
-        button.titleLabel?.font = UIFont(name: "System", size: 16)
+    let raceDropButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("select", for: .normal)
         button.setTitleColor(UIColor.violetBlue, for: .normal)
-        button.layer.cornerRadius = 5
-        button.layer.borderWidth = 1
-        button.layer.borderColor = UIColor(red:0.37, green:0.44, blue:0.93, alpha:1.0).cgColor
-        button.addTarget(self, action: #selector(buttonSelected), for: .touchUpInside)
+        button.addTarget(self, action: #selector(handleRaceDrop), for: .touchUpInside)
         return button
+    }()
+    
+    
+
+    let roleTextView: UITextView = {
+        let textView = UITextView()
+        textView.font = UIFont.systemFont(ofSize: 20)
+        textView.textColor = UIColor.black
+        textView.isUserInteractionEnabled = false
+        return textView
         
     }()
     
-    let productManagerButton: UIButton = {
+    let roleDropButton: UIButton = {
         let button = UIButton(type: .custom)
-        button.setTitle("Product Manager", for: .normal)
+        button.setTitle("select", for: .normal)
         button.setTitleColor(UIColor.violetBlue, for: .normal)
         button.titleLabel?.font = UIFont(name: "System", size: 16)
-        button.layer.cornerRadius = 5
-        button.layer.borderWidth = 1
-        button.layer.borderColor = UIColor.violetBlue.cgColor
-        button.addTarget(self, action: #selector(buttonSelected), for: .touchUpInside)
+        button.addTarget(self, action: #selector(handleRoleDrop), for: .touchUpInside)
         return button
     }()
     
-    let designerButton: UIButton = {
-        let button = UIButton(type: .custom)
-        button.setTitle("Designer", for: .normal)
-        button.setTitleColor(UIColor.violetBlue, for: .normal)
-        button.titleLabel?.font = UIFont(name: "System", size: 16)
-        button.layer.cornerRadius = 5
-        button.layer.borderWidth = 1
-        button.layer.borderColor = UIColor.violetBlue.cgColor
-        button.addTarget(self, action: #selector(buttonSelected), for: .touchUpInside)
-        return button
-    }()
-    
-    @objc func buttonSelected(sender: UIButton) {
-        let buttons = [softwareEngineerButton, productManagerButton, designerButton]
-        buttons.forEach {
-            $0.isSelected = false
-            $0.backgroundColor = UIColor.white
-            $0.setTitleColor(UIColor.violetBlue, for: .normal)
-        }
+    @objc func handleGenderDrop() {
+        genderDropdown.show()
         
-        sender.isSelected = true
-        if sender.isSelected {
-            sender.backgroundColor = UIColor.violetBlue
-            sender.setTitleColor(UIColor.white, for: .selected)
-        }
+    }
+    @objc func handleRaceDrop() {
+        raceDropdown.show()
+        
+    }
+    
+    @objc func handleRoleDrop() {
+        roleDropdown.show()
         
     }
     
@@ -174,7 +168,7 @@ class EditVC: UIViewController, UIImagePickerControllerDelegate {
     let raceTextView: UITextView = {
         let textView = UITextView()
 //        textView.text = "race textview"
-        textView.font = UIFont.systemFont(ofSize: 20)
+        textView.font = UIFont.systemFont(ofSize: 16)
         textView.textColor = UIColor.black
         textView.backgroundColor = UIColor.white
         textView.isUserInteractionEnabled = true
@@ -199,6 +193,14 @@ class EditVC: UIViewController, UIImagePickerControllerDelegate {
         textView.backgroundColor = UIColor.white
         textView.isUserInteractionEnabled = true
         return textView
+    }()
+    
+    let genderDropButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("select", for: .normal)
+        button.setTitleColor(UIColor.violetBlue, for: .normal)
+        button.addTarget(self, action: #selector(handleGenderDrop), for: .touchUpInside)
+        return button
     }()
     
     
@@ -237,16 +239,9 @@ class EditVC: UIViewController, UIImagePickerControllerDelegate {
     
     @objc func handleDismiss() {
         print("dismiss")
-
         self.navigationController?.popViewController(animated: true)
-//        dismiss(animated: true, completion: {
-//            AppDelegateViewModel.instance.changeStatus(authStatus: .authorized)
-//        })
     }
     
-    deinit {
-//        print("christy says hi:)")
-    }
     
     @objc func touchDown(sender: UIButton) {
         sender.setTitleColor(UIColor.white, for: UIControlState.normal)
@@ -276,6 +271,34 @@ class EditVC: UIViewController, UIImagePickerControllerDelegate {
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(handleSave))
         addBorders()
+        handleDropDowns()
+    }
+    
+    func handleDropDowns() {
+        genderDropdown.anchorView = genderTextView
+        genderDropdown.dataSource = ["Man", "Woman", "Other"]
+        genderDropdown.selectionAction = { [weak self] (index, item) in
+            self?.genderTextView.text = item
+        }
+        
+        roleDropdown.anchorView = roleTextView
+        roleDropdown.dataSource = ["Software Engineer", "Product Manager", "Designer", "Other"]
+        roleDropdown.selectionAction = { [weak self] (index, item) in
+            self?.roleTextView.text = item
+        }
+        
+        raceDropdown.anchorView = raceTextView
+        raceDropdown.dataSource = ["American Indian or Alaska Native",
+                                   "Asian",
+                                   "Black or African American",
+                                   "Native Hawaiian or Other Pacific Islander",
+                                   "White",
+                                   "Hispanic or Latino",
+                                   "Other"]
+        raceDropdown.selectionAction = { [weak self] (index, item) in
+            self?.raceTextView.text = item
+        }
+        
     }
     
     var bar: UIView!
@@ -299,7 +322,8 @@ class EditVC: UIViewController, UIImagePickerControllerDelegate {
         scrollView = UIScrollView()
         let screensize: CGRect = UIScreen.main.bounds
         let screenWidth = screensize.width
-        self.scrollView.contentSize = CGSize(width:screenWidth, height: 1000)
+        let screenHeight = screensize.height
+        self.scrollView.contentSize = CGSize(width:screenWidth, height: screenHeight + 500)
         self.scrollView.isScrollEnabled = true
         self.scrollView.frame = self.view.bounds
         view.addSubview(scrollView)
@@ -317,10 +341,13 @@ class EditVC: UIViewController, UIImagePickerControllerDelegate {
     override func viewDidLayoutSubviews() {
         nameTextView.layer.addBorder(edge: .bottom, color: UIColor.lightGray, thickness: 0.8)
         companyTextView.layer.addBorder(edge: .bottom, color: UIColor.lightGray, thickness: 0.8)
-        goalTextView.layer.addBorder(edge: .bottom, color: UIColor.lightGray, thickness: 0.8)
+//        goalTextView.layer.addBorder(edge: .bottom, color: UIColor.lightGray, thickness: 0.8)
         yearTextView.layer.addBorder(edge: .bottom, color: UIColor.lightGray, thickness: 0.8)
         genderTextView.layer.addBorder(edge: .bottom, color: UIColor.lightGray, thickness: 0.8)
         raceTextView.layer.addBorder(edge: .bottom, color: UIColor.lightGray, thickness: 0.8)
+        goalTextView.layer.borderColor = UIColor.lightGray.cgColor
+        goalTextView.layer.borderWidth = 0.8
+        goalTextView.layer.cornerRadius = 5
 //        bar.layer.addBorder(edge: .bottom, color: UIColor.gray, thickness: 0.8)
     }
 

@@ -143,13 +143,22 @@ class ProfileVC: UIViewController {
         view.backgroundColor = UIColor.white
         fetchUser()
         setImage()
-       
         setUpViews()
         setUpHeaders()
     }
     
-//    weak var editVC = EditVC!.self
-//    var editVC = EditVC()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        fetchUser()
+        setImage()
+        setUpViews()
+        setUpHeaders()
+        navigationController?.navigationBar.isTranslucent = true
+        
+    }
+
+    
+
     @objc func handleEdit() {
         print("edit")
         let editVC = EditVC()

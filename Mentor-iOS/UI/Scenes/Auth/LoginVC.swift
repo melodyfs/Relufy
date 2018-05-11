@@ -50,7 +50,7 @@ class LoginVC: UIViewController {
         let textField = UITextField()
         let title  = "password"
         var myMutableStringTitle = NSMutableAttributedString()
-        myMutableStringTitle = NSMutableAttributedString(string:title, attributes: [NSAttributedStringKey.font:UIFont.systemFont(ofSize: 20)]) // Font
+        myMutableStringTitle = NSMutableAttributedString(string:title, attributes: [NSAttributedStringKey.font:UIFont.systemFont(ofSize: 20)]) 
         myMutableStringTitle.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor.white.withAlphaComponent(0.6), range:NSRange(location:0,length:title.characters.count))
         textField.attributedPlaceholder = myMutableStringTitle
         textField.font = UIFont.systemFont(ofSize: 20)

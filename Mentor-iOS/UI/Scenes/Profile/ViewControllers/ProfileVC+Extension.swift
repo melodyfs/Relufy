@@ -66,11 +66,6 @@ extension ProfileVC {
         
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        setImage()
-        navigationController?.navigationBar.isTranslucent = true
-        
-    }
+   
     
 }

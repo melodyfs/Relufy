@@ -53,11 +53,10 @@ class MatchesVC: UIViewController {
         registerCollectionView()
         setNameAndImage()
         navigationController?.navigationBar.prefersLargeTitles = true
-//        addSegmentedControl()
         addChangeRoleBarButton()
         
         let sv = UIViewController.displaySpinner(onView: self.view)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 6.0) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
             UIViewController.removeSpinner(spinner: sv)
         }
     }
@@ -159,22 +158,14 @@ class MatchesVC: UIViewController {
         dataSource.configureCell = { cv, indexPath in
             let cell = cv.dequeueReusableCell(withReuseIdentifier: self.cellID, for: indexPath) as! MatchesListCell
             cell.viewModel = self.dataSource.items[indexPath.section]
-//            cell.connectButton.tag = self.matchIDs[indexPath.section]
-//            cell.connectButton.addTarget(self, action: #selector(self.handleMore), for: .touchUpInside)
             cell.addShadow()
             cell.roundCorner()
-//            self.selectedUser = [self.dataSource.items[indexPath.row]]
             return cell
         }
         
          UIViewController.removeSpinner(spinner: sv)
     }
     
-//    var selectedUser = [MessageItemViewModel]()
-    
-
-    
-
     func setNameAndImage() {
         if AppKeys.instance.isMentor {
             ServerNetworking.shared.getInfo(route: .getMentorImage, params: [:]) { info in

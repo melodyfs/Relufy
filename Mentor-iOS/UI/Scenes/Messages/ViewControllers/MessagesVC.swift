@@ -27,14 +27,10 @@ class MessagesVC: UIViewController, PusherDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel.confirmed = ["confirmed": "true"]
-//        keys.setMentorOrMentee(isMentor: false)
         keys.setMentorOrMentee(isMentor: keys.isMentor)
-//        fetchUsers()
         registerCollectionView()
         tabBarController?.tabBar.isHidden = false
         navigationController?.navigationBar.prefersLargeTitles = true
-//        navigationItem.title = "Inbox"
-//        addSegmentedControl()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -42,11 +38,8 @@ class MessagesVC: UIViewController, PusherDelegate {
         keys.setMentorOrMentee(isMentor: keys.isMentor)
         self.tabBarController?.tabBar.isHidden = false
         DispatchQueue.main.async {
-//            self.fetchUsers()
             self.collectionView.reloadData()
         }
-        
-    
     }
     
     func addSegmentedControl() {
@@ -91,7 +84,6 @@ class MessagesVC: UIViewController, PusherDelegate {
         collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: flowLayout)
         collectionView.register(MessageCell.self, forCellWithReuseIdentifier: cell)
         flowLayout.scrollDirection = .vertical
-//        collectionView.isPagingEnabled = true
         collectionView.isScrollEnabled = true
         
         fetchUsers()

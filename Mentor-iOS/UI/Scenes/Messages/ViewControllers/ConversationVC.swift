@@ -148,6 +148,8 @@ class ConversationVC: UIViewController, PusherDelegate, UITextViewDelegate {
     func sendMessage(content: String) {
         ServerNetworking.shared.getInfo(route: .sendMessage, params: ["channel_name": channelName, "content": content, "event": "chat", "sender": userEmail!]) { _ in }
         ServerNetworking.shared.getInfo(route: .saveMessage, params:["channel_name": channelName, "content": content, "event": "chat", "sender": userEmail!]) { _ in }
+        
+//        notifyNewMessage(title: UserDefaults.standard.string(forKey: "name")!, body: content)
     }
     
     @objc func handleNotificationKeyboard(notification: NSNotification) {
@@ -202,6 +204,7 @@ class ConversationVC: UIViewController, PusherDelegate, UITextViewDelegate {
                         self.dataSource.items.append(message)
                         let section = self.dataSource.items.count
                         self.collectionView?.insertSections([section - 1])
+                        self.notifyNewMessage(title: sender, body: content)
                     }
                 }
             }
