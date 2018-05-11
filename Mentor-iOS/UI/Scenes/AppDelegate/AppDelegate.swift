@@ -11,6 +11,7 @@ import IQKeyboardManagerSwift
 import PusherSwift
 import UserNotifications
 import PushNotifications
+import DropDown
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -39,7 +40,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().tintColor = UIColor.violetBlue
 //        UINavigationBar.appearance().backgroundColor = UIColor.violetBlue
         UITabBar.appearance().tintColor = UIColor.violetBlue
-        UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey.foregroundColor : UIColor.violetBlue]
+        UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey.foregroundColor : UIColor.black]
+        DropDown.appearance().layer.shadowColor = UIColor.white.cgColor
+        DropDown.appearance().backgroundColor = UIColor.white
+        DropDown.appearance().selectionBackgroundColor = UIColor.violetBlue
     }
     
     func configNotifications() {
@@ -62,6 +66,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         style()
         
         configNotifications()
+        DropDown.startListeningToKeyboard()
         
         return true
     }

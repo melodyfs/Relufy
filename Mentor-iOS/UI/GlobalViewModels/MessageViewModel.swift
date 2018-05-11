@@ -55,8 +55,10 @@ class MessageViewModel {
         return users.map(convertToMessageItem)
     }
 
+    // get rid of it
     func convertToMessageItem(user: User) -> MessageItemViewModel {
         return MessageItemViewModel(
+            id: user.id ?? 0,
             name: "\(user.name ?? "None")",
             email: "\(user.email ?? "None")",
             role: "\(user.role?.capitalized ?? "None")",
@@ -73,7 +75,8 @@ class MessageViewModel {
 }
 
 struct MessageItemViewModel {
-    let name: String
+    var id: Int
+    var name: String
     var email: String
     var role: String
     var years: Int

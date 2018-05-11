@@ -15,6 +15,7 @@ class EditVC: UIViewController, UIImagePickerControllerDelegate {
     let keys = AppKeys.instance
     var imageData: Data?
     let viewModel = UserViewModel()
+    static var instance = EditVC()
 
     let nameLabel: UILabel = {
         let label = UILabel()
@@ -146,7 +147,7 @@ class EditVC: UIViewController, UIImagePickerControllerDelegate {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16)
         label.textColor = UIColor.gray
-        label.text = "The reason I am in tech"
+        label.text = "Bio"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -209,7 +210,7 @@ class EditVC: UIViewController, UIImagePickerControllerDelegate {
         imageView.layer.masksToBounds = false
         imageView.layer.cornerRadius = 50
         imageView.clipsToBounds = true
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
         return imageView
     }()
     
@@ -239,12 +240,12 @@ class EditVC: UIViewController, UIImagePickerControllerDelegate {
 
         self.navigationController?.popViewController(animated: true)
 //        dismiss(animated: true, completion: {
-////            AppDelegateViewModel.instance.changeStatus(authStatus: .authorized)
+//            AppDelegateViewModel.instance.changeStatus(authStatus: .authorized)
 //        })
     }
     
     deinit {
-        
+//        print("christy says hi:)")
     }
     
     @objc func touchDown(sender: UIButton) {
@@ -263,6 +264,7 @@ class EditVC: UIViewController, UIImagePickerControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        keys.setMentorOrMentee(isMentor: keys.isMentor)
         setUpScrollView()
         view.backgroundColor = UIColor.white
         setUpViews()

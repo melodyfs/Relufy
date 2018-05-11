@@ -38,7 +38,7 @@ enum Route {
         case .createMentor, .updateMentor, .getMentorInfo:
             return "/mentors"
         case .getMentor:
-             return "/one"
+             return "/mentors/one"
         case .createMentee, .updateMentee, .getMenteeInfo:
             return "/mentees"
         case .sendMessage:
@@ -68,7 +68,8 @@ enum Route {
              .getMentee, .getMentor, .postNotification:
             return [:]
         default:
-            let headers = ["Authorization": "Token token=\(keychain.get("token")!)"]
+            let headers = ["Authorization": "Token token=\(token)"]
+//            let headers = ["Authorization": "Token token=f25bba710ef44b0cf1f2cf7d323267cf"]
             return headers
         }
         

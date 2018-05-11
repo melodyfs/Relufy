@@ -1,0 +1,153 @@
+//
+//  SignUpVC+Extension.swift
+//  Mentor-iOS
+//
+//  Created by Melody on 5/1/18.
+//  Copyright © 2018 Melody Yang. All rights reserved.
+//
+
+import Foundation
+
+extension SignUpVC {
+    
+    func collectedParams() -> [String: String]{
+        
+        let params = ["name": nameTextView.text ?? "None",
+                      "years_experience": yearTextView.text ?? "0",
+                      "company": companyTextView.text ?? "None",
+                      "goal": goalTextView.text ?? "None",
+                      "role": roleTextView.text ?? "None",
+                      "race": raceTextView.text ?? "None",
+                      "gender": genderTextView.text ?? "None",
+                      "email": emailTextView.text ?? "None",
+                      "password": passwordTextView.text ?? "None"]
+        return params
+    }
+    
+    
+//    func updateProfileImage() {
+//        if imageData != nil {
+//            if keys.isMentor {
+//                UploadImage.upload(route: .updateMentor,  imageData: imageData!)
+//            } else {
+//                UploadImage.upload(route: .updateMentee, imageData: imageData!)
+//            }
+//        }
+//    }
+    
+   
+    
+    func setUpViews() {
+//        scrollView.addSubview(dismissButton)
+//        scrollView.addSubview(saveButton)
+//        scrollView.addSubview(profileImageView)
+        scrollView.addSubview(nameLabel)
+        scrollView.addSubview(nameTextView)
+        scrollView.addSubview(roleLabel)
+        scrollView.addSubview(roleTextView)
+        scrollView.addSubview(roleDropButton)
+//        scrollView.addSubview(mentorOrMenteeTextView)
+//        scrollView.addSubview(mentorOrMenteeLabel)
+//        scrollView.addSubview(mentorMenteeDropButton)
+        scrollView.addSubview(forLabel)
+        scrollView.addSubview(yearTextView)
+        scrollView.addSubview(yearLabel)
+        scrollView.addSubview(companyLabel)
+        scrollView.addSubview(companyTextView)
+        scrollView.addSubview(goalLabel)
+        scrollView.addSubview(goalTextView)
+        scrollView.addSubview(raceLabel)
+        scrollView.addSubview(raceTextView)
+        scrollView.addSubview(genderLabel)
+        scrollView.addSubview(genderTextView)
+        scrollView.addSubview(emailLabel)
+        scrollView.addSubview(emailTextView)
+        scrollView.addSubview(passwordLabel)
+        scrollView.addSubview(passwordTextView)
+        scrollView.addSubview(genderDropButton)
+        scrollView.addSubview(raceDropButton)
+        
+//        profileImageView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 60).isActive = true
+//        profileImageView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
+//        profileImageView.heightAnchor.constraint(equalToConstant: 100).isActive = true
+//        profileImageView.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        
+        nameLabel.leftAnchor.constraint(equalTo: scrollView.leftAnchor, constant: 20).isActive = true
+        nameLabel.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 90).isActive = true
+        
+        nameTextView.anchor(top: nameLabel.topAnchor, left: nameLabel.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 20, paddingLeft: 0, paddingBottom: 0, paddingRight: 30, width: 70, height: 40)
+        
+        roleLabel.leftAnchor.constraint(equalTo: nameLabel.leftAnchor).isActive = true
+        roleLabel.topAnchor.constraint(equalTo: nameLabel.topAnchor, constant: 100).isActive = true
+        
+        roleTextView.anchor(top: roleLabel.topAnchor, left: nameLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 25, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 200, height: 40)
+        
+        roleDropButton.anchor(top: roleLabel.topAnchor, left: roleTextView.leftAnchor, bottom: nil, right: nil, paddingTop: 35, paddingLeft: 200, paddingBottom: 0, paddingRight: 0, width: 50, height: 20)
+        
+        forLabel.leftAnchor.constraint(equalTo: nameLabel.leftAnchor).isActive = true
+        forLabel.topAnchor.constraint(equalTo: roleLabel.topAnchor, constant: 130).isActive = true
+        
+        yearTextView.anchor(top: forLabel.topAnchor, left: forLabel.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 20, paddingLeft: 0, paddingBottom: 0, paddingRight: 200, width: 40, height: 40)
+        
+        yearLabel.leftAnchor.constraint(equalTo: yearTextView.leftAnchor, constant: 200).isActive = true
+        yearLabel.topAnchor.constraint(equalTo: yearTextView.topAnchor, constant: 7).isActive = true
+        
+        companyLabel.leftAnchor.constraint(equalTo: nameLabel.leftAnchor).isActive = true
+        companyLabel.topAnchor.constraint(equalTo: forLabel.topAnchor, constant: 100).isActive = true
+        
+        companyTextView.anchor(top: companyLabel.topAnchor, left: forLabel.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 20, paddingLeft: 0, paddingBottom: 0, paddingRight: 100, width: 40, height: 40)
+        
+        goalLabel.leftAnchor.constraint(equalTo: nameLabel.leftAnchor).isActive = true
+        goalLabel.topAnchor.constraint(equalTo: companyLabel.topAnchor, constant: 100).isActive = true
+        
+        goalTextView.anchor(top: goalLabel.topAnchor, left: goalLabel.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 20, paddingLeft: 0, paddingBottom: 0, paddingRight: 50, width: 40, height: 40)
+        
+        raceLabel.leftAnchor.constraint(equalTo: nameLabel.leftAnchor).isActive = true
+        raceLabel.topAnchor.constraint(equalTo: goalLabel.topAnchor, constant: 100).isActive = true
+        
+        raceTextView.anchor(top: raceLabel.topAnchor, left: raceLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 20, paddingLeft: 0, paddingBottom: 0, paddingRight: 50, width: 320, height: 40)
+        
+        raceDropButton.anchor(top: raceTextView.topAnchor, left: raceTextView.leftAnchor, bottom: nil, right: nil, paddingTop: 15, paddingLeft: 310, paddingBottom: 0, paddingRight: 0, width: 50, height: 10)
+        
+        genderLabel.leftAnchor.constraint(equalTo: nameLabel.leftAnchor).isActive = true
+        genderLabel.topAnchor.constraint(equalTo: raceLabel.topAnchor, constant: 100).isActive = true
+        
+        genderTextView.anchor(top: genderLabel.topAnchor, left: genderLabel.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 20, paddingLeft: 0, paddingBottom: 0, paddingRight: 250, width: 70, height: 40)
+        
+        genderDropButton.anchor(top: genderTextView.topAnchor, left: genderTextView.leftAnchor, bottom: nil, right: nil, paddingTop: 15, paddingLeft: 140, paddingBottom: 0, paddingRight: 0, width: 50, height: 10)
+        
+        emailLabel.leftAnchor.constraint(equalTo: nameLabel.leftAnchor).isActive = true
+        emailLabel.topAnchor.constraint(equalTo: genderLabel.topAnchor, constant: 100).isActive = true
+        
+        emailTextView.anchor(top: emailLabel.topAnchor, left: emailLabel.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 20, paddingLeft: 0, paddingBottom: 0, paddingRight: 50, width: 40, height: 40)
+        
+        passwordLabel.leftAnchor.constraint(equalTo: nameLabel.leftAnchor).isActive = true
+        passwordLabel.topAnchor.constraint(equalTo: emailLabel.topAnchor, constant: 100).isActive = true
+        
+        passwordTextView.anchor(top: passwordLabel.topAnchor, left: passwordLabel.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 15, paddingLeft: 0, paddingBottom: 0, paddingRight: 50, width: 40, height: 40)
+        
+        
+//        mentorOrMenteeLabel.leftAnchor.constraint(equalTo: nameLabel.leftAnchor).isActive = true
+//        mentorOrMenteeLabel.topAnchor.constraint(equalTo: passwordTextView.topAnchor, constant: 100).isActive = true
+//
+//        mentorOrMenteeTextView.anchor(top: mentorOrMenteeLabel.topAnchor, left: mentorOrMenteeLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 20, paddingLeft: 0, paddingBottom: 0, paddingRight: 50, width: 200, height: 40)
+//        
+//        mentorMenteeDropButton.anchor(top: mentorOrMenteeTextView.topAnchor, left: mentorOrMenteeTextView.leftAnchor, bottom: nil, right: nil, paddingTop: 25, paddingLeft: 210, paddingBottom: 0, paddingRight: 0, width: 50, height: 10)
+        
+    }
+    
+    func authorize() {
+        appDelegate.changeStatus(authStatus: .authorized)
+    }
+    
+    func unauthorize() {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    func setKeychainCredential() {
+        keychain.set(emailTextView.text!, forKey: "email")
+        keychain.set(passwordTextView.text!, forKey: "password")
+    }
+    
+    
+}

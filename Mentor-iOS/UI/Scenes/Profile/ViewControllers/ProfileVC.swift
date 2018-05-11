@@ -63,13 +63,13 @@ class ProfileVC: UIViewController {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16)
         label.textColor = UIColor.gray
-        label.text = "Reason I am in Tech"
+        label.text = "Bio"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    let goalInputLabel: UILabel = {
-        let label = UILabel()
+    let goalInputLabel: UITextView = {
+        let label = UITextView()
         label.font = UIFont.systemFont(ofSize: 20)
         label.textColor = UIColor.black
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -121,9 +121,9 @@ class ProfileVC: UIViewController {
         imageView.image = UIImage(named: "profileImageHolder")
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.layer.masksToBounds = false
-        imageView.layer.cornerRadius = 75
+        imageView.layer.cornerRadius = 50
         imageView.clipsToBounds = true
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
         return imageView
     }()
     
@@ -133,29 +133,32 @@ class ProfileVC: UIViewController {
         keychain.clear()
     }
     
+    let keys = AppKeys.instance
   
     override func viewDidLoad() {
         super.viewDidLoad()
+        keys.setMentorOrMentee(isMentor: keys.isMentor)
         setUpScrollView()
+        setUpBackground()
         view.backgroundColor = UIColor.white
         fetchUser()
         setImage()
-        setUpBackground()
+       
         setUpViews()
         setUpHeaders()
     }
     
 //    weak var editVC = EditVC!.self
-    var editVC = EditVC()
+//    var editVC = EditVC()
     @objc func handleEdit() {
         print("edit")
-        
+        let editVC = EditVC()
         self.navigationController?.pushViewController(editVC, animated: true)
 //        present(editVC, animated: true)
     }
     
     deinit {
-        
+        print("deinit")
     }
     
     var scrollView: UIScrollView!
@@ -168,30 +171,40 @@ class ProfileVC: UIViewController {
         self.scrollView.contentSize = CGSize(width:screenWidth, height: 800)
         self.scrollView.isScrollEnabled = true
         self.scrollView.frame = CGRect(x: 0, y: 30, width: screenWidth, height: 800)
-         view.addSubview(scrollView)
+        view.addSubview(scrollView)
     }
     
     func setUpHeaders() {
-        view.addSubview(profileImageView)
-        view.addSubview(nameLabel)
-        view.addSubview(roleLabel)
+        scrollView.addSubview(profileImageView)
+        scrollView.addSubview(nameLabel)
+        scrollView.addSubview(roleLabel)
         
-        profileImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 80).isActive = true
-        profileImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        profileImageView.heightAnchor.constraint(equalToConstant: 150).isActive = true
-        profileImageView.widthAnchor.constraint(equalToConstant: 150).isActive = true
+        profileImageView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 30).isActive = true
+        profileImageView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
+        profileImageView.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        profileImageView.widthAnchor.constraint(equalToConstant: 100).isActive = true
         
-        nameLabel.centerYAnchor.constraint(equalTo: profileImageView.centerYAnchor, constant: 110).isActive = true
+        nameLabel.centerYAnchor.constraint(equalTo: profileImageView.centerYAnchor, constant: 80).isActive = true
         nameLabel.centerXAnchor.constraint(equalTo: profileImageView.centerXAnchor).isActive = true
-        nameLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 50).isActive = true
         
         roleLabel.centerYAnchor.constraint(equalTo: nameLabel.centerYAnchor, constant: 30).isActive = true
         roleLabel.centerXAnchor.constraint(equalTo: nameLabel.centerXAnchor).isActive = true
+        
+        // V2 design
+//        profileImageView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 40).isActive = true
+//        profileImageView.heightAnchor.constraint(equalToConstant: 100).isActive = true
+//        profileImageView.widthAnchor.constraint(equalToConstant: 100).isActive = true
+//
+//        nameLabel.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 50).isActive = true
+//        nameLabel.leftAnchor.constraint(equalTo: profileImageView.leftAnchor, constant: 110).isActive = true
+//        
+//        roleLabel.topAnchor.constraint(equalTo: nameLabel.topAnchor, constant: 30).isActive = true
+//        roleLabel.leftAnchor.constraint(equalTo: nameLabel.leftAnchor).isActive = true
     }
     
     
     func setUpViews() {
-        navigationController?.navigationBar.barTintColor = UIColor.clear.withAlphaComponent(0.1)
+        navigationController?.navigationBar.prefersLargeTitles = true
         let editButtonItem = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(handleEdit))
         navigationItem.rightBarButtonItem = editButtonItem
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Log Out", style: .plain, target: self, action: #selector(handleLogout))
@@ -205,18 +218,21 @@ class ProfileVC: UIViewController {
         scrollView.addSubview(genderLabel)
         scrollView.addSubview(genderInputLabel)
         
-        companyLabel.leftAnchor.constraint(equalTo: scrollView.leftAnchor, constant: 20).isActive = true
-        companyLabel.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 270).isActive = true
-        companyInputLabel.leftAnchor.constraint(equalTo: scrollView.leftAnchor, constant: 20).isActive = true
+        goalLabel.leftAnchor.constraint(equalTo: scrollView.leftAnchor, constant: 20).isActive = true
+        goalLabel.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 230).isActive = true
+        goalInputLabel.leftAnchor.constraint(equalTo: scrollView.leftAnchor, constant: 20).isActive = true
+        goalInputLabel.topAnchor.constraint(equalTo: goalLabel.topAnchor, constant: 20).isActive = true
+        goalInputLabel.widthAnchor.constraint(equalToConstant: 200).isActive = true
+        goalInputLabel.heightAnchor.constraint(equalToConstant: 200).isActive = true
+        
+        
+        companyLabel.leftAnchor.constraint(equalTo: goalInputLabel.leftAnchor).isActive = true
+        companyLabel.topAnchor.constraint(equalTo: goalInputLabel.topAnchor, constant: 230).isActive = true
+        companyInputLabel.leftAnchor.constraint(equalTo: companyLabel.leftAnchor).isActive = true
         companyInputLabel.topAnchor.constraint(equalTo: companyLabel.topAnchor, constant: 20).isActive = true
         
-        goalLabel.leftAnchor.constraint(equalTo: companyInputLabel.leftAnchor).isActive = true
-        goalLabel.topAnchor.constraint(equalTo: companyInputLabel.topAnchor, constant: 40).isActive = true
-        goalInputLabel.leftAnchor.constraint(equalTo: goalLabel.leftAnchor).isActive = true
-        goalInputLabel.topAnchor.constraint(equalTo: goalLabel.topAnchor, constant: 20).isActive = true
-        
-        raceLabel.leftAnchor.constraint(equalTo: goalInputLabel.leftAnchor).isActive = true
-        raceLabel.topAnchor.constraint(equalTo: goalInputLabel.topAnchor, constant: 80).isActive = true
+        raceLabel.leftAnchor.constraint(equalTo: companyInputLabel.leftAnchor).isActive = true
+        raceLabel.topAnchor.constraint(equalTo: companyInputLabel.topAnchor, constant: 80).isActive = true
         raceInputLabel.leftAnchor.constraint(equalTo: raceLabel.leftAnchor).isActive = true
         raceInputLabel.topAnchor.constraint(equalTo: raceLabel.topAnchor, constant: 20).isActive = true
         
@@ -224,6 +240,27 @@ class ProfileVC: UIViewController {
         genderLabel.topAnchor.constraint(equalTo: raceInputLabel.topAnchor, constant: 40).isActive = true
         genderInputLabel.leftAnchor.constraint(equalTo: genderLabel.leftAnchor).isActive = true
         genderInputLabel.topAnchor.constraint(equalTo: genderLabel.topAnchor, constant: 20).isActive = true
+        
+        //V2 design
+//        goalLabel.leftAnchor.constraint(equalTo: scrollView.leftAnchor, constant: 20).isActive = true
+//        goalLabel.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 200).isActive = true
+//        goalInputLabel.leftAnchor.constraint(equalTo: scrollView.leftAnchor, constant: 20).isActive = true
+//        goalInputLabel.topAnchor.constraint(equalTo: goalLabel.topAnchor, constant: 20).isActive = true
+//
+//        companyLabel.leftAnchor.constraint(equalTo: goalInputLabel.leftAnchor).isActive = true
+//        companyLabel.topAnchor.constraint(equalTo: goalInputLabel.topAnchor, constant: 150).isActive = true
+//        companyInputLabel.leftAnchor.constraint(equalTo: companyLabel.leftAnchor).isActive = true
+//        companyInputLabel.topAnchor.constraint(equalTo: companyLabel.topAnchor, constant: 20).isActive = true
+//
+//        raceLabel.leftAnchor.constraint(equalTo: companyInputLabel.leftAnchor).isActive = true
+//        raceLabel.topAnchor.constraint(equalTo: companyInputLabel.topAnchor, constant: 80).isActive = true
+//        raceInputLabel.leftAnchor.constraint(equalTo: raceLabel.leftAnchor).isActive = true
+//        raceInputLabel.topAnchor.constraint(equalTo: raceLabel.topAnchor, constant: 20).isActive = true
+//
+//        genderLabel.leftAnchor.constraint(equalTo: raceInputLabel.leftAnchor).isActive = true
+//        genderLabel.topAnchor.constraint(equalTo: raceInputLabel.topAnchor, constant: 40).isActive = true
+//        genderInputLabel.leftAnchor.constraint(equalTo: genderLabel.leftAnchor).isActive = true
+//        genderInputLabel.topAnchor.constraint(equalTo: genderLabel.topAnchor, constant: 20).isActive = true
         
     }
 }

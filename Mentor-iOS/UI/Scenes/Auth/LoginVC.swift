@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import KeychainSwift
+import DropDown
 
 class LoginVC: UIViewController {
     
@@ -17,15 +18,17 @@ class LoginVC: UIViewController {
     let keychain = KeychainSwift()
     let networking = ServerNetworking.shared
     let userDefault = UserDefaults.standard
+    let mentorOrMenteeDropdown = DropDown()
     
     let logInButton: UIButton = {
-        let button = UIButton(type: .custom)
+        let button = UIButton(type: .system)
         button.setTitle("Log In", for: .normal)
-        button.setTitleColor(UIColor.white, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 20)
+        button.setTitleColor(UIColor.violetBlue, for: .normal)
         button.addTarget(self, action: #selector(handleLogin), for: .touchUpInside)
+        button.backgroundColor = UIColor.white
         button.addBorder(color: UIColor.white)
         button.makeRounded()
-        button.addTarget(self, action: #selector(touchDown), for: .touchDown)
         return button
     }()
     
@@ -57,17 +60,21 @@ class LoginVC: UIViewController {
         return textField
     }()
     
-    let signUpButton: UIButton = {
-        let button = UIButton(type: .custom)
-        button.setTitle("Sign Up", for: .normal)
-        button.setTitleColor(UIColor.white, for: .normal)
-        button.backgroundColor = UIColor.violetBlue
-        button.addTarget(self, action: #selector(handleSignUp), for: .touchUpInside)
-        button.addBorder(color: UIColor.white)
-        button.makeRounded()
-        button.addTarget(self, action: #selector(touchDown), for: .touchDown)
+    let dismissButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setBackgroundImage(UIImage(named: "dismiss-w"), for: .normal)
+        button.addTarget(self, action: #selector(handleDismiss), for: .touchUpInside)
+//        button.addTarget(self, action: #selector(touchDown), for: .touchDown)
         return button
     }()
+    
+    @objc func handleDismiss() {
+        print("dismiss")
+        dismiss(animated: true, completion: {
+            AppDelegateViewModel.instance.changeStatus(authStatus: .unauthorized)
+        })
+    }
+    
     
     let iconImageView: UIImageView = {
         let imageView = UIImageView()
@@ -79,117 +86,90 @@ class LoginVC: UIViewController {
         return imageView
     }()
     
-    @objc func touchDown(sender: UIButton) {
-        sender.backgroundColor = UIColor.white
-        sender.setTitleColor(UIColor.violetBlue, for: UIControlState.normal)
+    let mentorOrMenteeLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 20)
+        label.textColor = UIColor.white
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "I was ..."
+        return label
+    }()
+    
+    let mentorOrMenteeTextView: UILabel = {
+        let textView = UILabel()
+        textView.font = UIFont.systemFont(ofSize: 22)
+        textView.textColor = UIColor.white
+        textView.backgroundColor = UIColor.clear
+        textView.isUserInteractionEnabled = false
+        textView.contentMode = .bottom
+        return textView
+    }()
+    
+    let mentorMenteeDropButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setTitle("select", for: .normal)
+        button.setTitleColor(UIColor.white, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 18)
+        button.addTarget(self, action: #selector(handleMentorMenteeDrop), for: .touchUpInside)
+        return button
+    }()
+    
+    @objc func handleMentorMenteeDrop() {
+        mentorOrMenteeDropdown.show()
+        
     }
    
     @objc func handleLogin(sender: UIButton) {
+        
         setKeychainCredential()
+        
         let email = keychain.get("email")!
         let password = keychain.get("password")!
         
         let user = ["email": email, "password": password]
         let sv = UIViewController.displaySpinner(onView: self.view)
         
-        if keys.isMentor {
-            networking.getInfo(route: .getMentor, params: user) { data in
-                if let list = try? JSONDecoder().decode(User.self, from: data) {
-                    self.keychain.set((list.token)!, forKey: "token")
-                    self.keychain.set(String((list.id)!), forKey: "id")
-                    DispatchQueue.main.async {
-                        if self.networking.statusCode != 200{
-                            self.informSignUpFailure()
-                            self.unauthorize()
-                            UIViewController.removeSpinner(spinner: sv)
-                        } else {
-                            self.authorize()
-                            UIViewController.removeSpinner(spinner: sv)
-                        }
-                    }
-                } else {
-                    DispatchQueue.main.async {
-                        self.informSignUpFailure()
-                        UIViewController.removeSpinner(spinner: sv)
-                        self.unauthorize()
-                    }
-                }
-               
-            }
-        } else {
-            keys.setMentorOrMentee(isMentor: false)
-            networking.getInfo(route: .getMentee, params: user) { data in
-                if let list = try? JSONDecoder().decode(User.self, from: data) {
-                    self.keychain.set((list.token)!, forKey: "token")
-                    self.keychain.set(String((list.id)!), forKey: "id")
-                    DispatchQueue.main.async {
-                        if self.networking.statusCode != 200 {
-                            self.informSignUpFailure()
-                            UIViewController.removeSpinner(spinner: sv)
-                            self.unauthorize()
-                        } else {
-                            self.authorize()
-                            UIViewController.removeSpinner(spinner: sv)
-                        }
-                    }
-                } else {
-                    DispatchQueue.main.async {
-                        self.informSignUpFailure()
-                        UIViewController.removeSpinner(spinner: sv)
-                        self.unauthorize()
-                    }
-                    
-                }
-               
+        networking.getInfo(route: .getMentor, params: user) { data in
+            if let list = try? JSONDecoder().decode(User.self, from: data) {
+                print(list)
+                self.keychain.set((list.token)!, forKey: "token-mentor")
+                self.keychain.set(String((list.id)!), forKey: "id-mentor")
             }
         }
+        
+        networking.getInfo(route: .getMentee, params: user) { data in
+            if let list = try? JSONDecoder().decode(User.self, from: data) {
+                self.keychain.set((list.token)!, forKey: "token")
+                self.keychain.set(String((list.id)!), forKey: "id")
+                token = (list.token)!
+                userID = String((list.id)!)
+                DispatchQueue.main.async {
+                    if self.networking.statusCode != 200 {
+                        self.informLoginFailure()
+                        UIViewController.removeSpinner(spinner: sv)
+//                            self.unauthorize()
+                    } else {
+                        self.setMentorOrMentee()
+                        self.authorize()
+                        UIViewController.removeSpinner(spinner: sv)
+                    }
+                }
+            } else {
+                DispatchQueue.main.async {
+                    self.informLoginFailure()
+                    UIViewController.removeSpinner(spinner: sv)
+//                        self.unauthorize()
+                }
+                
+            }
+           
+        }
+       
+    
     }
     
-    @objc func handleSignUp() {
-        setKeychainCredential()
-        let email = keychain.get("email")!
-        let password = keychain.get("password")!
-        
-        let user = ["email": email, "password": password]
-        let sv = UIViewController.displaySpinner(onView: self.view)
-        
-        if keys.isMentor {
-            keys.setMentorOrMentee(isMentor: true)
-            networking.getInfo(route: .createMentor, params: user) { data in
-                let list = try? JSONDecoder().decode(User.self, from: data)
-                
-                 DispatchQueue.main.async {
-                    if self.networking.statusCode != 201 {
-                        self.informSignUpFailure()
-                        UIViewController.removeSpinner(spinner: sv)
-                        self.unauthorize()
-                    } else {
-                        self.keychain.set((list?.token)!, forKey: "token")
-                        self.keychain.set(String((list?.id)!), forKey: "id")
-                        UIViewController.removeSpinner(spinner: sv)
-                        self.authorize()
-                    }
-                }
-            }
-        } else {
-            keys.setMentorOrMentee(isMentor: false)
-            networking.getInfo(route: .createMentee, params: user) { data in
-                let list = try? JSONDecoder().decode(User.self, from: data)
-                DispatchQueue.main.async {
-                    if self.networking.statusCode != 201 {
-                        self.informSignUpFailure()
-                        UIViewController.removeSpinner(spinner: sv)
-                        self.unauthorize()
-                    } else {
-                        self.keychain.set((list?.token)!, forKey: "token")
-                        self.keychain.set(String((list?.id)!), forKey: "id")
-                        UIViewController.removeSpinner(spinner: sv)
-                        self.authorize()
-                    }
-                }
-            }
-        }
-        
+    func setMentorOrMentee() {
+        keys.setMentorOrMentee(isMentor: false)
     }
     
     func setKeychainCredential() {
@@ -200,74 +180,56 @@ class LoginVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpViews()
+        mentorOrMenteeDropdown.anchorView = mentorOrMenteeTextView
+        mentorOrMenteeDropdown.dataSource = ["giving advice", "receiving advice"]
+        mentorOrMenteeDropdown.selectionAction = { [weak self] (index, item) in
+            self?.mentorOrMenteeTextView.text = item
+        }
     }
     
     override func viewDidLayoutSubviews() {
         let lineColor = UIColor.white
         self.emailTextField.setBottomLine(borderColor: lineColor)
         self.passwordTextField.setBottomLine(borderColor: lineColor)
-        
+        self.mentorOrMenteeTextView.layer.addBorder(edge: .bottom, color: lineColor, thickness: 0.8)
     }
     
     func informLoginFailure() {
         let alertController = UIAlertController(title: "Login Failed", message: "Wrong email or password", preferredStyle: .alert)
-        let ok = UIAlertAction(title: "Ok", style: .default, handler: { action in
-            self.dismiss(animated: true, completion: nil)
-        })
+        let ok = UIAlertAction(title: "Ok", style: .default)
         alertController.addAction(ok)
         self.present(alertController, animated: true) { () in
             
         }
     }
     
-    func informSignUpFailure() {
-        let alertController = UIAlertController(title: "Email already exists", message: "Use other email", preferredStyle: .alert)
-        let ok = UIAlertAction(title: "Ok", style: .default, handler: { action in
-            self.dismiss(animated: true, completion: nil)
-        })
-        alertController.addAction(ok)
-        self.present(alertController, animated: true) { () in
-        }
+    deinit {
+        print("login deinit")
     }
     
-    
     func setUpViews() {
-        view.addSubview(iconImageView)
         view.addSubview(logInButton)
         view.addSubview(emailTextField)
         view.addSubview(passwordTextField)
-        view.addSubview(signUpButton)
-        
-        iconImageView.translatesAutoresizingMaskIntoConstraints = false
-        iconImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        iconImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -180).isActive = true
-        iconImageView.widthAnchor.constraint(equalToConstant: 200).isActive = true
-        iconImageView.heightAnchor.constraint(equalToConstant: 200).isActive = true
+        view.addSubview(dismissButton)
 
-       
         logInButton.translatesAutoresizingMaskIntoConstraints = false
-        logInButton.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: -80).isActive = true
-        logInButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 150).isActive = true
-        logInButton.widthAnchor.constraint(equalToConstant: 150).isActive = true
-        logInButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        logInButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        logInButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 220).isActive = true
+        logInButton.widthAnchor.constraint(equalToConstant: 300).isActive = true
+        logInButton.heightAnchor.constraint(equalToConstant: 80).isActive = true
         
         emailTextField.translatesAutoresizingMaskIntoConstraints = false
         emailTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        emailTextField.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -20).isActive = true
+        emailTextField.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -140).isActive = true
         emailTextField.widthAnchor.constraint(equalToConstant: 300).isActive = true
         
         passwordTextField.translatesAutoresizingMaskIntoConstraints = false
         passwordTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        passwordTextField.centerYAnchor.constraint(equalTo: emailTextField.centerYAnchor, constant: 70).isActive = true
+        passwordTextField.centerYAnchor.constraint(equalTo: emailTextField.centerYAnchor, constant: 80).isActive = true
         passwordTextField.widthAnchor.constraint(equalToConstant: 300).isActive = true
         
-        
-        signUpButton.translatesAutoresizingMaskIntoConstraints = false
-        signUpButton.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 80).isActive = true
-        signUpButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 150).isActive = true
-        signUpButton.widthAnchor.constraint(equalToConstant: 150).isActive = true
-        signUpButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        
+        dismissButton.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: nil, paddingTop: 30, paddingLeft: 20, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
     }
     
     func authorize() {
@@ -275,7 +237,7 @@ class LoginVC: UIViewController {
     }
     
     func unauthorize() {
-        appDelegate.changeStatus(authStatus: .unauthorized)
+        self.dismiss(animated: true, completion: nil)
     }
 }
 

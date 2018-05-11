@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import KeychainSwift
 
 class AppKeys {
     struct DomainKeys {
@@ -33,6 +34,13 @@ class AppKeys {
     
     func setMentorOrMentee(isMentor: Bool) {
         userDefaults.set(isMentor, forKey: DomainKeys.isMentor)
+        if isMentor == true {
+            token = keychain.get("token-mentor")!
+            userID = keychain.get("id-mentor")!
+        } else {
+            token = keychain.get("token")!
+            userID = keychain.get("id")!
+        }
     }
     
 }

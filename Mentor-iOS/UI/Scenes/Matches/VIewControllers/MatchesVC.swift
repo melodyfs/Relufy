@@ -21,26 +21,79 @@ class MatchesVC: UIViewController {
     let keys = AppKeys.instance
     var emptyView: UIView!
     var userInfo = [MessageItemViewModel]()
+    let screenSize = UIScreen.main.bounds
+    let userDefault = UserDefaults.standard
+    lazy var appDelegate = AppDelegateViewModel.instance
+   
+    
+    @objc func handleValueChange(sender: UISegmentedControl) {
+        collectionView.dataSource = nil
+        switch sender.selectedSegmentIndex {
+        case 0:
+            keys.setMentorOrMentee(isMentor: false)
+            appDelegate.changeStatus(authStatus: .authorized)
+            userDefault.set(0, forKey: "segNum")
+            print("value change")
+        case 1:
+            keys.setMentorOrMentee(isMentor: true)
+            appDelegate.changeStatus(authStatus: .authorized)
+            userDefault.set(1, forKey: "segNum")
+            print("value change")
+        default:
+            break
+        }
+        
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        keys.setMentorOrMentee(isMentor: keys.isMentor)
         viewModel.confirmed = ["confirmed": "false"]
         view.backgroundColor = UIColor.white
         registerCollectionView()
         setNameAndImage()
         navigationController?.navigationBar.prefersLargeTitles = true
-        print(userInfo.count)
+//        addSegmentedControl()
+        addChangeRoleBarButton()
+        
+        let sv = UIViewController.displaySpinner(onView: self.view)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 6.0) {
+            UIViewController.removeSpinner(spinner: sv)
+        }
+    }
     
+    func addSegmentedControl() {
+        let items = ["Mentors", "Mentees"]
+        let customSC = UISegmentedControl(items: items)
+        let normalFont = UIFont.systemFont(ofSize: 16)
+        let normalTextAttributes: [NSObject : AnyObject] = [
+            NSAttributedStringKey.font as NSObject: normalFont]
+        customSC.backgroundColor = UIColor.clear
+        customSC.tintColor = UIColor.violetBlue
+        customSC.setTitleTextAttributes(normalTextAttributes, for: .normal)
+        customSC.selectedSegmentIndex = userDefault.integer(forKey: "segNum")
+        customSC.frame = CGRect(x: 0, y: 0, width: 400, height: 40)
+        customSC.addTarget(self, action: #selector(handleValueChange), for: .valueChanged)
+        navigationItem.title = nil
+        navigationItem.titleView = customSC
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        viewModel.confirmed = ["confirmed": "false"]
+        registerCollectionView()
         ServerNetworking.shared.getInfo(route: .createMatches, params: [:]) {_ in}
-        fetchUsers()
         DispatchQueue.main.async {
             self.collectionView.reloadData()
         }
-//        configureCell()
+        
+        if keys.isMentor {
+            self.navigationItem.title = "Mentees"
+        } else {
+            self.navigationItem.title = "Mentors"
+        }
+        
+        
     }
     
     var getStartedLabel: UILabel = {
@@ -48,7 +101,7 @@ class MatchesVC: UIViewController {
         label.font = UIFont.systemFont(ofSize: 18)
         label.textColor = UIColor.black
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Complete Your Profile & Check Back Soon!"
+        label.text = "Check Back Soon For New Matches!"
         return label
     }()
     
@@ -63,7 +116,7 @@ class MatchesVC: UIViewController {
         let flowLayout = UICollectionViewFlowLayout()
         collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: flowLayout)
         collectionView.register(MatchesListCell.self, forCellWithReuseIdentifier: cellID)
-        flowLayout.scrollDirection = .horizontal
+        flowLayout.scrollDirection = .vertical
         collectionView.isPagingEnabled = true
         collectionView.isScrollEnabled = true
         
@@ -106,40 +159,22 @@ class MatchesVC: UIViewController {
         dataSource.configureCell = { cv, indexPath in
             let cell = cv.dequeueReusableCell(withReuseIdentifier: self.cellID, for: indexPath) as! MatchesListCell
             cell.viewModel = self.dataSource.items[indexPath.section]
-            cell.connectButton.tag = self.matchIDs[indexPath.section]
-            cell.connectButton.addTarget(self, action: #selector(self.handleConnect), for: .touchUpInside)
+//            cell.connectButton.tag = self.matchIDs[indexPath.section]
+//            cell.connectButton.addTarget(self, action: #selector(self.handleMore), for: .touchUpInside)
             cell.addShadow()
             cell.roundCorner()
-            let frameSize = self.collectionView.frame.size
-            cell.scrollView.frame = CGRect(x: 0, y: 0, width: frameSize.width - 20, height: frameSize.height - 120)
-            cell.scrollView.contentSize = CGSize(width: frameSize.width - 20, height: 650)
+//            self.selectedUser = [self.dataSource.items[indexPath.row]]
             return cell
         }
         
          UIViewController.removeSpinner(spinner: sv)
     }
     
-    @objc func handleConnect(sender: UIButton) {
-        print("connect tapped")
-        let otherPersonID = sender.tag
-        let index = matchIDs.index(of: otherPersonID)
-        var params = [String: String]()
-        
-        if keys.isMentor {
-            params = ["mentor_id": keychain.get("id")!,
-                          "mentee_id":"\(otherPersonID)",
-                          "confirmed": "true" ]
-        } else {
-            params = ["mentor_id": "\(otherPersonID)",
-                      "mentee_id": keychain.get("id")!,
-                      "confirmed": "true" ]
-        }
-        
-        ServerNetworking.shared.getInfo(route: .confirmMatched, params: params) { _ in}
-        dataSource.items.remove(at: index!)
-        self.collectionView.deleteSections([index!])
-    }
+//    var selectedUser = [MessageItemViewModel]()
     
+
+    
+
     func setNameAndImage() {
         if AppKeys.instance.isMentor {
             ServerNetworking.shared.getInfo(route: .getMentorImage, params: [:]) { info in
@@ -159,22 +194,79 @@ class MatchesVC: UIViewController {
         
     }
     
+    func addChangeRoleBarButton() {
+        let button = UIButton.init(type: .custom)
+        button.setImage(UIImage(named: "role"), for: UIControlState.normal)
+        button.addTarget(self, action: #selector(handleChange), for: UIControlEvents.touchUpInside)
+        button.frame = CGRect(x: 0, y: 0, width: 55, height: 50)
+        
+        let barButton = UIBarButtonItem(customView: button)
+        navigationItem.rightBarButtonItem = barButton
+    }
+    
+    @objc func handleChange() {
+        print("change")
+        let actionSheet = UIAlertController(
+            title: "Switch Your Role",
+            message: nil,
+            preferredStyle: .actionSheet
+        )
+        actionSheet.addAction(
+            UIAlertAction(
+                title: "Be a Mentee",
+                style: .default,
+                handler: { _ in
+                print("mentors")
+                self.keys.setMentorOrMentee(isMentor: false)
+                self.appDelegate.changeStatus(authStatus: .authorized)
+                
+                print("value change")
+            })
+        )
+        actionSheet.addAction(
+            UIAlertAction(
+                title: "Be a Mentor",
+                style: .default,
+                handler: { _ in
+                self.keys.setMentorOrMentee(isMentor: true)
+                self.appDelegate.changeStatus(authStatus: .authorized)
+            })
+        )
+        
+        actionSheet.addAction(
+            UIAlertAction(
+                title: "Cancel",
+                style: .cancel,
+                handler: { _ in
+                
+            })
+        )
+        
+        
+        self.present(actionSheet, animated: true, completion: nil)
+    }
+    
 
 }
 
 extension MatchesVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let selectedUser = dataSource.items[indexPath.row]
+        let selectedUser = dataSource.items[indexPath.section]
+        let personDetailVC = PersonDetailVC()
+        personDetailVC.selectedUser = [selectedUser]
+        navigationController?.pushViewController(personDetailVC, animated: true)
     }
     
     // cell size and position
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let frameSize = collectionView.frame.size
-        return CGSize(width: frameSize.width - 20, height: frameSize.height - 120)
+        return CGSize(width: frameSize.width - 20, height: frameSize.height - 280)
 
     }
+    
+    // padding for cell
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+        return UIEdgeInsets(top: 0, left: 10, bottom: 20, right: 10)
     }
     
 }

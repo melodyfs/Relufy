@@ -37,7 +37,9 @@ extension EditVC: UINavigationControllerDelegate {
             
             picker.delegate = self
             picker.allowsEditing = false
+            picker.modalPresentationStyle = .overCurrentContext
             self.present(picker, animated: true, completion: nil)
+
         }
     }
     
@@ -51,8 +53,7 @@ extension EditVC: UINavigationControllerDelegate {
         picker.cameraDevice = .rear
         picker.mediaTypes = UIImagePickerController.availableMediaTypes(for:.camera)!
         picker.delegate = self
-        
-        present(picker, animated: true)
+    
     }
     
     @objc func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
@@ -60,14 +61,14 @@ extension EditVC: UINavigationControllerDelegate {
         var image = info[UIImagePickerControllerOriginalImage] as? UIImage
         let jpegImage = UIImageJPEGRepresentation(image!, 0.3)
         imageData = jpegImage
-        picker.dismiss(animated: true)
+        picker.dismiss(animated: true, completion: nil)
         
         profileImageView.image = image
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         defer {
-            picker.dismiss(animated: true)
+            picker.dismiss(animated: false, completion: nil)
         }
         
         print("did cancel")

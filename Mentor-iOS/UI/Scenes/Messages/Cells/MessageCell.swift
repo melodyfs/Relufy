@@ -7,13 +7,21 @@
 //
 
 import UIKit
+import Kingfisher
 
 class MessageCell: UICollectionViewCell {
     
     var viewModel: MessageItemViewModel! {
         didSet {
             nameLabel.text = viewModel?.name
-            profileImageView.getImageFromURL(url: (viewModel?.image)!)
+            if (viewModel?.image)! == "/image_files/original/missing.png" {
+                profileImageView.image = UIImage(named: "profileImageHolder")
+            } else {
+//                profileImageView.getImageFromURL(url: (viewModel?.image)!)
+                let url = URL(string: (viewModel?.image)!)
+                profileImageView.kf.setImage(with: url)
+            }
+//            profileImageView.getImageFromURL(url: (viewModel?.image)!)
             roleLabel.text = (viewModel?.role)! + " for \(viewModel.years) year(s)"
             goalLabel.text = "Goal: " + viewModel.goal
         }
@@ -35,7 +43,7 @@ class MessageCell: UICollectionViewCell {
         imageView.layer.masksToBounds = false
         imageView.layer.cornerRadius = 40
         imageView.clipsToBounds = true
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
         return imageView
     }()
     
@@ -65,7 +73,7 @@ class MessageCell: UICollectionViewCell {
         addSubview(profileImageView)
         addSubview(nameLabel)
         addSubview(roleLabel)
-        addSubview(goalLabel)
+//        addSubview(goalLabel)
         
         profileImageView.leftAnchor.constraint(equalTo: leftAnchor, constant: 10).isActive = true
         profileImageView.topAnchor.constraint(equalTo: topAnchor, constant: 10).isActive = true
@@ -78,8 +86,8 @@ class MessageCell: UICollectionViewCell {
         roleLabel.leftAnchor.constraint(equalTo: nameLabel.leftAnchor).isActive = true
         roleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 40).isActive = true
         
-        goalLabel.leftAnchor.constraint(equalTo: nameLabel.leftAnchor).isActive = true
-        goalLabel.topAnchor.constraint(equalTo: topAnchor, constant: 60).isActive = true
+//        goalLabel.leftAnchor.constraint(equalTo: nameLabel.leftAnchor).isActive = true
+//        goalLabel.topAnchor.constraint(equalTo: topAnchor, constant: 60).isActive = true
         
         //        nameLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: 5).isActive = true
         

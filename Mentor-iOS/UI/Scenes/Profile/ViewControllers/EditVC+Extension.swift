@@ -58,20 +58,20 @@ extension EditVC {
     
     func updateInfo() {
         let params = collectParams()
-        if keys.isMentor {
+//        if keys.isMentor {
             ServerNetworking.shared.getInfo(route: .updateMentor, params: params) {_ in}
-        } else {
+//        } else {
             ServerNetworking.shared.getInfo(route: .updateMentee, params: params) {_ in}
-        }
+//        }
     }
     
     func updateProfileImage() {
         if imageData != nil {
-            if keys.isMentor {
+//            if keys.isMentor {
                 UploadImage.upload(route: .updateMentor,  imageData: imageData!)
-            } else {
+//            } else {
                 UploadImage.upload(route: .updateMentee, imageData: imageData!)
-            }
+//            }
         }
     }
     

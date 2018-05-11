@@ -15,6 +15,7 @@ enum AuthStatus {
     case unauthorized
     case backToProfile
     case editProfile
+    case loginView
 }
 
 typealias RootCallback = (_ viewController: UIViewController) -> Void
@@ -49,6 +50,8 @@ class AppDelegateViewModel {
 //            rootViewController.tabBarController?.selectedViewController = ProfileVC()
         case .editProfile:
             rootViewController = EditVC()
+        case .loginView:
+            rootViewController = LoginVC()
         }
         
         //switch view controller - recieve notification
@@ -85,6 +88,8 @@ class AppDelegateViewModel {
 //            rootViewController.tabBarController?
         case .editProfile:
             rootViewController = EditVC()
+        case .loginView:
+            rootViewController = LoginVC()
         }
         
         rootCallback(rootViewController)

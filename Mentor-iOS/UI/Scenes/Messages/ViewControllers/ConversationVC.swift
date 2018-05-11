@@ -61,6 +61,42 @@ class ConversationVC: UIViewController, PusherDelegate, UITextViewDelegate {
         setUpLayout()
         inputTextField.delegate = self
         addNotifications()
+        addProfileButton()
+    }
+    
+    func addProfileButton() {
+        let button = UIButton.init(type: .custom)
+        
+//        button.imageView?.sizeToFit()
+        
+        if userInfo.first!.image == "/image_files/original/missing.png" {
+            button.setImage(UIImage(named: "role"), for: UIControlState.normal)
+        } else {
+            let url = URL(string: userInfo.first!.image)
+            button.kf.setImage(with: url, for: .normal, placeholder: nil, options: nil, progressBlock: nil, completionHandler: nil)
+        }
+        
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.imageView?.layer.masksToBounds = false
+        button.imageView?.layer.cornerRadius = 15
+        button.imageView?.clipsToBounds = true
+        button.imageView?.contentMode = .scaleAspectFill
+        button.widthAnchor.constraint(equalToConstant: 30).isActive = true
+        button.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        
+        button.addTarget(self, action: #selector(showProfile), for: UIControlEvents.touchUpInside)
+        
+        let barButton = UIBarButtonItem(customView: button)
+        navigationItem.rightBarButtonItem = barButton
+    }
+    
+    @objc func showProfile() {
+//        let selectedUser = dataSource.items[indexPath.section]
+        let personDetailVC = ProfileDetailsVC()
+        personDetailVC.selectedUser = userInfo
+        navigationController?.pushViewController(personDetailVC, animated: true)
+//        navigationController?.pushViewController(PersonDetailVC, animated: true)
+        
     }
     
     func setChannelName() {
@@ -176,34 +212,6 @@ class ConversationVC: UIViewController, PusherDelegate, UITextViewDelegate {
     @objc func listenToMessagesInBackground(notification: Notification) {
         print(notification.userInfo)
         print("app in forground")
-//        notifyNewMessage(title: "Foreground", body: "content")
-//        let options = PusherClientOptions(
-//            authMethod: AuthMethod.authRequestBuilder(authRequestBuilder: AuthRequestBuilder()),
-//            host: .cluster(cluster)
-//        )
-//        pusher = Pusher(
-//            key: key,
-//            options: options
-//        )
-//        pusher.delegate = self
-//        pusher.connect()
-//
-//        let chan = pusher.subscribe(channelName)
-//        let _ = chan.bind(eventName: "chat", callback: { data in
-//            print(data)
-//            if let data = data as? [String : AnyObject] {
-//                if let sender = data["sender"] as? String {
-//                    if let content = data["content"] as? String {
-//                        let message = ConversationItemViewModel(sender: sender, content: content)
-//                        self.dataSource.items.append(message)
-//                        let section = self.dataSource.items.count
-//                        self.collectionView?.insertSections([section - 1])
-//                        self.notifyNewMessage(title: (self.userInfo.first?.name)!,
-//                                              body: content)
-//                    }
-//                }
-//            }
-//        })
 
     }
     

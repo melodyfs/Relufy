@@ -21,47 +21,41 @@ class OpenningVC: UIViewController {
         return label
     }()
     
-    let optionLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 25)
-        label.textColor = UIColor.white
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "I'd like to ..."
-        return label
-    }()
+//    let optionLabel: UILabel = {
+//        let label = UILabel()
+//        label.font = UIFont.systemFont(ofSize: 25)
+//        label.textColor = UIColor.white
+//        label.translatesAutoresizingMaskIntoConstraints = false
+//        label.text = "I'd like to ..."
+//        return label
+//    }()
     
-    let giveButton: UIButton = {
+    let signUpButton: UIButton = {
         let button = UIButton(type: .custom)
-        button.setTitle("Give advices", for: .normal)
+        button.setTitle("Sign Up", for: .normal)
         button.setTitleColor(UIColor.white, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 23)
-        button.addTarget(self, action: #selector(giveOrReceive), for: .touchUpInside)
+        button.addTarget(self, action: #selector(handleSignUp), for: .touchUpInside)
+        button.addTarget(self, action: #selector(touchDown), for: .touchUpInside)
         button.addBorder(color: UIColor.white)
         button.makeRounded()
         return button
     }()
-    
-    let receiveButton: UIButton = {
-        let button = UIButton(type: .custom)
-        button.setTitle("Receive advices", for: .normal)
+
+    let logInButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Log In", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 23)
-        button.setTitleColor(UIColor.white, for: .normal)
-        button.addTarget(self, action: #selector(giveOrReceive), for: .touchUpInside)
+        button.setTitleColor(UIColor.violetBlue, for: .normal)
+        button.backgroundColor = UIColor.white
+        button.addTarget(self, action: #selector(handleLogIn), for: .touchUpInside)
+        button.addTarget(self, action: #selector(touchDown), for: .touchUpInside)
         button.addBorder(color: UIColor.white)
         button.makeRounded()
         return button
     }()
-    
-    let nextButton: UIButton = {
-        let button = UIButton(type: .custom)
-        button.setTitle("Next >", for: .normal)
-        button.setTitleColor(UIColor.white, for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 27)
-        button.addTarget(self, action: #selector(handleNext), for: .touchUpInside)
-        button.addTarget(self, action: #selector(touchDown), for: .touchDown)
-        return button
-    }()
-    
+
+   
     let iconImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.backgroundColor = UIColor.white
@@ -77,30 +71,16 @@ class OpenningVC: UIViewController {
         sender.setTitleColor(UIColor.violetPurple, for: UIControlState.normal)
     }
     
-    @objc func giveOrReceive(sender: UIButton) {
-        let buttons = [giveButton, receiveButton]
-        buttons.forEach {
-            $0.isSelected = false
-            $0.backgroundColor = UIColor.clear
-            //            $0.setTitleColor(UIColor.white, for: .normal)
-        }
-        
-        sender.isSelected = true
-        if sender.isSelected {
-            sender.backgroundColor = UIColor.white
-            sender.setTitleColor(UIColor.violetBlue, for: .selected)
-        }
+    @objc func handleSignUp(sender: UIButton) {
+        let signupVC = SignUpVC()
+//        signupVC.modalTransitionStyle = .flipHorizontal
+        self.present(signupVC, animated: true)
         
     }
     
-    @objc func handleNext(sender: UIButton) {
-        if giveButton.isSelected {
-            keys.setMentorOrMentee(isMentor: true)
-        } else {
-            keys.setMentorOrMentee(isMentor: false)
-        }
-        
+    @objc func handleLogIn(sender: UIButton) {
         let loginVC = LoginVC()
+        loginVC.modalTransitionStyle = .flipHorizontal
         self.present(loginVC, animated: true)
     }
     
@@ -108,15 +88,15 @@ class OpenningVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpViews()
-        giveOrReceive(sender: giveButton)
+//        signUpOrLogIn(sender: signUpButton)
     }
     
     func setUpViews() {
         view.addSubview(titleLabel)
-        view.addSubview(optionLabel)
-        view.addSubview(giveButton)
-        view.addSubview(receiveButton)
-        view.addSubview(nextButton)
+//        view.addSubview(optionLabel)
+        view.addSubview(signUpButton)
+        view.addSubview(logInButton)
+//        view.addSubview(nextButton)
         view.addSubview(iconImageView)
         
         
@@ -128,22 +108,24 @@ class OpenningVC: UIViewController {
         titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         titleLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -70).isActive = true
         
-        optionLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        optionLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 20).isActive = true
+//        optionLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+//        optionLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 20).isActive = true
+//
+        signUpButton.translatesAutoresizingMaskIntoConstraints = false
+        signUpButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        signUpButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 80).isActive = true
+        signUpButton.widthAnchor.constraint(equalToConstant: 300).isActive = true
+        signUpButton.heightAnchor.constraint(equalToConstant: 80).isActive = true
         
-        giveButton.translatesAutoresizingMaskIntoConstraints = false
-        giveButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        giveButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 80).isActive = true
-        giveButton.widthAnchor.constraint(equalToConstant: 200).isActive = true
+        logInButton.translatesAutoresizingMaskIntoConstraints = false
+        logInButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        logInButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 180).isActive = true
+        logInButton.widthAnchor.constraint(equalToConstant: 300).isActive = true
+        logInButton.heightAnchor.constraint(equalToConstant: 80).isActive = true
         
-        receiveButton.translatesAutoresizingMaskIntoConstraints = false
-        receiveButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        receiveButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 140).isActive = true
-        receiveButton.widthAnchor.constraint(equalToConstant: 200).isActive = true
-        
-        nextButton.translatesAutoresizingMaskIntoConstraints = false
-        nextButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        nextButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 250).isActive = true
+//        nextButton.translatesAutoresizingMaskIntoConstraints = false
+//        nextButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+//        nextButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 250).isActive = true
     }
     
 

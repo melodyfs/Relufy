@@ -15,7 +15,7 @@ class AuthRequestBuilder: AuthRequestBuilderProtocol {
         let base = URL(string: "https://mentor-app-server.herokuapp.com/pushers")
         var request = URLRequest(url: base!)
         request.httpMethod = "POST"
-        request.allHTTPHeaderFields = ["Authorization": "Token token=\(keychain.get("token")!)"]
+        request.allHTTPHeaderFields = ["Authorization": "Token token=\(token)"]
         request.httpBody = "socket_id=\(socketID)&channel_name=\(channelName)".data(using: String.Encoding.utf8)
         return request
     }
