@@ -20,7 +20,6 @@ class EditVC: UIViewController, UIImagePickerControllerDelegate {
     let roleDropdown = DropDown()
     let raceDropdown = DropDown()
     let yearDropdown = DropDown()
-//    static var instance = EditVC()
 
 
     let nameLabel: UILabel = {
@@ -226,6 +225,15 @@ class EditVC: UIViewController, UIImagePickerControllerDelegate {
         return imageView
     }()
     
+    let editImageButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("edit", for: .normal)
+        button.setTitleColor(UIColor.violetBlue, for: .normal)
+        button.addTarget(self, action: #selector(tapImage), for: .touchUpInside)
+        button.titleLabel?.font = UIFont(name: "System", size: 14)
+        return button
+    }()
+    
     @objc func tapImage(tapGestureRecognizer: UITapGestureRecognizer) {
         openPhotoLibrary()
     }
@@ -291,14 +299,12 @@ class EditVC: UIViewController, UIImagePickerControllerDelegate {
         genderDropdown.dataSource = ["Man", "Woman", "Other"]
         genderDropdown.selectionAction = { [weak self] (index, item) in
             self?.genderDropButton.setTitle(item, for: .normal)
-//            self?.genderTextView.text = item
         }
         
         roleDropdown.anchorView = roleDropButton
         roleDropdown.dataSource = ["Software Engineer", "Product Manager", "Designer", "Other"]
         roleDropdown.selectionAction = { [weak self] (index, item) in
             self?.roleDropButton.setTitle(item, for: .normal)
-//            self?.roleTextView.text = item
         }
         
         yearDropdown.anchorView = yearTextView
@@ -325,7 +331,6 @@ class EditVC: UIViewController, UIImagePickerControllerDelegate {
                                    "Other"]
         raceDropdown.selectionAction = { [weak self] (index, item) in
             self?.raceDropButton.setTitle(item, for: .normal)
-//            self?.raceTextView.text = item
         }
         
     }

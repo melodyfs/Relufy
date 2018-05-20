@@ -14,21 +14,12 @@ class OpenningVC: UIViewController {
     
     let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 30)
+        label.font = UIFont.systemFont(ofSize: 38)
         label.textColor = UIColor.white
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Relate. Accelerate."
+        label.text = "Relate"
         return label
     }()
-    
-//    let optionLabel: UILabel = {
-//        let label = UILabel()
-//        label.font = UIFont.systemFont(ofSize: 25)
-//        label.textColor = UIColor.white
-//        label.translatesAutoresizingMaskIntoConstraints = false
-//        label.text = "I'd like to ..."
-//        return label
-//    }()
     
     let signUpButton: UIButton = {
         let button = UIButton(type: .custom)
@@ -101,12 +92,12 @@ class OpenningVC: UIViewController {
         
         
         iconImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        iconImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -200).isActive = true
-        iconImageView.widthAnchor.constraint(equalToConstant: 200).isActive = true
-        iconImageView.heightAnchor.constraint(equalToConstant: 200).isActive = true
+        iconImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -150).isActive = true
+        iconImageView.widthAnchor.constraint(equalToConstant: 150).isActive = true
+        iconImageView.heightAnchor.constraint(equalToConstant: 150).isActive = true
         
         titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        titleLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -70).isActive = true
+        titleLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -60).isActive = true
         
 //        optionLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
 //        optionLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 20).isActive = true

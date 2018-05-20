@@ -40,6 +40,7 @@ class SignUpVC: UIViewController, UIImagePickerControllerDelegate, UITextViewDel
         textView.textColor = UIColor.black
         textView.backgroundColor = UIColor.white
         textView.isUserInteractionEnabled = true
+        textView.becomeFirstResponder()
         return textView
     }()
     

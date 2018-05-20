@@ -23,7 +23,7 @@ class MessageCell: UICollectionViewCell {
             }
 //            profileImageView.getImageFromURL(url: (viewModel?.image)!)
             roleLabel.text = (viewModel?.role)! + " for \(viewModel.years) years"
-            goalLabel.text = "Goal: " + viewModel.goal
+//            goalLabel.text = "Goal: " + viewModel.goal
         }
     }
     
@@ -52,19 +52,20 @@ class MessageCell: UICollectionViewCell {
         label.font = UIFont.systemFont(ofSize: 15)
         label.textColor = UIColor.black
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.lineBreakMode = .byTruncatingTail
         return label
     }()
     
-    let goalLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 15)
-        label.textColor = UIColor.black
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-   
-    
+//    let goalLabel: UILabel = {
+//        let label = UILabel()
+//        label.font = UIFont.systemFont(ofSize: 15)
+//        label.textColor = UIColor.black
+//        label.translatesAutoresizingMaskIntoConstraints = false
+//        return label
+//    }()
+//
+//
+//
     override init(frame: CGRect) {
         super.init(frame: frame)
         setUpViews()

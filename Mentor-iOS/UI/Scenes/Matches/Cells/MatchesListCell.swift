@@ -32,6 +32,7 @@ class MatchesListCell: UICollectionViewCell {
         label.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         label.textColor = UIColor.black
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.lineBreakMode = .byTruncatingTail
         return label
     }()
     
@@ -40,6 +41,7 @@ class MatchesListCell: UICollectionViewCell {
         label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = UIColor.black
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.lineBreakMode = .byTruncatingTail
         return label
     }()
     
@@ -53,13 +55,13 @@ class MatchesListCell: UICollectionViewCell {
         return label
     }()
     
-    let goalInputLabel: UITextView = {
-        let label = UITextView()
+    let goalInputLabel: UILabel = {
+        let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16)
         label.textColor = UIColor.black
         label.translatesAutoresizingMaskIntoConstraints = false
         label.isUserInteractionEnabled = false
-        
+        label.lineBreakMode = .byTruncatingTail
         label.backgroundColor = UIColor.clear
         return label
     }()
@@ -70,7 +72,7 @@ class MatchesListCell: UICollectionViewCell {
         imageView.image = UIImage(named: "Profile")
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.layer.masksToBounds = false
-        imageView.layer.cornerRadius = 40
+//        imageView.layer.cornerRadius =
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFill
         return imageView
@@ -79,10 +81,11 @@ class MatchesListCell: UICollectionViewCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        photoHeight = frame.height/2.5
         setUpBackgroundView()
         setUpHeaders()
         setUpViews()
-        
+        profileImageView.layer.cornerRadius = photoHeight/2
         
     }
     
@@ -96,22 +99,24 @@ class MatchesListCell: UICollectionViewCell {
         return view
     }()
     
-     let screenWidth = UIScreen.main.bounds.size.width
+    let screenWidth = UIScreen.main.bounds.size.width
+    
+    var photoHeight: CGFloat!
     
     func setUpHeaders() {
         addSubview(profileImageView)
         addSubview(nameLabel)
         addSubview(roleLabel)
         
-       
         
         profileImageView.topAnchor.constraint(equalTo: topAnchor, constant: 10).isActive = true
-        profileImageView.heightAnchor.constraint(equalToConstant: 80).isActive = true
-        profileImageView.widthAnchor.constraint(equalToConstant: 80).isActive = true
-        profileImageView.leftAnchor.constraint(equalTo: leftAnchor, constant: 20).isActive = true
+        profileImageView.heightAnchor.constraint(equalToConstant: photoHeight).isActive = true
+        profileImageView.widthAnchor.constraint(equalToConstant: photoHeight).isActive = true
+        profileImageView.leftAnchor.constraint(equalTo: leftAnchor, constant: 15).isActive = true
+       
 
         nameLabel.topAnchor.constraint(equalTo: profileImageView.topAnchor, constant: 10).isActive = true
-        nameLabel.leftAnchor.constraint(equalTo: profileImageView.leftAnchor,  constant: 110).isActive = true
+        nameLabel.leftAnchor.constraint(equalTo: profileImageView.leftAnchor,  constant: 100).isActive = true
         
         roleLabel.topAnchor.constraint(equalTo: nameLabel.topAnchor, constant: 30).isActive = true
         roleLabel.leftAnchor.constraint(equalTo: nameLabel.leftAnchor).isActive = true
@@ -123,12 +128,12 @@ class MatchesListCell: UICollectionViewCell {
         addSubview(goalLabel)
         addSubview(goalInputLabel)
         
-        goalLabel.leftAnchor.constraint(equalTo: profileImageView.leftAnchor).isActive = true
+        goalLabel.leftAnchor.constraint(equalTo: profileImageView.leftAnchor, constant: 5).isActive = true
         goalLabel.topAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: 20).isActive = true
-        goalInputLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 15).isActive = true
+        goalInputLabel.leftAnchor.constraint(equalTo: goalLabel.leftAnchor).isActive = true
         goalInputLabel.topAnchor.constraint(equalTo: goalLabel.bottomAnchor, constant: 0).isActive = true
         goalInputLabel.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width - 50).isActive = true
-        goalInputLabel.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        goalInputLabel.heightAnchor.constraint(equalToConstant: 40).isActive = true
      
     }
     

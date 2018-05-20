@@ -54,7 +54,7 @@ class MessagesVC: UIViewController, PusherDelegate {
     var customSC: UISegmentedControl!
     
     func addSegmentedControl() {
-        let items = ["Mentors", "Mentees"]
+        let items = ["Relator", "Relatee"]
         customSC = UISegmentedControl(items: items)
         let normalFont = UIFont.systemFont(ofSize: 16)
         let normalTextAttributes: [NSObject : AnyObject] = [
@@ -63,7 +63,7 @@ class MessagesVC: UIViewController, PusherDelegate {
         customSC.tintColor = UIColor.violetBlue
         customSC.setTitleTextAttributes(normalTextAttributes, for: .normal)
         customSC.selectedSegmentIndex = 0
-        customSC.frame = CGRect(x: 0, y: 0, width: 400, height: 40)
+        customSC.frame = CGRect(x: 0, y: 0, width: 200, height: 20)
         customSC.addTarget(self, action: #selector(handleValueChange), for: .valueChanged)
         navigationItem.titleView = customSC
     }
@@ -193,9 +193,30 @@ class MessagesVC: UIViewController, PusherDelegate {
         return allChannels
     }
     
+    func collectAllMenteeChannels() -> [String] {
+        var allEmails = [String]()
+        for i in 0..<menteeUserInfo.count {
+            allEmails.append(menteeUserInfo[i].email)
+        }
+        
+        var allChannels = [String]()
+        for email in allEmails {
+            var channel = setChannelName(email: email)
+            allChannels.append(channel)
+        }
+        
+        return allChannels
+    }
+    
     func subToAllChatrooms() {
         allChannels = collectAllChannels()
         for channel in allChannels {
+            subToChannel(channelName: channel)
+            listenToMessages(channel: channel)
+        }
+        
+        var allMenteeChannels = collectAllMenteeChannels()
+        for channel in allMenteeChannels {
             subToChannel(channelName: channel)
             listenToMessages(channel: channel)
         }

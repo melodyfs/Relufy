@@ -14,7 +14,7 @@ extension ProfileVC {
         let bgView = UIImageView()
         bgView.getImageFromURL(url: UserDefaults.standard.string(forKey: "image")!)
         bgView.addBlurEffect()
-        bgView.backgroundColor = UIColor.lightGray.withAlphaComponent(0.5)
+        bgView.backgroundColor = UIColor.violetBlue.withAlphaComponent(0.5)
         
         scrollView.addSubview(bgView)
         bgView.translatesAutoresizingMaskIntoConstraints = false
