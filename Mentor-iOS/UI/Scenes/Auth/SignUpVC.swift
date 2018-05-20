@@ -27,10 +27,10 @@ class SignUpVC: UIViewController, UIImagePickerControllerDelegate, UITextViewDel
     
     let nameLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16)
+        label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = UIColor.gray
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Name"
+        label.text = "Name *"
         return label
     }()
     
@@ -45,10 +45,10 @@ class SignUpVC: UIViewController, UIImagePickerControllerDelegate, UITextViewDel
     
     let emailLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16)
+        label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = UIColor.gray
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Email"
+        label.text = "Email *"
         return label
     }()
     
@@ -64,10 +64,10 @@ class SignUpVC: UIViewController, UIImagePickerControllerDelegate, UITextViewDel
     
     let passwordLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16)
+        label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = UIColor.gray
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Password"
+        label.text = "Password *"
         return label
     }()
     
@@ -82,34 +82,34 @@ class SignUpVC: UIViewController, UIImagePickerControllerDelegate, UITextViewDel
     
     let roleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16)
+        label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = UIColor.gray
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Role"
+        label.text = "Role *"
         return label
     }()
     
     let forLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16)
+        label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = UIColor.gray
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "For"
+        label.text = "Years of Experience *"
         return label
     }()
     
-    let yearTextView: UITextView = {
-        let textView = UITextView()
-        textView.font = UIFont.systemFont(ofSize: 20)
-        textView.textColor = UIColor.lightGray
-        textView.backgroundColor = UIColor.white
-        textView.isUserInteractionEnabled = true
-        textView.keyboardType = UIKeyboardType.numberPad
-        textView.text = "0"
-//        textView.toolbarPlaceholder = "0"
-//        textView.placeholderText = "0"
-        return textView
+    let yearTextView: UIButton = {
+        let button = UIButton()
+        button.titleLabel?.font = UIFont(name: "System", size: 20)
+        button.setTitleColor(UIColor.black, for: .normal)
+        button.addTarget(self, action: #selector(handleYearDrop), for: .touchUpInside)
+        button.contentHorizontalAlignment = .left
+        return button
     }()
+    
+    @objc func handleYearDrop() {
+        yearDropdown.show()
+    }
     
     let yearLabel: UILabel = {
         let label = UILabel()
@@ -122,10 +122,10 @@ class SignUpVC: UIViewController, UIImagePickerControllerDelegate, UITextViewDel
     
     let companyLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16)
+        label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = UIColor.gray
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Company"
+        label.text = "Current Company"
         return label
     }()
     
@@ -141,10 +141,11 @@ class SignUpVC: UIViewController, UIImagePickerControllerDelegate, UITextViewDel
     
     let roleDropButton: UIButton = {
         let button = UIButton(type: .custom)
-        button.setTitle("select", for: .normal)
-        button.setTitleColor(UIColor.violetBlue, for: .normal)
-        button.titleLabel?.font = UIFont(name: "System", size: 16)
+//        button.setTitle("select", for: .normal)
+        button.setTitleColor(UIColor.black, for: .normal)
+        button.titleLabel?.font = UIFont(name: "System", size: 20)
         button.addTarget(self, action: #selector(handleRoleDrop), for: .touchUpInside)
+        button.contentHorizontalAlignment = .left
         return button
     }()
     
@@ -165,9 +166,9 @@ class SignUpVC: UIViewController, UIImagePickerControllerDelegate, UITextViewDel
     
     let goalLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16)
+        label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = UIColor.gray
-        label.text = "Bio"
+        label.text = "About Me *"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -184,9 +185,9 @@ class SignUpVC: UIViewController, UIImagePickerControllerDelegate, UITextViewDel
     
     let raceLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16)
+        label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = UIColor.gray
-        label.text = "Race"
+        label.text = "Race *"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -204,9 +205,9 @@ class SignUpVC: UIViewController, UIImagePickerControllerDelegate, UITextViewDel
     
     let genderLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16)
+        label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = UIColor.gray
-        label.text = "Gender"
+        label.text = "Gender *"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -240,11 +241,13 @@ class SignUpVC: UIViewController, UIImagePickerControllerDelegate, UITextViewDel
     
     let saveButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("Sign Up", for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 16)
-        button.setTitleColor(UIColor.violetBlue, for: .normal)
+        button.setTitle("Register", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 25)
+        button.setTitleColor(UIColor.white, for: .normal)
+        button.backgroundColor = UIColor.violetBlue
         button.addTarget(self, action: #selector(handleSave), for: .touchUpInside)
 //        button.addTarget(self, action: #selector(touchDown), for: .touchDown)
+        button.makeRounded()
         return button
     }()
     
@@ -260,7 +263,7 @@ class SignUpVC: UIViewController, UIImagePickerControllerDelegate, UITextViewDel
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 18)
         label.textColor = UIColor.black
-        label.text = "Create Profile"
+        label.text = "Sign Up"
         label.contentMode = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -268,17 +271,21 @@ class SignUpVC: UIViewController, UIImagePickerControllerDelegate, UITextViewDel
     
     let genderDropButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("select", for: .normal)
-        button.setTitleColor(UIColor.violetBlue, for: .normal)
+//        button.setTitle("select", for: .normal)
+        button.titleLabel?.font = UIFont(name: "System", size: 20)
+        button.setTitleColor(UIColor.black, for: .normal)
         button.addTarget(self, action: #selector(handleGenderDrop), for: .touchUpInside)
+        button.contentHorizontalAlignment = .left
         return button
     }()
     
     let raceDropButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("select", for: .normal)
-        button.setTitleColor(UIColor.violetBlue, for: .normal)
+//        button.setTitle("select", for: .normal)
+        button.titleLabel?.font = UIFont(name: "System", size: 20)
+        button.setTitleColor(UIColor.black, for: .normal)
         button.addTarget(self, action: #selector(handleRaceDrop), for: .touchUpInside)
+        button.contentHorizontalAlignment = .left
         return button
     }()
     
@@ -320,8 +327,8 @@ class SignUpVC: UIViewController, UIImagePickerControllerDelegate, UITextViewDel
     var eachFieldIsFilled = false
     
     func checkEmptyFields() {
-        if nameTextView.text == "" || roleTextView.text == "" || yearTextView.text == "" ||
-            goalTextView.text == "" || raceTextView.text == "" || genderTextView.text == "" ||
+        if nameTextView.text == "" || roleDropButton.titleLabel!.text == "" || yearTextView.titleLabel!.text == "" ||
+            goalTextView.text == "" || raceDropButton.titleLabel!.text == "" || genderDropButton.titleLabel!.text == "" ||
             emailTextView.text == "" || passwordTextView.text == "" {
             let alertController = UIAlertController(title: "Empty Fields", message: "Fill out all fields before moving forward!", preferredStyle: .alert)
             let ok = UIAlertAction(title: "Ok", style: .default)
@@ -386,7 +393,7 @@ class SignUpVC: UIViewController, UIImagePickerControllerDelegate, UITextViewDel
         addGestureToProfileImageView()
         addBar()
         handleDropDowns()
-        yearTextView.delegate = self
+//        yearTextView.delegate = self
     }
     
     func textViewDidBeginEditing(_ textView: UITextView) {
@@ -412,19 +419,20 @@ class SignUpVC: UIViewController, UIImagePickerControllerDelegate, UITextViewDel
     }
     
     func handleDropDowns() {
-        genderDropdown.anchorView = genderTextView
+        genderDropdown.anchorView = genderDropButton
         genderDropdown.dataSource = ["Man", "Woman", "Other"]
         genderDropdown.selectionAction = { [weak self] (index, item) in
-            self?.genderTextView.text = item
+            self?.genderDropButton.setTitle(item, for: .normal)
         }
         
-        roleDropdown.anchorView = roleTextView
+        roleDropdown.anchorView = roleDropButton
         roleDropdown.dataSource = ["Software Engineer", "Product Manager", "Designer", "Other"]
         roleDropdown.selectionAction = { [weak self] (index, item) in
-            self?.roleTextView.text = item
+//            self?.roleTextView.text = item
+            self?.roleDropButton.setTitle(item, for: .normal)
         }
         
-        raceDropdown.anchorView = raceTextView
+        raceDropdown.anchorView = raceDropButton
         raceDropdown.dataSource = ["American Indian or Alaska Native",
                                    "Asian",
                                    "Black or African American",
@@ -433,8 +441,24 @@ class SignUpVC: UIViewController, UIImagePickerControllerDelegate, UITextViewDel
                                    "Hispanic or Latino",
                                    "Other"]
         raceDropdown.selectionAction = { [weak self] (index, item) in
-            self?.raceTextView.text = item
+//            self?.raceTextView.text = item
+            self?.raceDropButton.setTitle(item, for: .normal)
         }
+        
+        yearDropdown.anchorView = yearTextView
+        yearDropdown.dataSource = ["I am interested in this role", "1", "2", "3",
+                                   "4", "5", "6", "7", "8", "9", "10", "11",
+                                   "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23",
+                                   "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34","35", "36",
+                                   "37", "38", "39", "40"]
+        yearDropdown.selectionAction = { [weak self] (index, item) in
+            if item == "I am interested in this role" {
+                self?.yearTextView.setTitle(item, for: .normal)
+            } else {
+                self?.yearTextView.setTitle(item + " years", for: .normal)
+            }
+        }
+        
 
     }
     
@@ -450,11 +474,11 @@ class SignUpVC: UIViewController, UIImagePickerControllerDelegate, UITextViewDel
         bar.layer.shadowRadius = 5
         bar.anchor(top: scrollView.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom:0, paddingRight: 0, width: view.frame.size.width, height: 70)
         bar.addSubview(dismissButton)
-        bar.addSubview(saveButton)
+//        bar.addSubview(saveButton)
         bar.addSubview(createLabel)
         
         dismissButton.anchor(top: bar.topAnchor, left: bar.leftAnchor, bottom: nil, right: nil, paddingTop: 25, paddingLeft: 20, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
-        saveButton.anchor(top: bar.topAnchor, left: nil, bottom: nil, right: bar.rightAnchor, paddingTop: 30, paddingLeft: 0, paddingBottom: 0, paddingRight: 20, width: 0, height: 0)
+        
         createLabel.centerXAnchor.constraint(equalTo: bar.centerXAnchor).isActive = true
         createLabel.centerYAnchor.constraint(equalTo: bar.centerYAnchor, constant: 10).isActive = true
         
@@ -467,7 +491,7 @@ class SignUpVC: UIViewController, UIImagePickerControllerDelegate, UITextViewDel
         let screensize: CGRect = UIScreen.main.bounds
         let screenWidth = screensize.width
         let height = screensize.height
-        self.scrollView.contentSize = CGSize(width:screenWidth, height: height + 550)
+        self.scrollView.contentSize = CGSize(width:screenWidth, height: height + 400)
         self.scrollView.isScrollEnabled = true
         self.scrollView.frame = self.view.bounds
         view.addSubview(scrollView)
@@ -478,9 +502,9 @@ class SignUpVC: UIViewController, UIImagePickerControllerDelegate, UITextViewDel
         companyTextView.layer.addBorder(edge: .bottom, color: UIColor.lightGray, thickness: 0.8)
         goalTextView.layer.addBorder(edge: .bottom, color: UIColor.lightGray, thickness: 0.8)
         yearTextView.layer.addBorder(edge: .bottom, color: UIColor.lightGray, thickness: 0.8)
-        genderTextView.layer.addBorder(edge: .bottom, color: UIColor.lightGray, thickness: 0.8)
-        raceTextView.layer.addBorder(edge: .bottom, color: UIColor.lightGray, thickness: 0.8)
-        roleTextView.layer.addBorder(edge: .bottom, color: UIColor.lightGray, thickness: 0.8)
+        genderDropButton.layer.addBorder(edge: .bottom, color: UIColor.lightGray, thickness: 0.8)
+        raceDropButton.layer.addBorder(edge: .bottom, color: UIColor.lightGray, thickness: 0.8)
+        roleDropButton.layer.addBorder(edge: .bottom, color: UIColor.lightGray, thickness: 0.8)
         emailTextView.layer.addBorder(edge: .bottom, color: UIColor.lightGray, thickness: 0.8)
         passwordTextView.layer.addBorder(edge: .bottom, color: UIColor.lightGray, thickness: 0.8)
 //        mentorOrMenteeTextView.layer.addBorder(edge: .bottom, color: UIColor.lightGray, thickness: 0.8)

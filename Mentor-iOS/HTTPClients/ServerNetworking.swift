@@ -130,5 +130,45 @@ class ServerNetworking {
         
     }
     
+    func getMenteeMatches(params: [String: String], completion: @escaping (Data) -> Void)  {
+        var url = URL(string:"https://mentor-app-server.herokuapp.com/matches")
+        url = url!.appendingQueryParameters(params)
+        var request = URLRequest(url: url!)
+        request.allHTTPHeaderFields = ["Authorization": "Token token=\(keychain.get("token-mentor")!)"]
+        
+        session.dataTask(with: request) { (data, res, err) in
+            let httpResponse = res as? HTTPURLResponse
+            if let data = data {
+                self.statusCode = (httpResponse?.statusCode)!
+                print(self.statusCode)
+                completion(data)
+                print("Networking succeeded")
+            }
+            else {
+                print(err?.localizedDescription ?? "Error")
+            }
+        }.resume()
+    }
+    
+    func getMenteeMatchesImages(params: [String: String], completion: @escaping (Data) -> Void)  {
+        var url = URL(string:"https://mentor-app-server.herokuapp.com/matches/get_info")
+        url = url!.appendingQueryParameters(params)
+        var request = URLRequest(url: url!)
+        request.allHTTPHeaderFields = ["Authorization": "Token token=\(keychain.get("token-mentor")!)"]
+        
+        session.dataTask(with: request) { (data, res, err) in
+            let httpResponse = res as? HTTPURLResponse
+            if let data = data {
+                self.statusCode = (httpResponse?.statusCode)!
+                print(self.statusCode)
+                completion(data)
+                print("Networking succeeded")
+            }
+            else {
+                print(err?.localizedDescription ?? "Error")
+            }
+            }.resume()
+    }
+    
 }
 

@@ -32,6 +32,7 @@ class ConversationVC: UIViewController, PusherDelegate, UITextViewDelegate {
         textField.isEditable = true
         textField.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.regular)
         textField.sizeToFit()
+        textField.becomeFirstResponder()
         return textField
     }()
 
@@ -70,7 +71,7 @@ class ConversationVC: UIViewController, PusherDelegate, UITextViewDelegate {
 //        button.imageView?.sizeToFit()
         
         if userInfo.first!.image == "/image_files/original/missing.png" {
-            button.setImage(UIImage(named: "role"), for: UIControlState.normal)
+            button.setImage(UIImage(named: "profileImageHolder"), for: UIControlState.normal)
         } else {
             let url = URL(string: userInfo.first!.image)
             button.kf.setImage(with: url, for: .normal, placeholder: nil, options: nil, progressBlock: nil, completionHandler: nil)
@@ -101,11 +102,11 @@ class ConversationVC: UIViewController, PusherDelegate, UITextViewDelegate {
     
     func setChannelName() {
         if keys.isMentor {
-            viewModel.channelName = ["channel_name": "private-\(userEmail!)-\(otherPersonEmail!)"]
-            channelName = "private-\(userEmail!)-\(otherPersonEmail!)"
+            viewModel.channelName = ["channel_name": "private-\(userEmail!)-\(userInfo.first!.email)"]
+            channelName = "private-\(userEmail!)-\(userInfo.first!.email)"
         } else {
-            viewModel.channelName = ["channel_name": "private-\(otherPersonEmail!)-\(userEmail!)"]
-            channelName = "private-\(otherPersonEmail!)-\(userEmail!)"
+            viewModel.channelName = ["channel_name": "private-\(userInfo.first!.email)-\(userEmail!)"]
+            channelName = "private-\(userInfo.first!.email)-\(userEmail!)"
         }
     }
     
@@ -180,6 +181,7 @@ class ConversationVC: UIViewController, PusherDelegate, UITextViewDelegate {
         DispatchQueue.main.async {
             self.collectionView.reloadData()
         }
+        navigationItem.title = userInfo.first!.name
     }
     
     func listenToMessages() {
@@ -204,7 +206,6 @@ class ConversationVC: UIViewController, PusherDelegate, UITextViewDelegate {
                         self.dataSource.items.append(message)
                         let section = self.dataSource.items.count
                         self.collectionView?.insertSections([section - 1])
-                        self.notifyNewMessage(title: sender, body: content)
                     }
                 }
             }
@@ -216,12 +217,6 @@ class ConversationVC: UIViewController, PusherDelegate, UITextViewDelegate {
         print(notification.userInfo)
         print("app in forground")
 
-    }
-    
-    func notifyNewMessage(title: String, body: String) {
-        var params = ["title": title,
-                      "body": body]
-        ServerNetworking.shared.getInfo(route: .postNotification, params: params) {_ in}
     }
     
     
@@ -273,7 +268,7 @@ class ConversationVC: UIViewController, PusherDelegate, UITextViewDelegate {
             let cell = cv.dequeueReusableCell(withReuseIdentifier: self.cell, for: indexPath) as! ConversationCell
             cell.viewModel = self.dataSource.items[indexPath.section]
             let email = self.dataSource.items[indexPath.section].sender
-            if email == self.otherPersonEmail! {
+            if email == self.userInfo.first!.email {
                 cell.profileImageView.getImageFromURL(url: self.userInfo[indexPath.row].image)
                 cell.nameLabel.text = self.userInfo.first?.name
             } else {
@@ -283,6 +278,7 @@ class ConversationVC: UIViewController, PusherDelegate, UITextViewDelegate {
             return cell
         }
     }
+    
 
 }
 

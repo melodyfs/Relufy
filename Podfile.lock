@@ -1,6 +1,7 @@
 PODS:
   - Alamofire (4.7.1)
   - DropDown (2.3.1)
+  - GrowingTextView (0.5.5)
   - IQKeyboardManagerSwift (5.0.8)
   - KeychainSwift (9.0.2)
   - Kingfisher (4.7.0)
@@ -10,6 +11,7 @@ PODS:
 DEPENDENCIES:
   - Alamofire (~> 4.6)
   - DropDown
+  - GrowingTextView (~> 0.5)
   - IQKeyboardManagerSwift
   - KeychainSwift (~> 9.0)
   - Kingfisher (~> 4.0)
@@ -20,6 +22,7 @@ SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
     - Alamofire
     - DropDown
+    - GrowingTextView
     - IQKeyboardManagerSwift
     - KeychainSwift
     - Kingfisher
@@ -29,12 +32,13 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   Alamofire: 68d7d521118d49c615a8d2214d87cdf525599d30
   DropDown: 20499c7b2731b0d21609af924e47c7677a2be50d
+  GrowingTextView: 8ea0aa547c567521ab066452c12784a460ff6e8d
   IQKeyboardManagerSwift: 2e7dc7f98c111458c1ea2b373f893e8cf95e2b97
   KeychainSwift: 3ab1d428d0dbff59cd056f1d0bfc640b36c2b081
   Kingfisher: da6b005aa96d37698e3e4f1ccfe96a5b9bbf27d6
   PusherSwift: de9238b6b9faec5275d452e5f43ce9c82b78731e
   PushNotifications: 7f58dc67d51eeb30011807b7ce6bb19e8e0e59d4
 
-PODFILE CHECKSUM: f425a8dddaebaf54d93242ad186fa89edd10108a
+PODFILE CHECKSUM: 518fe8c0167807c3a0964f8037a1fe5367df82fe
 
 COCOAPODS: 1.5.0

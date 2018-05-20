@@ -50,6 +50,14 @@ class ConversationCell: UICollectionViewCell {
         imageView.contentMode = .scaleAspectFill
         return imageView
     }()
+    let timeLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.textColor = UIColor.lightGray
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "5/7/18 12:10"
+        return label
+    }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -62,6 +70,7 @@ class ConversationCell: UICollectionViewCell {
         addSubview(messageTextView)
         addSubview(profileImageView)
         addSubview(nameLabel)
+//        addSubview(timeLabel)
         
         profileImageView.leftAnchor.constraint(equalTo: leftAnchor, constant: 10).isActive = true
         profileImageView.topAnchor.constraint(equalTo: topAnchor, constant: 10).isActive = true
@@ -72,7 +81,8 @@ class ConversationCell: UICollectionViewCell {
         nameLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 60).isActive = true
         nameLabel.topAnchor.constraint(equalTo: profileImageView.topAnchor).isActive = true
         
-//        nameLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 20).isActive = true
+//        timeLabel.leftAnchor.constraint(equalTo: nameLabel.leftAnchor, constant: 20 + nameLabel.intrinsicContentSize.width).isActive = true
+//        timeLabel.topAnchor.constraint(equalTo: nameLabel.topAnchor, constant: 4).isActive = true
         
     }
     

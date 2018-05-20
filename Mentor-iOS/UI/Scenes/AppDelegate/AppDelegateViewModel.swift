@@ -44,7 +44,7 @@ class AppDelegateViewModel {
         case .unauthorized:
             rootViewController = OpenningVC()
         case .backToProfile:
-           TabBarController().tabBarController?.selectedIndex = 2
+           TabBarController().tabBarController?.selectedIndex = 1
             let vc = TabBarController().tabBarController?.selectedViewController
             rootViewController = vc!
 //            rootViewController.tabBarController?.selectedViewController = ProfileVC()
@@ -84,7 +84,9 @@ class AppDelegateViewModel {
         case .backToProfile:
             keys.set(isLoggedIn: true)
             rootViewController = TabBarController()
-            rootViewController.tabBarController?.selectedIndex = 2
+//            rootViewController.tabBarController?.selectedViewController = MessagesVC()
+            
+//            rootCallback((rootViewController.tabBarController?.selectedViewController)!)
 //            rootViewController.tabBarController?
         case .editProfile:
             rootViewController = EditVC()

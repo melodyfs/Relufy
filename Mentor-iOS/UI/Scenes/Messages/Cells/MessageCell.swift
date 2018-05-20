@@ -22,7 +22,7 @@ class MessageCell: UICollectionViewCell {
                 profileImageView.kf.setImage(with: url)
             }
 //            profileImageView.getImageFromURL(url: (viewModel?.image)!)
-            roleLabel.text = (viewModel?.role)! + " for \(viewModel.years) year(s)"
+            roleLabel.text = (viewModel?.role)! + " for \(viewModel.years) years"
             goalLabel.text = "Goal: " + viewModel.goal
         }
     }
@@ -63,6 +63,8 @@ class MessageCell: UICollectionViewCell {
         return label
     }()
     
+   
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setUpViews()
@@ -73,7 +75,7 @@ class MessageCell: UICollectionViewCell {
         addSubview(profileImageView)
         addSubview(nameLabel)
         addSubview(roleLabel)
-//        addSubview(goalLabel)
+//        addSubview(timeLabel)
         
         profileImageView.leftAnchor.constraint(equalTo: leftAnchor, constant: 10).isActive = true
         profileImageView.topAnchor.constraint(equalTo: topAnchor, constant: 10).isActive = true

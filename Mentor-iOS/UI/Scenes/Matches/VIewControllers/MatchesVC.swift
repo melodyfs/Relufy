@@ -23,6 +23,8 @@ class MatchesVC: UIViewController {
     var userInfo = [MessageItemViewModel]()
     let screenSize = UIScreen.main.bounds
     let userDefault = UserDefaults.standard
+    var menteeMatchIDs = [Int]()
+    var menteeUserInfo = [MessageItemViewModel]()
     lazy var appDelegate = AppDelegateViewModel.instance
    
     
@@ -31,12 +33,15 @@ class MatchesVC: UIViewController {
         switch sender.selectedSegmentIndex {
         case 0:
             keys.setMentorOrMentee(isMentor: false)
-            appDelegate.changeStatus(authStatus: .authorized)
+//            appDelegate.changeStatus(authStatus: .authorized)
+           
             userDefault.set(0, forKey: "segNum")
             print("value change")
         case 1:
             keys.setMentorOrMentee(isMentor: true)
-            appDelegate.changeStatus(authStatus: .authorized)
+//            appDelegate.changeStatus(authStatus: .authorized)
+//            fetchMenteeMessages()
+            configureCell()
             userDefault.set(1, forKey: "segNum")
             print("value change")
         default:
@@ -53,7 +58,7 @@ class MatchesVC: UIViewController {
         registerCollectionView()
         setNameAndImage()
         navigationController?.navigationBar.prefersLargeTitles = true
-        addChangeRoleBarButton()
+//        addChangeRoleBarButton()
         
         let sv = UIViewController.displaySpinner(onView: self.view)
         DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
@@ -120,11 +125,21 @@ class MatchesVC: UIViewController {
         collectionView.isScrollEnabled = true
         
         fetchUsers()
+        configureCell()
         
         collectionView.backgroundColor = UIColor.white
         collectionView.showsHorizontalScrollIndicator = false
         self.view.addSubview(collectionView)
-        collectionView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 80, paddingLeft: 0, paddingBottom: 10, paddingRight: 0, width: 0, height: 200)
+        let tabBarHeight = CGFloat((tabBarController?.tabBar.frame.size.height)!)
+//        collectionView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 120, paddingLeft: 0, paddingBottom: -tabBarHeight, paddingRight: 0, width: 0, height: 0)
+        let topBarHeight = UIApplication.shared.statusBarFrame.size.height +
+            (self.navigationController?.navigationBar.frame.height ?? 0.0)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        collectionView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        collectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: topBarHeight).isActive = true
+//        collectionView.heightAnchor.constraint(equalTo: view.heightAnchor, constant: 50).isActive = true
+        collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -tabBarHeight).isActive = true
         
         collectionView.dataSource = dataSource
         collectionView.delegate = self
@@ -132,29 +147,22 @@ class MatchesVC: UIViewController {
     
     func fetchUsers() {
         viewModel.fetchMatches(callback: { [unowned self] (users) in
-            self.dataSource.items = users
             self.userInfo = users
+            self.dataSource.items = self.userInfo
             self.matchIDs = self.viewModel.matchIDs
             DispatchQueue.main.async {
                 self.collectionView.reloadData()
             }
         })
         
-       configureCell()
+       
     }
     
    
     
     func configureCell() {
         let sv = UIViewController.displaySpinner(onView: self.view)
-        
-        if self.dataSource.items.count == 0 {
-            self.collectionView.setEmptyMessage("Complete Your Profile & Check Back Soon!")
-//            self.collectionView.setImageView(UIImage(named: "empty")!)
-        }
-        
-       
-        
+
         dataSource.configureCell = { cv, indexPath in
             let cell = cv.dequeueReusableCell(withReuseIdentifier: self.cellID, for: indexPath) as! MatchesListCell
             cell.viewModel = self.dataSource.items[indexPath.section]
@@ -251,13 +259,13 @@ extension MatchesVC: UICollectionViewDelegateFlowLayout {
     // cell size and position
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let frameSize = collectionView.frame.size
-        return CGSize(width: frameSize.width - 20, height: frameSize.height - 280)
+        return CGSize(width: frameSize.width - 20, height: frameSize.height / 2.7)
 
     }
     
     // padding for cell
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: 10, bottom: 20, right: 10)
+        return UIEdgeInsets(top: 0, left: 10, bottom: 10, right: 10)
     }
     
 }

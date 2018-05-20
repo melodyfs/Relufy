@@ -20,11 +20,12 @@ class EditVC: UIViewController, UIImagePickerControllerDelegate {
     let roleDropdown = DropDown()
     let raceDropdown = DropDown()
     let yearDropdown = DropDown()
-    static var instance = EditVC()
+//    static var instance = EditVC()
+
 
     let nameLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16)
+        label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = UIColor.gray
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Name"
@@ -35,14 +36,14 @@ class EditVC: UIViewController, UIImagePickerControllerDelegate {
         let textView = UITextView()
         textView.font = UIFont.systemFont(ofSize: 20)
         textView.textColor = UIColor.black
-        textView.backgroundColor = UIColor.white
+        textView.backgroundColor = UIColor.clear
         textView.isUserInteractionEnabled = true
         return textView
     }()
     
     let roleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16)
+        label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = UIColor.gray
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Role"
@@ -51,22 +52,25 @@ class EditVC: UIViewController, UIImagePickerControllerDelegate {
     
     let forLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16)
+        label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = UIColor.gray
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "For"
+        label.text = "Years of Experience"
         return label
     }()
     
-    let yearTextView: UITextView = {
-        let textView = UITextView()
-        textView.font = UIFont.systemFont(ofSize: 20)
-        textView.textColor = UIColor.black
-        textView.backgroundColor = UIColor.white
-        textView.isUserInteractionEnabled = true
-        textView.keyboardType = .numberPad
-        return textView
+    let yearTextView: UIButton = {
+        let button = UIButton()
+        button.titleLabel?.font = UIFont(name: "System", size: 20)
+        button.setTitleColor(UIColor.black, for: .normal)
+        button.addTarget(self, action: #selector(handleYearDrop), for: .touchUpInside)
+        button.contentHorizontalAlignment = .left
+        return button
     }()
+    
+    @objc func handleYearDrop() {
+        yearDropdown.show()
+    }
     
     let yearLabel: UILabel = {
         let label = UILabel()
@@ -79,18 +83,20 @@ class EditVC: UIViewController, UIImagePickerControllerDelegate {
     
     let companyLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16)
+        label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = UIColor.gray
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Company"
+        label.text = "Current Company"
         return label
     }()
     
     let raceDropButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("select", for: .normal)
-        button.setTitleColor(UIColor.violetBlue, for: .normal)
+//        button.setTitle("select", for: .normal)
+        button.titleLabel?.font = UIFont(name: "System", size: 20)
+        button.setTitleColor(UIColor.black, for: .normal)
         button.addTarget(self, action: #selector(handleRaceDrop), for: .touchUpInside)
+        button.contentHorizontalAlignment = .left
         return button
     }()
     
@@ -101,16 +107,18 @@ class EditVC: UIViewController, UIImagePickerControllerDelegate {
         textView.font = UIFont.systemFont(ofSize: 20)
         textView.textColor = UIColor.black
         textView.isUserInteractionEnabled = false
+        textView.backgroundColor = UIColor.clear
         return textView
         
     }()
     
     let roleDropButton: UIButton = {
         let button = UIButton(type: .custom)
-        button.setTitle("select", for: .normal)
-        button.setTitleColor(UIColor.violetBlue, for: .normal)
-        button.titleLabel?.font = UIFont(name: "System", size: 16)
+//        button.setTitle("select", for: .normal)
+        button.setTitleColor(UIColor.black, for: .normal)
+        button.titleLabel?.font = UIFont(name: "System", size: 20)
         button.addTarget(self, action: #selector(handleRoleDrop), for: .touchUpInside)
+        button.contentHorizontalAlignment = .left
         return button
     }()
     
@@ -132,14 +140,14 @@ class EditVC: UIViewController, UIImagePickerControllerDelegate {
         let textView = UITextView()
         textView.font = UIFont.systemFont(ofSize: 20)
         textView.textColor = UIColor.black
-        textView.backgroundColor = UIColor.white
+        textView.backgroundColor = UIColor.clear
         textView.isUserInteractionEnabled = true
         return textView
     }()
     
     let goalLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16)
+        label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = UIColor.gray
         label.text = "Bio"
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -151,14 +159,14 @@ class EditVC: UIViewController, UIImagePickerControllerDelegate {
 //        textView.text = "Goal textview"
         textView.font = UIFont.systemFont(ofSize: 20)
         textView.textColor = UIColor.black
-        textView.backgroundColor = UIColor.white
+        textView.backgroundColor = UIColor.clear
         textView.isUserInteractionEnabled = true
         return textView
     }()
     
     let raceLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16)
+        label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = UIColor.gray
         label.text = "Race"
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -170,7 +178,7 @@ class EditVC: UIViewController, UIImagePickerControllerDelegate {
 //        textView.text = "race textview"
         textView.font = UIFont.systemFont(ofSize: 16)
         textView.textColor = UIColor.black
-        textView.backgroundColor = UIColor.white
+        textView.backgroundColor = UIColor.clear
         textView.isUserInteractionEnabled = true
         return textView
     }()
@@ -178,7 +186,7 @@ class EditVC: UIViewController, UIImagePickerControllerDelegate {
     
     let genderLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16)
+        label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = UIColor.gray
         label.text = "Gender"
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -190,16 +198,18 @@ class EditVC: UIViewController, UIImagePickerControllerDelegate {
 //        textView.text = "gender textview"
         textView.font = UIFont.systemFont(ofSize: 20)
         textView.textColor = UIColor.black
-        textView.backgroundColor = UIColor.white
-        textView.isUserInteractionEnabled = true
+        textView.backgroundColor = UIColor.clear
+        textView.isUserInteractionEnabled = false
         return textView
     }()
     
     let genderDropButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("select", for: .normal)
-        button.setTitleColor(UIColor.violetBlue, for: .normal)
+//        button.setTitle("select", for: .normal)
+        button.setTitleColor(UIColor.black, for: .normal)
         button.addTarget(self, action: #selector(handleGenderDrop), for: .touchUpInside)
+        button.contentHorizontalAlignment = .left
+        button.titleLabel?.font = UIFont(name: "System", size: 20)
         return button
     }()
     
@@ -249,12 +259,14 @@ class EditVC: UIViewController, UIImagePickerControllerDelegate {
     
     @objc func handleSave() {
         print("save")
-        self.dismiss(animated: false, completion: {
-            AppDelegateViewModel.instance.changeStatus(authStatus: .authorized)
-        })
+//        self.dismiss(animated: false, completion: {
+//            AppDelegateViewModel.instance.changeStatus(authStatus: .authorized)
+//        })
         updateInfo()
         updateProfileImage()
         ServerNetworking.shared.getInfo(route: .createMatches, params: [:]) {_ in}
+        navigationController?.popViewController(animated: true)
+        navigationController?.navigationBar.prefersLargeTitles = true
     }
     
     override func viewDidLoad() {
@@ -270,24 +282,40 @@ class EditVC: UIViewController, UIImagePickerControllerDelegate {
         profileImageView.isUserInteractionEnabled = true
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(handleSave))
-        addBorders()
+//        addBorders()
         handleDropDowns()
     }
     
     func handleDropDowns() {
-        genderDropdown.anchorView = genderTextView
+        genderDropdown.anchorView = genderDropButton
         genderDropdown.dataSource = ["Man", "Woman", "Other"]
         genderDropdown.selectionAction = { [weak self] (index, item) in
-            self?.genderTextView.text = item
+            self?.genderDropButton.setTitle(item, for: .normal)
+//            self?.genderTextView.text = item
         }
         
-        roleDropdown.anchorView = roleTextView
+        roleDropdown.anchorView = roleDropButton
         roleDropdown.dataSource = ["Software Engineer", "Product Manager", "Designer", "Other"]
         roleDropdown.selectionAction = { [weak self] (index, item) in
-            self?.roleTextView.text = item
+            self?.roleDropButton.setTitle(item, for: .normal)
+//            self?.roleTextView.text = item
         }
         
-        raceDropdown.anchorView = raceTextView
+        yearDropdown.anchorView = yearTextView
+        yearDropdown.dataSource = ["I am interested in this role", "1", "2", "3",
+                                   "4", "5", "6", "7", "8", "9", "10", "11",
+                                   "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23",
+                                   "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34","35", "36",
+                                   "37", "38", "39", "40"]
+        yearDropdown.selectionAction = { [weak self] (index, item) in
+            if item == "I am interested in this role" {
+                self?.yearTextView.setTitle(item, for: .normal)
+            } else {
+                self?.yearTextView.setTitle(item + " years", for: .normal)
+            }
+        }
+        
+        raceDropdown.anchorView = raceDropButton
         raceDropdown.dataSource = ["American Indian or Alaska Native",
                                    "Asian",
                                    "Black or African American",
@@ -296,7 +324,8 @@ class EditVC: UIViewController, UIImagePickerControllerDelegate {
                                    "Hispanic or Latino",
                                    "Other"]
         raceDropdown.selectionAction = { [weak self] (index, item) in
-            self?.raceTextView.text = item
+            self?.raceDropButton.setTitle(item, for: .normal)
+//            self?.raceTextView.text = item
         }
         
     }
@@ -323,7 +352,7 @@ class EditVC: UIViewController, UIImagePickerControllerDelegate {
         let screensize: CGRect = UIScreen.main.bounds
         let screenWidth = screensize.width
         let screenHeight = screensize.height
-        self.scrollView.contentSize = CGSize(width:screenWidth, height: screenHeight + 500)
+        self.scrollView.contentSize = CGSize(width:screenWidth, height: screenHeight + 350)
         self.scrollView.isScrollEnabled = true
         self.scrollView.frame = self.view.bounds
         view.addSubview(scrollView)
@@ -332,23 +361,31 @@ class EditVC: UIViewController, UIImagePickerControllerDelegate {
     func addBorders() {
         nameTextView.layer.addBorder(edge: .bottom, color: UIColor.lightGray, thickness: 0.8)
         companyTextView.layer.addBorder(edge: .bottom, color: UIColor.lightGray, thickness: 0.8)
-        goalTextView.layer.addBorder(edge: .bottom, color: UIColor.lightGray, thickness: 0.8)
         yearTextView.layer.addBorder(edge: .bottom, color: UIColor.lightGray, thickness: 0.8)
-        genderTextView.layer.addBorder(edge: .bottom, color: UIColor.lightGray, thickness: 0.8)
-        raceTextView.layer.addBorder(edge: .bottom, color: UIColor.lightGray, thickness: 0.8)
+        genderDropButton.layer.addBorder(edge: .bottom, color: UIColor.lightGray, thickness: 0.8)
+        raceDropButton.layer.addBorder(edge: .bottom, color: UIColor.lightGray, thickness: 0.8)
+        goalTextView.layer.borderColor = UIColor.lightGray.cgColor
+        goalTextView.layer.borderWidth = 0.8
+        goalTextView.layer.cornerRadius = 5
+        roleDropButton.layer.addBorder(edge: .bottom, color: UIColor.lightGray, thickness: 0.8)
     }
     
     override func viewDidLayoutSubviews() {
         nameTextView.layer.addBorder(edge: .bottom, color: UIColor.lightGray, thickness: 0.8)
         companyTextView.layer.addBorder(edge: .bottom, color: UIColor.lightGray, thickness: 0.8)
-//        goalTextView.layer.addBorder(edge: .bottom, color: UIColor.lightGray, thickness: 0.8)
         yearTextView.layer.addBorder(edge: .bottom, color: UIColor.lightGray, thickness: 0.8)
-        genderTextView.layer.addBorder(edge: .bottom, color: UIColor.lightGray, thickness: 0.8)
-        raceTextView.layer.addBorder(edge: .bottom, color: UIColor.lightGray, thickness: 0.8)
+        genderDropButton.layer.addBorder(edge: .bottom, color: UIColor.lightGray, thickness: 0.8)
+        raceDropButton.layer.addBorder(edge: .bottom, color: UIColor.lightGray, thickness: 0.8)
         goalTextView.layer.borderColor = UIColor.lightGray.cgColor
         goalTextView.layer.borderWidth = 0.8
         goalTextView.layer.cornerRadius = 5
-//        bar.layer.addBorder(edge: .bottom, color: UIColor.gray, thickness: 0.8)
+        roleDropButton.layer.addBorder(edge: .bottom, color: UIColor.lightGray, thickness: 0.8)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.prefersLargeTitles = false
+//        addBorders()
     }
 
 

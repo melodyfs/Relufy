@@ -13,4 +13,5 @@ target 'Mentor-iOS' do
   pod 'PushNotifications'
   pod 'DropDown'
   pod 'Kingfisher', '~> 4.0'
+  pod 'GrowingTextView', '~> 0.5'
   end

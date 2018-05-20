@@ -23,10 +23,10 @@ class LoginVC: UIViewController {
     let logInButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Log In", for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 20)
-        button.setTitleColor(UIColor.violetBlue, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 25)
+        button.setTitleColor(UIColor.white, for: .normal)
         button.addTarget(self, action: #selector(handleLogin), for: .touchUpInside)
-        button.backgroundColor = UIColor.white
+        button.backgroundColor = UIColor.white.withAlphaComponent(0.3)
         button.addBorder(color: UIColor.white)
         button.makeRounded()
         return button
@@ -43,6 +43,7 @@ class LoginVC: UIViewController {
         textField.textColor = UIColor.white
         textField.backgroundColor = UIColor.clear
         textField.keyboardType = UIKeyboardType.emailAddress
+        textField.becomeFirstResponder()
         return textField
     }()
     
@@ -215,7 +216,7 @@ class LoginVC: UIViewController {
 
         logInButton.translatesAutoresizingMaskIntoConstraints = false
         logInButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        logInButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 220).isActive = true
+        logInButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 30).isActive = true
         logInButton.widthAnchor.constraint(equalToConstant: 300).isActive = true
         logInButton.heightAnchor.constraint(equalToConstant: 80).isActive = true
         

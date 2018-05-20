@@ -7,10 +7,11 @@
 //
 
 import Foundation
-
+import Kingfisher
 import UIKit
+import GrowingTextView
 
-class ProfileDetailsVC: UIViewController {
+class ProfileDetailsVC: UIViewController, GrowingTextViewDelegate {
     
     var selectedUser = [MessageItemViewModel]()
     var userImage: UIImage!
@@ -34,18 +35,19 @@ class ProfileDetailsVC: UIViewController {
     let goalLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16)
-        label.textColor = UIColor.gray
-        label.text = "Bio"
+        label.textColor = UIColor.violetBlue
+        label.text = "About Me"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    let goalInputLabel: UITextView = {
-        let label = UITextView()
+    let goalInputLabel: GrowingTextView = {
+        let label = GrowingTextView()
         label.font = UIFont.systemFont(ofSize: 20)
         label.textColor = UIColor.black
         label.translatesAutoresizingMaskIntoConstraints = false
         label.isUserInteractionEnabled = false
+        label.backgroundColor = UIColor.clear
         return label
     }()
     
@@ -55,13 +57,14 @@ class ProfileDetailsVC: UIViewController {
         label.font = UIFont.systemFont(ofSize: 20)
         label.textColor = UIColor.black
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.backgroundColor = UIColor.clear
         return label
     }()
     
     let companyLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16)
-        label.textColor = UIColor.gray
+        label.textColor = UIColor.violetBlue
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Current Company"
         return label
@@ -70,7 +73,7 @@ class ProfileDetailsVC: UIViewController {
     let raceLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16)
-        label.textColor = UIColor.gray
+        label.textColor = UIColor.violetBlue
         label.text = "Race"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -81,13 +84,14 @@ class ProfileDetailsVC: UIViewController {
         label.font = UIFont.systemFont(ofSize: 20)
         label.textColor = UIColor.black
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.backgroundColor = UIColor.clear
         return label
     }()
     
     let genderLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16)
-        label.textColor = UIColor.gray
+        label.textColor = UIColor.violetBlue
         label.text = "Gender"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -98,6 +102,7 @@ class ProfileDetailsVC: UIViewController {
         label.font = UIFont.systemFont(ofSize: 20)
         label.textColor = UIColor.black
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.backgroundColor = UIColor.clear
         return label
     }()
     
@@ -131,20 +136,6 @@ class ProfileDetailsVC: UIViewController {
         roleLabel.centerYAnchor.constraint(equalTo: nameLabel.centerYAnchor, constant: 30).isActive = true
         roleLabel.centerXAnchor.constraint(equalTo: nameLabel.centerXAnchor).isActive = true
         
-        //        profileImageView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 60).isActive = true
-        //        profileImageView.heightAnchor.constraint(equalToConstant: 100).isActive = true
-        //        profileImageView.widthAnchor.constraint(equalToConstant: 100).isActive = true
-        //        profileImageView.leftAnchor.constraint(equalTo: scrollView.leftAnchor, constant: 30).isActive = true
-        //
-        //        nameLabel.topAnchor.constraint(equalTo: profileImageView.topAnchor, constant: 20).isActive = true
-        //        nameLabel.leftAnchor.constraint(equalTo: profileImageView.leftAnchor,  constant: 120).isActive = true
-        //
-        //        roleLabel.topAnchor.constraint(equalTo: nameLabel.topAnchor, constant: 30).isActive = true
-        //        roleLabel.leftAnchor.constraint(equalTo: nameLabel.leftAnchor).isActive = true
-        
-        //        connectButton.translatesAutoresizingMaskIntoConstraints = false
-        //        connectButton.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -20).isActive = true
-        
     }
 
     
@@ -160,27 +151,39 @@ class ProfileDetailsVC: UIViewController {
         scrollView.addSubview(genderInputLabel)
         
         
-        goalLabel.leftAnchor.constraint(equalTo: scrollView.leftAnchor, constant: 30).isActive = true
-        goalLabel.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 240).isActive = true
-        goalInputLabel.leftAnchor.constraint(equalTo: goalLabel.leftAnchor).isActive = true
-        goalInputLabel.topAnchor.constraint(equalTo: goalLabel.topAnchor, constant: 20).isActive = true
-        goalInputLabel.widthAnchor.constraint(equalToConstant: screensize.width - 50).isActive = true
-        goalInputLabel.heightAnchor.constraint(equalToConstant: 200).isActive = true
+        let itemWidth = screensize.width - 40
         
-        companyLabel.anchor(top: goalInputLabel.topAnchor, left: goalInputLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 160, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        goalLabel.leftAnchor.constraint(equalTo: scrollView.leftAnchor, constant: 20).isActive = true
+        goalLabel.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 240).isActive = true
+        goalLabel.widthAnchor.constraint(equalToConstant: itemWidth).isActive = true
+        goalInputLabel.leftAnchor.constraint(equalTo: goalLabel.leftAnchor, constant: -5).isActive = true
+        goalInputLabel.topAnchor.constraint(equalTo: goalLabel.topAnchor, constant: 10).isActive = true
+        goalInputLabel.widthAnchor.constraint(equalToConstant: itemWidth).isActive = true
+        //        goalInputLabel.heightAnchor.constraint(equalToConstant: 200).isActive = true
+        
+        companyLabel.anchor(top: goalInputLabel.bottomAnchor, left: goalLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 30, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: itemWidth, height: 0)
         companyInputLabel.leftAnchor.constraint(equalTo: companyLabel.leftAnchor).isActive = true
         companyInputLabel.topAnchor.constraint(equalTo: companyLabel.topAnchor, constant: 20).isActive = true
+        companyInputLabel.widthAnchor.constraint(equalToConstant: itemWidth).isActive = true
         
         
         raceLabel.leftAnchor.constraint(equalTo: companyInputLabel.leftAnchor).isActive = true
         raceLabel.topAnchor.constraint(equalTo: companyInputLabel.topAnchor, constant: 70).isActive = true
+        raceLabel.widthAnchor.constraint(equalToConstant: itemWidth).isActive = true
         raceInputLabel.leftAnchor.constraint(equalTo: raceLabel.leftAnchor).isActive = true
         raceInputLabel.topAnchor.constraint(equalTo: raceLabel.topAnchor, constant: 20).isActive = true
+        raceInputLabel.widthAnchor.constraint(equalToConstant: itemWidth).isActive = true
         
         genderLabel.leftAnchor.constraint(equalTo: raceInputLabel.leftAnchor).isActive = true
         genderLabel.topAnchor.constraint(equalTo: raceInputLabel.topAnchor, constant: 70).isActive = true
+        genderLabel.widthAnchor.constraint(equalToConstant: itemWidth).isActive = true
         genderInputLabel.leftAnchor.constraint(equalTo: genderLabel.leftAnchor).isActive = true
         genderInputLabel.topAnchor.constraint(equalTo: genderLabel.topAnchor, constant: 20).isActive = true
+        genderInputLabel.widthAnchor.constraint(equalToConstant: itemWidth).isActive = true
+//        genderInputLabel.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -5).isActive = true
+//        scrollView.contentSize = goalLabel.frame.size.height
+//        scrollView.updateContentView()
+        
         
     }
     
@@ -191,10 +194,19 @@ class ProfileDetailsVC: UIViewController {
         scrollView = UIScrollView()
         let screenWidth = screensize.width
         let height = screensize.height
-        self.scrollView.contentSize = CGSize(width:screenWidth, height: height + 550)
+        self.scrollView.contentSize = CGSize(width:screenWidth, height: height + 50)
         self.scrollView.isScrollEnabled = true
         self.scrollView.frame = self.view.bounds
         view.addSubview(scrollView)
+//        scrollView = UIScrollView()
+//        view.addSubview(scrollView)
+//        scrollView.isScrollEnabled = true
+////        scrollView.translatesAutoresizingMaskIntoConstraints = false
+////        scrollView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+////                scrollView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+////        scrollView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+////        scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20).isActive = true
+//        scrollView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: -10, paddingRight: 0, width: 0, height: 0)
     }
     
     func setValues() {
@@ -203,7 +215,8 @@ class ProfileDetailsVC: UIViewController {
             profileImageView.image = UIImage(named: "profileImageHolder")
             
         } else {
-            profileImageView.getImageFromURL(url: (selectedUser.first?.image)!)
+            let url = URL(string: (selectedUser.first?.image)!)
+            profileImageView.kf.setImage(with: url)
             
         }
         
@@ -218,10 +231,9 @@ class ProfileDetailsVC: UIViewController {
     
     func setUpBackground() {
         let bgView = UIImageView()
-        //        bgView.getImageFromURL(url: UserDefaults.standard.string(forKey: "image")!)
-        //        bgView.image = userImage
-        //        bgView.addBlurEffect()
-        bgView.backgroundColor = UIColor.lightGray.withAlphaComponent(0.5)
+        bgView.image = userImage
+        bgView.addBlurEffect()
+        bgView.backgroundColor = UIColor.violetBlue.withAlphaComponent(0.5)
         
         scrollView.addSubview(bgView)
         bgView.translatesAutoresizingMaskIntoConstraints = false
@@ -240,5 +252,45 @@ class ProfileDetailsVC: UIViewController {
         setUpBackground()
         setUpHeaders()
         setUpViews()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.prefersLargeTitles = false
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.navigationBar.prefersLargeTitles = true
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+//        addBottomBorders() 
+    }
+    
+    func addBottomBorders() {
+        companyLabel.layer.addBorder(edge: .top, color: UIColor.violetBlue, thickness: 0.5)
+        raceLabel.layer.addBorder(edge: .top, color: UIColor.violetBlue, thickness: 0.5)
+        genderLabel.layer.addBorder(edge: .top, color: UIColor.violetBlue, thickness: 0.5)
+    }
+    
+    func textViewDidChangeHeight(_ textView: GrowingTextView, height: CGFloat) {
+        UIView.animate(withDuration: 0.2) {
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    func addTopBorderWithColor(_ objView : UILabel, color: UIColor, width: CGFloat) {
+        let border = CALayer()
+        border.backgroundColor = color.cgColor
+        border.frame = CGRect(x: 0, y: 0, width: objView.frame.size.width, height: width)
+        objView.layer.addSublayer(border)
+    }
+}
+
+extension UIScrollView {
+    func updateContentView() {
+        contentSize.height = subviews.sorted(by: { $0.frame.maxY < $1.frame.maxY }).last?.frame.maxY ?? contentSize.height
     }
 }

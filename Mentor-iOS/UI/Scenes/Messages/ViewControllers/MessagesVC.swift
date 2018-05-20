@@ -22,7 +22,8 @@ class MessagesVC: UIViewController, PusherDelegate {
     var channelName = ""
     lazy var appDelegate = AppDelegateViewModel.instance
     let userDefault = UserDefaults.standard
-   
+    var allChannels = [String]()
+    var menteeUserInfo = [MessageItemViewModel]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,46 +32,60 @@ class MessagesVC: UIViewController, PusherDelegate {
         registerCollectionView()
         tabBarController?.tabBar.isHidden = false
         navigationController?.navigationBar.prefersLargeTitles = true
+        fetchMenteeMessages()
+        fetchUsers()
+        configureCell()
+        addSegmentedControl()
+        DispatchQueue.main.async {
+            self.collectionView.reloadData()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         keys.setMentorOrMentee(isMentor: keys.isMentor)
         self.tabBarController?.tabBar.isHidden = false
+        configureCell()
         DispatchQueue.main.async {
             self.collectionView.reloadData()
         }
     }
     
+    var customSC: UISegmentedControl!
+    
     func addSegmentedControl() {
         let items = ["Mentors", "Mentees"]
-        let customSC = UISegmentedControl(items: items)
+        customSC = UISegmentedControl(items: items)
         let normalFont = UIFont.systemFont(ofSize: 16)
         let normalTextAttributes: [NSObject : AnyObject] = [
             NSAttributedStringKey.font as NSObject: normalFont]
         customSC.backgroundColor = UIColor.clear
         customSC.tintColor = UIColor.violetBlue
         customSC.setTitleTextAttributes(normalTextAttributes, for: .normal)
-        customSC.selectedSegmentIndex = userDefault.integer(forKey: "segNum")
+        customSC.selectedSegmentIndex = 0
         customSC.frame = CGRect(x: 0, y: 0, width: 400, height: 40)
         customSC.addTarget(self, action: #selector(handleValueChange), for: .valueChanged)
-        navigationItem.title = nil
         navigationItem.titleView = customSC
     }
+
+    
+    var getMenteeMessages = false
     
     @objc func handleValueChange(sender: UISegmentedControl) {
-        collectionView.dataSource = nil
         switch sender.selectedSegmentIndex {
         case 0:
-            keys.setMentorOrMentee(isMentor: false)
-//            appDelegate.changeStatus(authStatus: .authorized)
-            userDefault.set(0, forKey: "segNum")
-            print("value change")
+            getMenteeMessages = false
+            configureCell()
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
+
         case 1:
-            keys.setMentorOrMentee(isMentor: true)
-//            appDelegate.changeStatus(authStatus: .authorized)
-            userDefault.set(1, forKey: "segNum")
-            print("value change")
+            getMenteeMessages = true
+            configureCell()
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
         default:
             break
         }
@@ -86,8 +101,6 @@ class MessagesVC: UIViewController, PusherDelegate {
         flowLayout.scrollDirection = .vertical
         collectionView.isScrollEnabled = true
         
-        fetchUsers()
-        
         collectionView.backgroundColor = UIColor.white
         collectionView.showsVerticalScrollIndicator = false
         self.view.addSubview(collectionView)
@@ -99,24 +112,146 @@ class MessagesVC: UIViewController, PusherDelegate {
     }
     
     func fetchUsers() {
-        viewModel.fetchMatches(callback: { (users) in
-            self.dataSource.items = users
-            self.userInfo = users
+        if getMenteeMessages {
+            viewModel.fetchMenteeMatches(callback: { (users) in
+                self.menteeUserInfo = users
+                self.dataSource.items = self.menteeUserInfo
+                self.subToAllChatrooms()
+                self.configureCell()
+                DispatchQueue.main.async {
+                    self.collectionView.reloadData()
+                }
+            })
+        } else {
+            viewModel.fetchMatches(callback: { (users) in
+                self.userInfo = users
+                self.dataSource.items = self.userInfo
+                self.subToAllChatrooms()
+                self.configureCell()
+                DispatchQueue.main.async {
+                    self.collectionView.reloadData()
+                }
+            })
+        }
+        
+
+    }
+    
+    func fetchMenteeMessages() {
+        viewModel.fetchMenteeMatches(callback: { (users) in
+            self.menteeUserInfo = users
+        })
+    }
+    
+    func configureCell() {
+        
+        if getMenteeMessages {
             DispatchQueue.main.async {
                 self.collectionView.reloadData()
+                self.dataSource.items = self.menteeUserInfo
             }
-        })
-        configureCell()
-    }
-    func configureCell() {
-        dataSource.configureCell = { cv, indexPath in
-            let cell = cv.dequeueReusableCell(withReuseIdentifier: self.cell, for: indexPath) as! MessageCell
-            cell.viewModel = self.dataSource.items[indexPath.section]
-            cell.addShadow()
+            dataSource.configureCell = { cv, indexPath in
+                let cell = cv.dequeueReusableCell(withReuseIdentifier: self.cell, for: indexPath) as! MessageCell
+                cell.viewModel = self.dataSource.items[indexPath.section]
+                cell.addShadow()
+        
+                return cell
+            }
             
-            return cell
+            
+        } else {
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+                self.dataSource.items = self.userInfo
+            }
+            dataSource.configureCell = { cv, indexPath in
+                let cell = cv.dequeueReusableCell(withReuseIdentifier: self.cell, for: indexPath) as! MessageCell
+                cell.viewModel = self.dataSource.items[indexPath.section]
+                cell.addShadow()
+                
+                return cell
+            }
+        }
+        
+        
+        
+       
+    }
+    
+    func collectAllChannels() -> [String] {
+        var allEmails = [String]()
+        for i in 0..<userInfo.count {
+            allEmails.append(userInfo[i].email)
+        }
+        
+        var allChannels = [String]()
+        for email in allEmails {
+            var channel = setChannelName(email: email)
+            allChannels.append(channel)
+        }
+        
+        return allChannels
+    }
+    
+    func subToAllChatrooms() {
+        allChannels = collectAllChannels()
+        for channel in allChannels {
+            subToChannel(channelName: channel)
+            listenToMessages(channel: channel)
         }
     }
+    
+    let userEmail = KeychainSwift().get("email")
+    
+    func setChannelName(email: String) -> String {
+        var channelName = ""
+        if keys.isMentor {
+            channelName = "private-\(userEmail!)-\(email)"
+        } else {
+            channelName = "private-\(email)-\(userEmail!)"
+        }
+        return channelName
+    }
+    
+    func listenToMessages(channel: String) {
+        let options = PusherClientOptions(
+            authMethod: AuthMethod.authRequestBuilder(authRequestBuilder: AuthRequestBuilder()),
+            host: .cluster(cluster)
+        )
+        pusher = Pusher(
+            key: key,
+            options: options
+        )
+        pusher.delegate = self
+        pusher.connect()
+        
+        let chan = pusher.subscribe(channel)
+        let _ = chan.bind(eventName: "chat", callback: { data in
+            print(data)
+            if let data = data as? [String : AnyObject] {
+                if let sender = data["sender"] as? String {
+                    if let content = data["content"] as? String {
+                        self.notifyNewMessage(title: sender, body: content)
+//                        dataSource.configureCell = { cv, indexPath in
+//                            let cell = cv.dequeueReusableCell(withReuseIdentifier: self.cell, for: indexPath) as! MessageCell
+//                            cell.viewModel = self.dataSource.items[indexPath.section]
+//                            cell.addShadow()
+//
+//                            return cell
+//                        }
+                    }
+                }
+            }
+        })
+        
+    }
+    
+    func notifyNewMessage(title: String, body: String) {
+        var params = ["title": title,
+                      "body": body]
+        ServerNetworking.shared.getInfo(route: .postNotification, params: params) {_ in}
+    }
+    
     
     func subToChannel(channelName: String) {
         let options = PusherClientOptions(
