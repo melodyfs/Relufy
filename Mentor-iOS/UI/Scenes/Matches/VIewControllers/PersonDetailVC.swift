@@ -257,11 +257,13 @@ class PersonDetailVC: UIViewController, GrowingTextViewDelegate {
         genderLabel.leftAnchor.constraint(equalTo: raceInputLabel.leftAnchor).isActive = true
         genderLabel.topAnchor.constraint(equalTo: raceInputLabel.topAnchor, constant: 70).isActive = true
         genderLabel.widthAnchor.constraint(equalToConstant: itemWidth).isActive = true
+//        genderInputLabel.anchor(top: genderLabel.topAnchor, left: genderLabel.leftAnchor, bottom: scrollView.bottomAnchor, right: nil, paddingTop: 20, paddingLeft: 0, paddingBottom: 30, paddingRight: 0, width: itemWidth, height: 50)
         genderInputLabel.leftAnchor.constraint(equalTo: genderLabel.leftAnchor).isActive = true
         genderInputLabel.topAnchor.constraint(equalTo: genderLabel.topAnchor, constant: 20).isActive = true
 //        genderInputLabel.widthAnchor.constraint(equalToConstant: itemWidth).isActive = true
         genderInputLabel.heightAnchor.constraint(equalToConstant: 40).isActive = true
-//        genderInputLabel.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -10).isActive = true
+        let tabBarHeight = CGFloat((tabBarController?.tabBar.frame.size.height)!)
+        genderInputLabel.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -tabBarHeight - 65).isActive = true
         
     }
     
@@ -271,8 +273,6 @@ class PersonDetailVC: UIViewController, GrowingTextViewDelegate {
     func setUpScrollView() {
 //        scrollView = UIScrollView()
 //        view.addSubview(scrollView)
-//        let screensize: CGRect = UIScreen.main.bounds
-//        let screenWidth = screensize.width
 //        //        self.scrollView.contentSize = CGSize(width:screenWidth, height: screensize.height + 50)
 //        scrollView.isScrollEnabled = true
 //        //        self.scrollView.frame = CGRect(x: 0, y: 0, width: screenWidth, height: screensize.height + 50)
@@ -284,7 +284,7 @@ class PersonDetailVC: UIViewController, GrowingTextViewDelegate {
         scrollView = UIScrollView()
         let screenWidth = screensize.width
         let height = screensize.height
-        self.scrollView.contentSize = CGSize(width:screenWidth, height: height + 50)
+//        self.scrollView.contentSize = CGSize(width:screenWidth, height: height + 50)
         self.scrollView.isScrollEnabled = true
         self.scrollView.frame = self.view.bounds
         view.addSubview(scrollView)

@@ -197,9 +197,7 @@ class ProfileVC: UIViewController, UITextViewDelegate, GrowingTextViewDelegate {
         view.addSubview(scrollView)
         let screensize: CGRect = UIScreen.main.bounds
         let screenWidth = screensize.width
-//        self.scrollView.contentSize = CGSize(width:screenWidth, height: screensize.height + 50)
         scrollView.isScrollEnabled = true
-//        self.scrollView.frame = CGRect(x: 0, y: 0, width: screenWidth, height: screensize.height + 50)
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         scrollView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true

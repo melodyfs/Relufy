@@ -242,6 +242,7 @@ class EditVC: UIViewController, UIImagePickerControllerDelegate {
         let button = UIButton(type: .custom)
         button.setTitle("Save", for: .normal)
         button.setTitleColor(UIColor.violetBlue, for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(handleSave), for: .touchUpInside)
         button.addTarget(self, action: #selector(touchDown), for: .touchDown)
         return button

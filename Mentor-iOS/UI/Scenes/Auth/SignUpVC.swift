@@ -489,13 +489,15 @@ class SignUpVC: UIViewController, UIImagePickerControllerDelegate, UITextViewDel
     
     func setUpScrollView() {
         scrollView = UIScrollView()
+        view.addSubview(scrollView)
         let screensize: CGRect = UIScreen.main.bounds
         let screenWidth = screensize.width
-        let height = screensize.height
-        self.scrollView.contentSize = CGSize(width:screenWidth, height: height + 400)
-        self.scrollView.isScrollEnabled = true
-        self.scrollView.frame = self.view.bounds
-        view.addSubview(scrollView)
+        scrollView.isScrollEnabled = true
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        scrollView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        scrollView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
     
     override func viewDidLayoutSubviews() {

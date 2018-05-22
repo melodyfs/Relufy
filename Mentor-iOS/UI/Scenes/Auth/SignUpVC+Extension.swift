@@ -140,14 +140,11 @@ extension SignUpVC {
         
         passwordTextView.anchor(top: passwordLabel.topAnchor, left: passwordLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 15, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: itemWidth, height: 40)
         
-        saveButton.anchor(top: passwordTextView.topAnchor, left: passwordLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 60, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: itemWidth, height: 80)
-        
-//        mentorOrMenteeLabel.leftAnchor.constraint(equalTo: nameLabel.leftAnchor).isActive = true
-//        mentorOrMenteeLabel.topAnchor.constraint(equalTo: passwordTextView.topAnchor, constant: 100).isActive = true
-//
-//        mentorOrMenteeTextView.anchor(top: mentorOrMenteeLabel.topAnchor, left: mentorOrMenteeLabel.leftAnchor, bottom: nil, right: nil, paddingTop: 20, paddingLeft: 0, paddingBottom: 0, paddingRight: 50, width: 200, height: 40)
-//        
-//        mentorMenteeDropButton.anchor(top: mentorOrMenteeTextView.topAnchor, left: mentorOrMenteeTextView.leftAnchor, bottom: nil, right: nil, paddingTop: 25, paddingLeft: 210, paddingBottom: 0, paddingRight: 0, width: 50, height: 10)
+        saveButton.anchor(top: passwordTextView.topAnchor, left: passwordLabel.leftAnchor, bottom: scrollView.bottomAnchor, right: nil, paddingTop: 70, paddingLeft: 0, paddingBottom: 10, paddingRight: 0, width: itemWidth, height: 50)
+//        saveButton.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
+//        saveButton.widthAnchor.constraint(equalToConstant: itemWidth).isActive = true
+//        saveButton.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = true
+//        saveButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
         
     }
     

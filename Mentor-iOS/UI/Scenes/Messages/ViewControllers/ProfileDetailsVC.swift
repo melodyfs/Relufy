@@ -180,6 +180,8 @@ class ProfileDetailsVC: UIViewController, GrowingTextViewDelegate {
         genderInputLabel.leftAnchor.constraint(equalTo: genderLabel.leftAnchor).isActive = true
         genderInputLabel.topAnchor.constraint(equalTo: genderLabel.topAnchor, constant: 20).isActive = true
         genderInputLabel.widthAnchor.constraint(equalToConstant: itemWidth).isActive = true
+        let tabBarHeight = CGFloat((tabBarController?.tabBar.frame.size.height)!)
+        genderInputLabel.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -tabBarHeight).isActive = true
 //        genderInputLabel.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -5).isActive = true
 //        scrollView.contentSize = goalLabel.frame.size.height
 //        scrollView.updateContentView()
@@ -192,21 +194,10 @@ class ProfileDetailsVC: UIViewController, GrowingTextViewDelegate {
     
     func setUpScrollView() {
         scrollView = UIScrollView()
-        let screenWidth = screensize.width
-        let height = screensize.height
-        self.scrollView.contentSize = CGSize(width:screenWidth, height: height + 50)
+//        self.scrollView.contentSize = CGSize(width:screenWidth, height: height + 50)
         self.scrollView.isScrollEnabled = true
         self.scrollView.frame = self.view.bounds
         view.addSubview(scrollView)
-//        scrollView = UIScrollView()
-//        view.addSubview(scrollView)
-//        scrollView.isScrollEnabled = true
-////        scrollView.translatesAutoresizingMaskIntoConstraints = false
-////        scrollView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-////                scrollView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-////        scrollView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-////        scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20).isActive = true
-//        scrollView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: -10, paddingRight: 0, width: 0, height: 0)
     }
     
     func setValues() {

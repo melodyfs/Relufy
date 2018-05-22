@@ -115,10 +115,10 @@ class MatchesListCell: UICollectionViewCell {
         profileImageView.leftAnchor.constraint(equalTo: leftAnchor, constant: 15).isActive = true
        
 
-        nameLabel.topAnchor.constraint(equalTo: profileImageView.topAnchor, constant: 10).isActive = true
-        nameLabel.leftAnchor.constraint(equalTo: profileImageView.leftAnchor,  constant: 100).isActive = true
+        nameLabel.topAnchor.constraint(equalTo: profileImageView.topAnchor, constant: photoHeight/5).isActive = true
+        nameLabel.leftAnchor.constraint(equalTo: profileImageView.leftAnchor,  constant: photoHeight + 10).isActive = true
         
-        roleLabel.topAnchor.constraint(equalTo: nameLabel.topAnchor, constant: 30).isActive = true
+        roleLabel.topAnchor.constraint(equalTo: nameLabel.topAnchor, constant: 20).isActive = true
         roleLabel.leftAnchor.constraint(equalTo: nameLabel.leftAnchor).isActive = true
     }
     
@@ -129,7 +129,7 @@ class MatchesListCell: UICollectionViewCell {
         addSubview(goalInputLabel)
         
         goalLabel.leftAnchor.constraint(equalTo: profileImageView.leftAnchor, constant: 5).isActive = true
-        goalLabel.topAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: 20).isActive = true
+        goalLabel.topAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: 15).isActive = true
         goalInputLabel.leftAnchor.constraint(equalTo: goalLabel.leftAnchor).isActive = true
         goalInputLabel.topAnchor.constraint(equalTo: goalLabel.bottomAnchor, constant: 0).isActive = true
         goalInputLabel.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width - 50).isActive = true
