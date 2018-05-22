@@ -31,8 +31,10 @@ Clone this repo and run `pod install`
 ## Technologies Used
 - [UIKit](https://developer.apple.com/documentation/uikit)
 - [Pusher](https://github.com/pusher/pusher-http-ruby)
-- [Keychain Swift](https://github.com/evgenyneu/keychain-swift)
+- [KeychainSwift](https://github.com/evgenyneu/keychain-swift)
 - [IQKeyboardManager](https://github.com/hackiftekhar/IQKeyboardManager)
+- [Alamorefire](https://github.com/Alamofire/Alamofire)
+- [DropDown](https://github.com/AssistoLab/DropDown)
 
 
 ## Demos
