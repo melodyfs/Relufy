@@ -54,9 +54,9 @@ class MessagesVC: UIViewController, PusherDelegate {
     var customSC: UISegmentedControl!
     
     func addSegmentedControl() {
-        let items = ["Relator", "Relatee"]
+        let items = ["From Relators", "From Relatees"]
         customSC = UISegmentedControl(items: items)
-        let normalFont = UIFont.systemFont(ofSize: 16)
+        let normalFont = UIFont.systemFont(ofSize: 14)
         let normalTextAttributes: [NSObject : AnyObject] = [
             NSAttributedStringKey.font as NSObject: normalFont]
         customSC.backgroundColor = UIColor.clear

@@ -20,7 +20,7 @@ class TabBarController: UITabBarController {
     
     private func setUpTabBar() {
         
-        let matchesNavController = createNavigationController(navTitle: "Mentors", tabBarTitle: "Browse", unselectedImageName: UIImage(named: "matches"), selectedImageName: UIImage(named: "matches"), rootViewController: MatchesVC())
+        let matchesNavController = createNavigationController(navTitle: "Relators", tabBarTitle: "Browse", unselectedImageName: UIImage(named: "matches"), selectedImageName: UIImage(named: "matches"), rootViewController: MatchesVC())
 
         let messagesNavController = createNavigationController(navTitle: "Inbox", tabBarTitle: "Inbox", unselectedImageName: UIImage(named: "messages"), selectedImageName: UIImage(named: "messages"), rootViewController: MessagesVC())
         

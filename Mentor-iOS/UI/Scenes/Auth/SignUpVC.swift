@@ -188,7 +188,7 @@ class SignUpVC: UIViewController, UIImagePickerControllerDelegate, UITextViewDel
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = UIColor.gray
-        label.text = "Race *"
+        label.text = "Race"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -208,7 +208,7 @@ class SignUpVC: UIViewController, UIImagePickerControllerDelegate, UITextViewDel
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = UIColor.gray
-        label.text = "Gender *"
+        label.text = "Gender"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -247,7 +247,6 @@ class SignUpVC: UIViewController, UIImagePickerControllerDelegate, UITextViewDel
         button.setTitleColor(UIColor.white, for: .normal)
         button.backgroundColor = UIColor.violetBlue
         button.addTarget(self, action: #selector(handleSave), for: .touchUpInside)
-//        button.addTarget(self, action: #selector(touchDown), for: .touchDown)
         button.makeRounded()
         return button
     }()
@@ -272,7 +271,6 @@ class SignUpVC: UIViewController, UIImagePickerControllerDelegate, UITextViewDel
     
     let genderDropButton: UIButton = {
         let button = UIButton(type: .system)
-//        button.setTitle("select", for: .normal)
         button.titleLabel?.font = UIFont(name: "System", size: 20)
         button.setTitleColor(UIColor.black, for: .normal)
         button.addTarget(self, action: #selector(handleGenderDrop), for: .touchUpInside)
@@ -282,7 +280,6 @@ class SignUpVC: UIViewController, UIImagePickerControllerDelegate, UITextViewDel
     
     let raceDropButton: UIButton = {
         let button = UIButton(type: .system)
-//        button.setTitle("select", for: .normal)
         button.titleLabel?.font = UIFont(name: "System", size: 20)
         button.setTitleColor(UIColor.black, for: .normal)
         button.addTarget(self, action: #selector(handleRaceDrop), for: .touchUpInside)
@@ -312,25 +309,18 @@ class SignUpVC: UIViewController, UIImagePickerControllerDelegate, UITextViewDel
     }
     
     @objc func handleSave() {
-        print("save")
-        setMentorOrMentee()
         checkEmptyFields()
         if eachFieldIsFilled {
             signUpUser()
         }
-       
     }
-    
-    func setMentorOrMentee() {
-        keys.setMentorOrMentee(isMentor: false)
-    }
+
     
     var eachFieldIsFilled = false
     
     func checkEmptyFields() {
         if nameTextView.text == "" || roleDropButton.titleLabel!.text == "" || yearTextView.titleLabel!.text == "" ||
-            goalTextView.text == "" || raceDropButton.titleLabel!.text == "" || genderDropButton.titleLabel!.text == "" ||
-            emailTextView.text == "" || passwordTextView.text == "" {
+            goalTextView.text == "" || emailTextView.text == "" || passwordTextView.text == "" {
             let alertController = UIAlertController(title: "Empty Fields", message: "Fill out all fields before moving forward!", preferredStyle: .alert)
             let ok = UIAlertAction(title: "Ok", style: .default)
             alertController.addAction(ok)
@@ -375,7 +365,7 @@ class SignUpVC: UIViewController, UIImagePickerControllerDelegate, UITextViewDel
                     }
                 }
             }
-        keys.setMentorOrMentee(isMentor: false)
+        
     }
     
     func informSignUpFailure() {
@@ -394,7 +384,6 @@ class SignUpVC: UIViewController, UIImagePickerControllerDelegate, UITextViewDel
         addGestureToProfileImageView()
         addBar()
         handleDropDowns()
-//        yearTextView.delegate = self
     }
     
     func textViewDidBeginEditing(_ textView: UITextView) {
@@ -429,7 +418,6 @@ class SignUpVC: UIViewController, UIImagePickerControllerDelegate, UITextViewDel
         roleDropdown.anchorView = roleDropButton
         roleDropdown.dataSource = ["Software Engineer", "Product Manager", "Designer", "Other"]
         roleDropdown.selectionAction = { [weak self] (index, item) in
-//            self?.roleTextView.text = item
             self?.roleDropButton.setTitle(item, for: .normal)
         }
         

@@ -330,7 +330,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Mentor-iOS/HTTPClients/ServerNetworking.swift"
-            timestampString = "548473294.250091"
+            timestampString = "551937982.7568769"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "115"
@@ -346,12 +346,12 @@
                   moduleName = "Mentor-iOS"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/melodyyang/Desktop/Mentor-iOS/Mentor-iOS/HTTPClients/ServerNetworking.swift"
-                  timestampString = "547675231.2228481"
+                  timestampString = "551937862.833666"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "111"
-                  endingLineNumber = "111"
-                  offsetFromSymbolStart = "700">
+                  startingLineNumber = "117"
+                  endingLineNumber = "117"
+                  offsetFromSymbolStart = "641">
                </Location>
                <Location
                   shouldBeEnabled = "No"
@@ -361,11 +361,11 @@
                   moduleName = "Mentor-iOS"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/melodyyang/Desktop/Mentor-iOS/Mentor-iOS/HTTPClients/ServerNetworking.swift"
-                  timestampString = "547675231.225597"
+                  timestampString = "551937862.835894"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "112"
-                  endingLineNumber = "112"
+                  startingLineNumber = "118"
+                  endingLineNumber = "118"
                   offsetFromSymbolStart = "65">
                </Location>
             </Locations>
@@ -394,7 +394,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Mentor-iOS/HTTPClients/ServerNetworking.swift"
-            timestampString = "548473294.2502199"
+            timestampString = "551937982.756953"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "114"
@@ -474,7 +474,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Mentor-iOS/UI/Scenes/Matches/VIewControllers/MatchesVC.swift"
-            timestampString = "548473294.250402"
+            timestampString = "548742279.238795"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "92"
@@ -522,7 +522,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Mentor-iOS/UI/Scenes/Profile/ViewControllers/ProfileVC.swift"
-            timestampString = "548654762.204091"
+            timestampString = "551937982.757082"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "190"
@@ -618,11 +618,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Mentor-iOS/UI/Scenes/Auth/SignUpVC.swift"
-            timestampString = "548654762.2042331"
+            timestampString = "551937982.757399"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "331"
-            endingLineNumber = "331"
+            startingLineNumber = "330"
+            endingLineNumber = "330"
             landmarkName = "checkEmptyFields()"
             landmarkType = "7">
          </BreakpointContent>
@@ -634,28 +634,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Mentor-iOS/UI/Scenes/Auth/SignUpVC.swift"
-            timestampString = "548654762.2042871"
+            timestampString = "551937982.7574559"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "401"
-            endingLineNumber = "401"
+            startingLineNumber = "400"
+            endingLineNumber = "400"
             landmarkName = "textViewDidBeginEditing(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Mentor-iOS/UI/Scenes/Auth/SignUpVC.swift"
-            timestampString = "548654762.204335"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "326"
-            endingLineNumber = "326"
-            landmarkName = "setMentorOrMentee()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -746,7 +730,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Mentor-iOS/UI/Scenes/Matches/VIewControllers/MatchesVC.swift"
-            timestampString = "548473294.2511801"
+            timestampString = "548742279.239139"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "152"
@@ -778,7 +762,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Mentor-iOS/UI/Scenes/AppDelegate/AppKeys.swift"
-            timestampString = "548025940.011187"
+            timestampString = "551937982.757587"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "36"
@@ -810,7 +794,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Mentor-iOS/UI/Scenes/Matches/VIewControllers/MatchesVC.swift"
-            timestampString = "548473294.251354"
+            timestampString = "548742279.239289"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "34"
@@ -826,7 +810,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Mentor-iOS/UI/Scenes/Matches/VIewControllers/MatchesVC.swift"
-            timestampString = "548473294.2514091"
+            timestampString = "548742279.239362"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "71"
@@ -890,13 +874,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Mentor-iOS/UI/Scenes/Messages/ViewControllers/MessagesVC.swift"
-            timestampString = "548473294.251586"
+            timestampString = "548742279.239489"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "144"
             endingLineNumber = "144"
-            landmarkName = "fetchMenteeMessages()"
-            landmarkType = "7">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -922,7 +906,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Mentor-iOS/HTTPClients/ServerNetworking.swift"
-            timestampString = "548473294.2517281"
+            timestampString = "551937982.7577209"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "138"
@@ -976,6 +960,22 @@
             startingLineNumber = "76"
             endingLineNumber = "76"
             landmarkName = "fetchMenteeMatches(callback:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Mentor-iOS/UI/Scenes/Profile/ViewControllers/ProfileVC.swift"
+            timestampString = "551937982.757955"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "146"
+            endingLineNumber = "146"
+            landmarkName = "viewDidLoad()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

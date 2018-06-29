@@ -91,11 +91,11 @@ class MatchesVC: UIViewController {
             self.collectionView.reloadData()
         }
         
-        if keys.isMentor {
-            self.navigationItem.title = "Mentees"
-        } else {
-            self.navigationItem.title = "Mentors"
-        }
+//        if keys.isMentor {
+//            self.navigationItem.title = "Mentees"
+//        } else {
+//            self.navigationItem.title = "Mentors"
+//        }
         
         
     }

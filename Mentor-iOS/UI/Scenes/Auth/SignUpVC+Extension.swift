@@ -26,21 +26,12 @@ extension SignUpVC {
                       "company": companyTextView.text ?? "None",
                       "goal": goalTextView.text ?? "None",
                       "role": roleDropButton.titleLabel!.text ?? "None",
-                      "race": raceDropButton.titleLabel!.text ?? "None",
-                      "gender": genderDropButton.titleLabel!.text ?? "None"]
+                      "race": raceDropButton.titleLabel!.text ?? "Other",
+                      "gender": genderDropButton.titleLabel!.text ?? "Other",
+                      "email": emailTextView.text ?? "None",
+                      "password": passwordTextView.text ?? "None"]
         return params
     }
-    
-    
-//    func updateProfileImage() {
-//        if imageData != nil {
-//            if keys.isMentor {
-//                UploadImage.upload(route: .updateMentor,  imageData: imageData!)
-//            } else {
-//                UploadImage.upload(route: .updateMentee, imageData: imageData!)
-//            }
-//        }
-//    }
     
    
     

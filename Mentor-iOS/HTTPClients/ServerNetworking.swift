@@ -104,7 +104,7 @@ class ServerNetworking {
     
     func getInfo(route: Route, params: [String: String], completion: @escaping (Data) -> Void) {
         let base = "https://mentor-app-server.herokuapp.com"
-        let base2 = "http://localhost:3000"
+//        let base2 = "http://localhost:3000"
         let fullURL = base + route.path()
         var url = URL(string: fullURL)!
         
