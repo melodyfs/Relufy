@@ -1,6 +1,6 @@
 [<img src="https://github.com/melodyfs/Relate/blob/master/relateIcon.png" width="150" height="150" />](https://itunes.apple.com/us/app/relate-connect-grow/id1372381485?ls=1&mt=8)
 
-# Relate
+# Relufy (previously Relate)
 
 Relate helps you connect with the right mentors/mentees to grow in your tech career!
 
